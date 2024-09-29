@@ -46,12 +46,12 @@ public class StaffRolesP extends javax.swing.JPanel {
     private void initComponents() {
 
         panelPrincipal = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TablaDeDatosStaff = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TablaDeDatosStaff = new javax.swing.JTable();
         btnBorrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -63,9 +63,35 @@ public class StaffRolesP extends javax.swing.JPanel {
         btnNvoRegistro = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        panelPrincipal.setBackground(new java.awt.Color(222, 247, 244));
+        panelPrincipal.setBackground(new java.awt.Color(65, 70, 181));
 
-        jPanel1.setBackground(new java.awt.Color(58, 58, 145));
+        btnAgregar.setBackground(new java.awt.Color(255, 153, 51));
+        btnAgregar.setText("Agregar");
+        btnAgregar.setEnabled(false);
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setBackground(new java.awt.Color(255, 153, 51));
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.setEnabled(false);
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        btnModificar.setBackground(new java.awt.Color(255, 153, 51));
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(65, 70, 181));
 
         TablaDeDatosStaff.setBackground(new java.awt.Color(239, 239, 239));
         TablaDeDatosStaff.setModel(new javax.swing.table.DefaultTableModel(
@@ -110,29 +136,7 @@ public class StaffRolesP extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnAgregar.setText("Agregar");
-        btnAgregar.setEnabled(false);
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
-
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.setEnabled(false);
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
-
-        btnModificar.setText("Modificar");
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
-
+        btnBorrar.setBackground(new java.awt.Color(255, 153, 51));
         btnBorrar.setText("Borrar");
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,6 +149,7 @@ public class StaffRolesP extends javax.swing.JPanel {
         jLabel1.setText(" STAFF Roles ");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Code");
 
         txtCode.setEditable(false);
@@ -152,11 +157,14 @@ public class StaffRolesP extends javax.swing.JPanel {
         txtRoleName.setEditable(false);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("role_name");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("role_description");
 
+        btnNvoRegistro.setBackground(new java.awt.Color(255, 153, 51));
         btnNvoRegistro.setText("Nuevo Registro");
         btnNvoRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,6 +172,7 @@ public class StaffRolesP extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(255, 153, 51));
         jButton1.setText("Menu");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

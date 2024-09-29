@@ -17,8 +17,8 @@ public class Conexion {
             con=DriverManager.getConnection("jdbc:postgresql://"+ ip +":"+ puerto + "/"+ bd ,"developer", "sono1306");
             estCon = true;
         } catch (Exception e) {
-            //JOptionPane.showMessageDialog(null, "La base de datos no esta activa.\nIntentelo de nuevo.\n" + e.getMessage(), "Error de Base de datos", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(null, e.getMessage() + "\nIntentelo de nuevo." , "Error de Base de datos", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "La base de datos no esta activa.\nIntentelo de nuevo.\n" + e.getMessage(), "Error de Base de datos", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null, e.getMessage() + "\nIntentelo de nuevo." , "Error de Base de datos", JOptionPane.ERROR_MESSAGE);
             //System.err.println("Error:"+e);
             estCon = false;
             System.exit(0);

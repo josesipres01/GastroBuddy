@@ -63,10 +63,11 @@ public class CustomersP extends javax.swing.JPanel {
         btnNvoRegistro = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        panelPrincipal.setBackground(new java.awt.Color(222, 247, 244));
+        panelPrincipal.setBackground(new java.awt.Color(65, 70, 181));
 
-        jPanel1.setBackground(new java.awt.Color(58, 58, 145));
+        jPanel1.setBackground(new java.awt.Color(65, 70, 181));
 
+        TablaDeDatosStaff.setAutoCreateRowSorter(true);
         TablaDeDatosStaff.setBackground(new java.awt.Color(239, 239, 239));
         TablaDeDatosStaff.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -85,7 +86,9 @@ public class CustomersP extends javax.swing.JPanel {
             }
         });
         TablaDeDatosStaff.setGridColor(new java.awt.Color(153, 153, 153));
-        TablaDeDatosStaff.setShowGrid(true);
+        TablaDeDatosStaff.setShowGrid(false);
+        TablaDeDatosStaff.setShowHorizontalLines(true);
+        TablaDeDatosStaff.setShowVerticalLines(true);
         TablaDeDatosStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TablaDeDatosStaffMouseClicked(evt);
@@ -110,30 +113,42 @@ public class CustomersP extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnAgregar.setBackground(new java.awt.Color(255, 153, 51));
+        btnAgregar.setForeground(new java.awt.Color(51, 51, 51));
         btnAgregar.setText("Agregar");
         btnAgregar.setEnabled(false);
+        btnAgregar.setFocusable(false);
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
             }
         });
 
+        btnLimpiar.setBackground(new java.awt.Color(255, 153, 51));
+        btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setText("Limpiar");
         btnLimpiar.setEnabled(false);
+        btnLimpiar.setFocusable(false);
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
             }
         });
 
+        btnModificar.setBackground(new java.awt.Color(255, 153, 51));
+        btnModificar.setForeground(new java.awt.Color(51, 51, 51));
         btnModificar.setText("Modificar");
+        btnModificar.setFocusable(false);
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
             }
         });
 
+        btnBorrar.setBackground(new java.awt.Color(255, 153, 51));
+        btnBorrar.setForeground(new java.awt.Color(51, 51, 51));
         btnBorrar.setText("Borrar");
+        btnBorrar.setFocusable(false);
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBorrarActionPerformed(evt);
@@ -145,6 +160,7 @@ public class CustomersP extends javax.swing.JPanel {
         jLabel1.setText(" Customers ");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("id");
 
         txtId.setEditable(false);
@@ -156,14 +172,19 @@ public class CustomersP extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("phone");
 
+        btnNvoRegistro.setBackground(new java.awt.Color(255, 153, 51));
+        btnNvoRegistro.setForeground(new java.awt.Color(51, 51, 51));
         btnNvoRegistro.setText("Nuevo Registro");
+        btnNvoRegistro.setFocusable(false);
         btnNvoRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNvoRegistroActionPerformed(evt);
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(255, 153, 51));
         jButton1.setText("Menu");
+        jButton1.setFocusable(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -175,21 +196,13 @@ public class CustomersP extends javax.swing.JPanel {
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
+                .addContainerGap(66, Short.MAX_VALUE)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(201, 201, 201)
+                        .addGap(193, 193, 193)
                         .addComponent(jLabel1))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnNvoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,8 +215,17 @@ public class CustomersP extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(34, 34, 34))
+                            .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNvoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBorrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(6, 6, 6))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,9 +243,9 @@ public class CustomersP extends javax.swing.JPanel {
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(24, 24, 24)
                         .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(75, 75, 75)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
