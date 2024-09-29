@@ -82,10 +82,9 @@ public class MealsP extends javax.swing.JPanel {
         cBoxStaffId = new javax.swing.JComboBox<>();
         cBoxCustId = new javax.swing.JComboBox<>();
 
-        panelPrincipal.setBackground(new java.awt.Color(65, 70, 181));
-        panelPrincipal.setForeground(new java.awt.Color(255, 255, 255));
+        panelPrincipal.setBackground(new java.awt.Color(222, 247, 244));
 
-        jPanel1.setBackground(new java.awt.Color(65, 70, 181));
+        jPanel1.setBackground(new java.awt.Color(58, 58, 145));
 
         TablaDeDatosPrin.setBackground(new java.awt.Color(239, 239, 239));
         TablaDeDatosPrin.setModel(new javax.swing.table.DefaultTableModel(
@@ -132,7 +131,6 @@ public class MealsP extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnAgregar.setBackground(new java.awt.Color(255, 153, 51));
         btnAgregar.setText("Agregar");
         btnAgregar.setEnabled(false);
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -141,7 +139,6 @@ public class MealsP extends javax.swing.JPanel {
             }
         });
 
-        btnLimpiar.setBackground(new java.awt.Color(255, 153, 51));
         btnLimpiar.setText("Limpiar");
         btnLimpiar.setEnabled(false);
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -150,7 +147,6 @@ public class MealsP extends javax.swing.JPanel {
             }
         });
 
-        btnModificar.setBackground(new java.awt.Color(255, 153, 51));
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,7 +154,6 @@ public class MealsP extends javax.swing.JPanel {
             }
         });
 
-        btnBorrar.setBackground(new java.awt.Color(255, 153, 51));
         btnBorrar.setText("Borrar");
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -171,28 +166,22 @@ public class MealsP extends javax.swing.JPanel {
         jLabel1.setText(" Meals");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("id");
 
         txtId.setEditable(false);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("staff_id");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("customers_id");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("date_of_meal");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("cost_of_meal");
 
-        btnNvoRegistro.setBackground(new java.awt.Color(255, 153, 51));
         btnNvoRegistro.setText("Nuevo Registro");
         btnNvoRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,7 +194,6 @@ public class MealsP extends javax.swing.JPanel {
         jForDateofmeal.setToolTipText("Año-Mes-Dia");
         jForDateofmeal.setFocusable(false);
 
-        jButton1.setBackground(new java.awt.Color(255, 153, 51));
         jButton1.setText("Menu");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,7 +201,6 @@ public class MealsP extends javax.swing.JPanel {
             }
         });
 
-        btnPagar.setBackground(new java.awt.Color(255, 153, 51));
         btnPagar.setText("Pagar");
         btnPagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

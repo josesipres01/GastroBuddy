@@ -1,14 +1,13 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
 package pantallas;
 
 import EnumPantalla.Pantalla;
 import Main.VentanaPrincipal;
 import config.Conexion;
 import java.sql.SQLException;
-import java.util.Timer;
-import java.util.TimerTask;
-
-
 
 /**
  *
@@ -19,39 +18,25 @@ public class PrincipalP extends javax.swing.JPanel {
     VentanaPrincipal ventana;
     
     static Conexion cn = new Conexion();
-    private Timer timer;
-    private final int INTERVALO = 1000; // 5000 ms = 5 segundos
-
     /**
      * Creates new form PrincipalP
      */
     public PrincipalP(VentanaPrincipal v) {
         initComponents();
         this.ventana = v;
-        //checkEstado();
-        iniciarCheckEstado();
+        checkEstado();
         
     }
-     void iniciarCheckEstado() {
-        timer = new Timer(true); // Daemon para que el timer termine cuando la aplicación finaliza
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                checkEstado(); // Llama a checkEstado periódicamente
-            }
-        }, 0, INTERVALO); // Inicia inmediatamente y se repite cada INTERVALO milisegundos
-    }
 
-      void checkEstado() {
+    void checkEstado (){
         try {
-            if (cn.getEstado()) {
+            if (cn.getEstado()){
                 labelEstado.setText("Estado de BD: Activo");
-            } else {
+            }else{
                 labelEstado.setText("Estado de BD: Inactiva");
             }
             cn.closeConnection();
         } catch (SQLException ex) {
-            // Manejar excepción
         }
     }
     

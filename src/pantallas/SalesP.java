@@ -77,9 +77,9 @@ public class SalesP extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         txtStaffId = new javax.swing.JTextField();
 
-        panelPrincipal.setBackground(new java.awt.Color(65, 70, 181));
+        panelPrincipal.setBackground(new java.awt.Color(222, 247, 244));
 
-        jPanel1.setBackground(new java.awt.Color(65, 70, 181));
+        jPanel1.setBackground(new java.awt.Color(58, 58, 145));
 
         TablaDeDatosStaff.setBackground(new java.awt.Color(239, 239, 239));
         TablaDeDatosStaff.setModel(new javax.swing.table.DefaultTableModel(
@@ -124,7 +124,6 @@ public class SalesP extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnAgregar.setBackground(new java.awt.Color(255, 153, 51));
         btnAgregar.setText("Agregar");
         btnAgregar.setEnabled(false);
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +132,6 @@ public class SalesP extends javax.swing.JPanel {
             }
         });
 
-        btnLimpiar.setBackground(new java.awt.Color(255, 153, 51));
         btnLimpiar.setText("Limpiar");
         btnLimpiar.setEnabled(false);
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -142,7 +140,6 @@ public class SalesP extends javax.swing.JPanel {
             }
         });
 
-        btnModificar.setBackground(new java.awt.Color(255, 153, 51));
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,7 +147,6 @@ public class SalesP extends javax.swing.JPanel {
             }
         });
 
-        btnBorrar.setBackground(new java.awt.Color(255, 153, 51));
         btnBorrar.setText("Borrar");
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,17 +159,14 @@ public class SalesP extends javax.swing.JPanel {
         jLabel1.setText(" Sales ");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("id");
 
         txtId.setEditable(false);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("amount");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("id_meals");
 
         txtMealsId.addActionListener(new java.awt.event.ActionListener() {
@@ -183,10 +176,8 @@ public class SalesP extends javax.swing.JPanel {
         });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("date_of_meal");
 
-        btnNvoRegistro.setBackground(new java.awt.Color(255, 153, 51));
         btnNvoRegistro.setText("Nuevo Registro");
         btnNvoRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,7 +185,6 @@ public class SalesP extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 153, 51));
         jButton1.setText("Menu");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,11 +196,9 @@ public class SalesP extends javax.swing.JPanel {
         dateOfMeal.setToolTipText("Año-Mes-Dia");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("id_staff");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("id_customer");
 
         txtStaffId.addActionListener(new java.awt.event.ActionListener() {
