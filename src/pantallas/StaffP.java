@@ -65,9 +65,9 @@ public class StaffP extends javax.swing.JPanel {
         btnNvoRegistro = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        panelPrincipal.setBackground(new java.awt.Color(222, 247, 244));
+        panelPrincipal.setBackground(new java.awt.Color(81, 81, 201));
 
-        jPanel1.setBackground(new java.awt.Color(58, 58, 145));
+        jPanel1.setBackground(new java.awt.Color(81, 81, 201));
 
         TablaDeDatosStaff.setBackground(new java.awt.Color(239, 239, 239));
         TablaDeDatosStaff.setModel(new javax.swing.table.DefaultTableModel(
@@ -112,6 +112,7 @@ public class StaffP extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnAgregar.setBackground(new java.awt.Color(255, 153, 51));
         btnAgregar.setText("Agregar");
         btnAgregar.setEnabled(false);
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -120,6 +121,7 @@ public class StaffP extends javax.swing.JPanel {
             }
         });
 
+        btnLimpiar.setBackground(new java.awt.Color(255, 153, 51));
         btnLimpiar.setText("Limpiar");
         btnLimpiar.setEnabled(false);
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -128,6 +130,7 @@ public class StaffP extends javax.swing.JPanel {
             }
         });
 
+        btnModificar.setBackground(new java.awt.Color(255, 153, 51));
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +138,7 @@ public class StaffP extends javax.swing.JPanel {
             }
         });
 
+        btnBorrar.setBackground(new java.awt.Color(255, 153, 51));
         btnBorrar.setText("Borrar");
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,6 +151,7 @@ public class StaffP extends javax.swing.JPanel {
         jLabel1.setText(" STAFF ");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("id");
 
         txtId.setEditable(false);
@@ -154,14 +159,18 @@ public class StaffP extends javax.swing.JPanel {
         txtFirstName.setEditable(false);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("first_name");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("last_name");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("role_code");
 
+        btnNvoRegistro.setBackground(new java.awt.Color(255, 153, 51));
         btnNvoRegistro.setText("Nuevo Registro");
         btnNvoRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,6 +178,7 @@ public class StaffP extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(255, 153, 51));
         jButton1.setText("Menu");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
