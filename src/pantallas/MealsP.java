@@ -92,7 +92,7 @@ public class MealsP extends javax.swing.JPanel {
 
             },
             new String [] {
-                "id", "staff_id", "customers_id", "date_of_meal", "cost_of_meal"
+                "id", "staff_name", "customers_name", "date_of_meal", "cost_of_meal"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -118,17 +118,14 @@ public class MealsP extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         btnAgregar.setBackground(new java.awt.Color(255, 153, 51));
@@ -276,7 +273,7 @@ public class MealsP extends javax.swing.JPanel {
                                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
                                     .addComponent(txtCostofmeal, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(29, Short.MAX_VALUE))))
+                        .addContainerGap(41, Short.MAX_VALUE))))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,23 +334,26 @@ public class MealsP extends javax.swing.JPanel {
 
     private void TablaDeDatosPrinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosPrinMouseClicked
 
-        if(TablaDeDatosPrin.isFocusable()){
-            int row = TablaDeDatosPrin.getSelectedRow();
-            if (row == -1) {
-                JOptionPane.showMessageDialog(null, "No se Selecciono");
-            } else {
-                String id = (String) TablaDeDatosPrin.getValueAt(row, 0).toString();
-                String staffId = (String) TablaDeDatosPrin.getValueAt(row, 1);
-                String customersid = (String) TablaDeDatosPrin.getValueAt(row, 2);
-                String dateString = (String) TablaDeDatosPrin.getValueAt(row, 3);
-                String costofmeal = (String) TablaDeDatosPrin.getValueAt(row, 4);
-                txtId.setText(id);
-                cBoxStaffId.setSelectedItem(staffId + mStaff.get(Integer.parseInt(staffId)));
-                cBoxCustId.setSelectedItem(customersid + mCliente.get(Integer.parseInt(customersid)));
-                jForDateofmeal.setText(dateString);
-                txtCostofmeal.setText(costofmeal);
-            }
+        if (TablaDeDatosPrin.isFocusable()) {
+        int row = TablaDeDatosPrin.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "No se seleccionó ninguna fila");
+        } else {
+            // Obtén los valores de las celdas, asegurando el tipo correcto
+            String id = TablaDeDatosPrin.getValueAt(row, 0).toString();
+            String staffName = TablaDeDatosPrin.getValueAt(row, 1).toString(); // Nombre del staff
+            String customerName = TablaDeDatosPrin.getValueAt(row, 2).toString(); // Nombre del cliente
+            String dateString = TablaDeDatosPrin.getValueAt(row, 3).toString(); // Fecha de la comida
+            String costOfMeal = TablaDeDatosPrin.getValueAt(row, 4).toString(); // Costo de la comida
+
+            // Asigna valores a los campos correspondientes
+            txtId.setText(id);
+            cBoxStaffId.setSelectedItem(staffName);  // Selecciona el nombre del staff
+            cBoxCustId.setSelectedItem(customerName);  // Selecciona el nombre del cliente
+            jForDateofmeal.setText(dateString);  // Asigna la fecha
+            txtCostofmeal.setText(costOfMeal);  // Asigna el costo
         }
+    }
     }//GEN-LAST:event_TablaDeDatosPrinMouseClicked
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -395,30 +395,34 @@ public class MealsP extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cBoxCustIdActionPerformed
 
-    void listar() {
-        String sql = "SELECT * FROM meals ORDER BY id;";
-        try {
-            con = cn.getConnection();
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
-            Object[] meals = new Object[5];
-//            String[] Titulos={"ID","DNI","NOMBRES"};         
-//            model=new DefaultTableModel(null,Titulos);   
-            model = (DefaultTableModel) TablaDeDatosPrin.getModel();
-            while (rs.next()) {
-                meals[0] = rs.getInt("id");
-                meals[1] = rs.getString("staff_id");
-                meals[2] = rs.getString("customers_id");
-                meals[3] = rs.getString("date_of_meal");
-                meals[4] = rs.getString("cost_of_meal");
-                model.addRow(meals);
-            }
-            TablaDeDatosPrin.setModel(model);
-        } catch (Exception e) {
+void listar() {
+    String sql ="SELECT m.id, s.first_name AS staff_name, c.name AS customer_name, m.date_of_meal, m.cost_of_meal " +
+             "FROM meals m " +
+             "JOIN staff s ON m.staff_id = s.id " +
+             "JOIN customers c ON m.customers_id = c.id;";
+    try {
+        con = cn.getConnection();
+        st = con.createStatement();
+        rs = st.executeQuery(sql);
+        Object[] meals = new Object[5];  
+        model = (DefaultTableModel) TablaDeDatosPrin.getModel();
+        
+        // Limpia el modelo antes de añadir nuevas filas
+        model.setRowCount(0);
 
+        while (rs.next()) {
+            meals[0] = rs.getInt("id");               
+            meals[1] = rs.getString("staff_name");     
+            meals[2] = rs.getString("customer_name"); 
+            meals[3] = rs.getString("date_of_meal");   
+            meals[4] = rs.getDouble("cost_of_meal");   
+            model.addRow(meals);
         }
-
+        TablaDeDatosPrin.setModel(model);
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
 
     void agregarRegistro() {
             try {

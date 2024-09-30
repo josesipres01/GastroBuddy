@@ -37,7 +37,7 @@ public class MealDishesP extends javax.swing.JPanel {
         initComponents();
         this.ventana = v;
         listar();
-        generarItemId();
+     
         
     }
 
@@ -78,7 +78,7 @@ public class MealDishesP extends javax.swing.JPanel {
 
             },
             new String [] {
-                "meal_id", "item_id", "quantity"
+                "meal_id", "item", "quantity"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -268,20 +268,31 @@ public class MealDishesP extends javax.swing.JPanel {
 
     private void TablaDeDatosStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosStaffMouseClicked
 
-        if (TablaDeDatosStaff.isFocusable()) {
-            int row = TablaDeDatosStaff.getSelectedRow();
-            if (row == -1) {
-                JOptionPane.showMessageDialog(null, "No se Selecciono");
+         if (TablaDeDatosStaff.isFocusable()) {
+        int row = TablaDeDatosStaff.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "No se seleccionó ninguna fila");
+        } else {
+            // Obtén los valores de las celdas, asegurando el tipo correcto
+            String mealId = TablaDeDatosStaff.getValueAt(row, 0).toString();  // ID de la comida
+            String itemName = TablaDeDatosStaff.getValueAt(row, 1).toString();  // Nombre del ítem
+            String quantity = TablaDeDatosStaff.getValueAt(row, 2).toString();  // Cantidad
+
+            // Asigna valores a los campos correspondientes
+            txtMealId.setText(mealId);
+
+            // Aquí asumimos que tienes un HashMap que busca un ID numérico basado en el nombre del ítem
+            // Si tienes un ID para el ítem que necesitas, asegúrate de usarlo adecuadamente
+            if (hashMap.containsKey(itemName)) { // Asegúrate de que el HashMap use el nombre para buscar el ID
+                cboxItemId.setSelectedItem(itemName + " " + hashMap.get(itemName));
             } else {
-                String code = (String) TablaDeDatosStaff.getValueAt(row, 0).toString();
-                String roleName = (String) TablaDeDatosStaff.getValueAt(row, 1);
-                String roleDes = (String) TablaDeDatosStaff.getValueAt(row, 2);
-                //String roleCode = (String) TablaDeDatosStaff.getValueAt(row, 3);
-                txtMealId.setText(code);
-                cboxItemId.setSelectedItem(roleName + hashMap.get(Integer.parseInt(roleName)));
-                txtQuantity.setText(roleDes);
+                cboxItemId.setSelectedItem(itemName);  // Si no está en el mapa, solo muestra el nombre
             }
+
+            // Asigna la cantidad
+            txtQuantity.setText(quantity);
         }
+    }
     }//GEN-LAST:event_TablaDeDatosStaffMouseClicked
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -315,24 +326,33 @@ public class MealDishesP extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     void listar() {
-        String sql = "SELECT meal_id, item_id, quantity FROM meal_dishes ORDER BY meal_id;";
-        try {
-            con = cn.getConnection();
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
-            Object[] meals = new Object[3];
-            model = (DefaultTableModel) TablaDeDatosStaff.getModel();
-            while (rs.next()) {
-                meals[0] = rs.getInt("meal_id");
-                meals[1] = rs.getString("item_id");
-                meals[2] = rs.getString("quantity");
-                model.addRow(meals);
-            }
-            TablaDeDatosStaff.setModel(model);
-        } catch (Exception e) {
+    String sql = "SELECT m.meal_id, t.name AS item_name, m.quantity " +
+                 "FROM meal_dishes m " +
+                 "JOIN menu_items t ON m.item_id = t.id"; 
+    try {
+        con = cn.getConnection();
+        st = con.createStatement();
+        rs = st.executeQuery(sql);
+        
+        // Limpia el modelo antes de añadir nuevas filas
+        model = (DefaultTableModel) TablaDeDatosStaff.getModel();
+        model.setRowCount(0); // Limpia las filas existentes
+        
+        Object[] meals = new Object[3];
+        
+        while (rs.next()) {
+            meals[0] = rs.getInt("meal_id"); // ID de la comida
+            meals[1] = rs.getString("item_name"); // Nombre del ítem (debería ser "item_name")
+            meals[2] = rs.getInt("quantity"); // Cantidad
 
+            model.addRow(meals);
         }
+        TablaDeDatosStaff.setModel(model);
+    } catch (Exception e) {
+        e.printStackTrace(); // Imprimir la excepción para depuración
     }
+}
+
 
     void agregarRegistro() {
         if (txtMealId.getText().equals("")) {
@@ -407,27 +427,7 @@ public class MealDishesP extends javax.swing.JPanel {
         actualizar();
     }
 
-    public void generarItemId(){
-        //
-        try{
-            Conexion cn = new Conexion();
-            Connection con;
-            Statement st;
-            ResultSet rs;
-
-            String sql = "SELECT id, name FROM menu_items ORDER BY id;";
-            con = cn.getConnection();
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
-
-            while (rs.next()) {
-                cboxItemId.addItem(rs.getString(1) + "-" + rs.getString(2) );
-                hashMap.put(rs.getInt(1), "-" + rs.getString(2));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+  
     
     void limpiarTexts() {
         txtMealId.setText("");
