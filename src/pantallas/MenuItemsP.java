@@ -82,7 +82,7 @@ public class MenuItemsP extends javax.swing.JPanel {
 
             },
             new String [] {
-                "id", "menu_id", "price", "name", "description"
+                "id", "menu_name", "name", "price", "description"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -297,25 +297,36 @@ public class MenuItemsP extends javax.swing.JPanel {
 
     private void TablaDeDatosStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosStaffMouseClicked
 
-        if (TablaDeDatosStaff.isFocusable()) {
-            int row = TablaDeDatosStaff.getSelectedRow();
-            if (row == -1) {
-                JOptionPane.showMessageDialog(null, "No se Selecciono");
+         if (TablaDeDatosStaff.isFocusable()) {
+        int row = TablaDeDatosStaff.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "No se seleccionó ninguna fila");
+        } else {
+            // Obtén los valores de las celdas de la fila seleccionada
+            String id = TablaDeDatosStaff.getValueAt(row, 0).toString();
+            String menu_name = TablaDeDatosStaff.getValueAt(row, 1).toString();
+            String price = TablaDeDatosStaff.getValueAt(row, 2).toString();
+            String name = TablaDeDatosStaff.getValueAt(row, 3).toString();
+            String description = TablaDeDatosStaff.getValueAt(row, 4).toString();
+
+            // Asigna los valores obtenidos a los campos correspondientes
+            txtId.setText(id);
+            txtPrice.setText(price);
+            txtName.setText(name);
+            txtDescription.setText(description);
+
+            // Para el ComboBox, si el nombre del menú ya está en el ComboBox, lo selecciona
+            cBoxMenuId.setSelectedItem(menu_name);
+
+            // Si necesitas obtener algún valor del hashMap relacionado con el `menu_name`
+            // Si el `menu_name` es una clave del `hashMap`
+            if (hashMap.containsKey(menu_name)) {
+                cBoxMenuId.setSelectedItem(menu_name + " - " + hashMap.get(menu_name));
             } else {
-                //id, menu_id, price, name, description
-                String id = (String) TablaDeDatosStaff.getValueAt(row, 0).toString();
-                String menu_id = (String) TablaDeDatosStaff.getValueAt(row, 1);
-                String price = (String) TablaDeDatosStaff.getValueAt(row, 2);
-                String name = (String) TablaDeDatosStaff.getValueAt(row, 3);
-                String description = (String) TablaDeDatosStaff.getValueAt(row, 4);
-                txtId.setText(id);
-                cBoxMenuId.setSelectedItem(menu_id + hashMap.get(Integer.parseInt(menu_id)));
-                //System.out.println(menu_id + hashMap.get(Integer.parseInt(menu_id)));
-                txtPrice.setText(price);
-                txtName.setText(name);
-                txtDescription.setText(description);
+                cBoxMenuId.setSelectedItem(menu_name); // De lo contrario, selecciona solo el nombre
             }
         }
+    }
     }//GEN-LAST:event_TablaDeDatosStaffMouseClicked
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -349,26 +360,34 @@ public class MenuItemsP extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     void listar() {
-        String sql = "SELECT id, menu_id, price, name, description FROM public.menu_items ORDER BY id;";
-        try {
-            con = cn.getConnection();
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
-            Object[] meals = new Object[5];
-            model = (DefaultTableModel) TablaDeDatosStaff.getModel();
-            while (rs.next()) {
-                meals[0] = rs.getInt("id");
-                meals[1] = rs.getString("menu_id");
-                meals[2] = rs.getString("price");
-                meals[3] = rs.getString("name");
-                meals[4] = rs.getString("description");
-                model.addRow(meals);
-            }
-            TablaDeDatosStaff.setModel(model);
-        } catch (Exception e) {
+    String sql = "SELECT m.id, l.name AS menu_name, m.price, m.name, m.description " +
+                 "FROM menu_items m " +
+                 "JOIN menu l ON l.id = m.menu_id;"; // Aquí se selecciona el menu_name en lugar de menu_id
+    try {
+        con = cn.getConnection();
+        st = con.createStatement();
+        rs = st.executeQuery(sql);
 
+        // Limpiar la tabla antes de agregar nuevos datos
+        model = (DefaultTableModel) TablaDeDatosStaff.getModel();
+        model.setRowCount(0); // Limpia las filas existentes
+
+        Object[] menuItems = new Object[5]; // Para almacenar las 5 columnas que seleccionas
+
+        while (rs.next()) {
+            menuItems[0] = rs.getInt("id");           
+            menuItems[1] = rs.getString("menu_name"); 
+            menuItems[2] = rs.getString("name");
+            menuItems[3] = rs.getDouble("price");
+            menuItems[4] = rs.getString("description"); 
+
+            model.addRow(menuItems);
         }
+        TablaDeDatosStaff.setModel(model);
+    } catch (Exception e) {
+        e.printStackTrace(); // Para depurar cualquier excepción
     }
+}
 
     void agregarRegistro() {
         if (txtId.getText().equals("")) {
