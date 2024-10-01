@@ -288,11 +288,11 @@ public class StaffP extends javax.swing.JPanel {
                 String id = (String) TablaDeDatosStaff.getValueAt(row, 0).toString();
                 String lastName = (String) TablaDeDatosStaff.getValueAt(row, 1);
                 String firstName = (String) TablaDeDatosStaff.getValueAt(row, 2);
-                String roleCode = (String) TablaDeDatosStaff.getValueAt(row, 3);
+                String role_name = (String) TablaDeDatosStaff.getValueAt(row, 3).toString();
                 txtId.setText(id);
                 txtFirstName.setText(lastName);
                 txtLastName.setText(firstName);
-                txtRoleCode.setText(roleCode);
+                txtRoleCode.setText(role_name);
             }
         }
     }//GEN-LAST:event_TablaDeDatosStaffMouseClicked
@@ -328,7 +328,9 @@ public class StaffP extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     void listar() {
-        String sql = "SELECT * FROM staff ORDER BY id;";
+        String sql = "SELECT id, first_name, last_name, reff_staff_roles.role_name " +
+             "FROM staff " +
+             "JOIN reff_staff_roles ON reff_staff_roles.code = staff.role_code;";
         try {
             con = cn.getConnection();
             st = con.createStatement();
@@ -339,7 +341,7 @@ public class StaffP extends javax.swing.JPanel {
                 meals[0] = rs.getInt("id");
                 meals[1] = rs.getString("first_name");
                 meals[2] = rs.getString("last_name");
-                meals[3] = rs.getString("role_code");
+                meals[3] = rs.getString("role_name");
                 model.addRow(meals);
             }
             TablaDeDatosStaff.setModel(model);

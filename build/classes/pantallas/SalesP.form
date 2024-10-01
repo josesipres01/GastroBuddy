@@ -197,8 +197,8 @@
                         <Column editable="false" title="id" type="java.lang.Object"/>
                         <Column editable="false" title="amount" type="java.lang.Object"/>
                         <Column editable="false" title="id_meals" type="java.lang.Object"/>
-                        <Column editable="false" title="id_staff" type="java.lang.Object"/>
-                        <Column editable="false" title="id_customer" type="java.lang.Object"/>
+                        <Column editable="false" title="staff_name" type="java.lang.Object"/>
+                        <Column editable="false" title="customer_name" type="java.lang.Object"/>
                         <Column editable="false" title="date_of_meal" type="java.lang.Object"/>
                       </Table>
                     </Property>

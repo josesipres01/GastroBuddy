@@ -87,7 +87,7 @@ public class SalesP extends javax.swing.JPanel {
 
             },
             new String [] {
-                "id", "amount", "id_meals", "id_staff", "id_customer", "date_of_meal"
+                "id", "amount", "id_meals", "staff_name", "customer_name", "date_of_meal"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -336,15 +336,15 @@ public class SalesP extends javax.swing.JPanel {
                 String id = (String) TablaDeDatosStaff.getValueAt(row, 0).toString();
                 String amount = (String) TablaDeDatosStaff.getValueAt(row, 1);
                 String id_meals = (String) TablaDeDatosStaff.getValueAt(row, 2);
-                String id_staff = (String) TablaDeDatosStaff.getValueAt(row, 3);
-                String id_customer = (String) TablaDeDatosStaff.getValueAt(row, 4);
+                String staff_namee = TablaDeDatosStaff.getValueAt(row, 3).toString();
+                String customer_name = TablaDeDatosStaff.getValueAt(row, 4).toString();
                 String date_of_meal = (String) TablaDeDatosStaff.getValueAt(row, 5);
                 
                 txtId.setText(id);
                 txtAmount.setText(amount);
-                txtCustomer.setText(id_customer);
+                txtCustomer.setText(staff_namee);
                 txtMealsId.setText(id_meals);
-                txtStaffId.setText(id_staff);
+                txtStaffId.setText(customer_name);
                 dateOfMeal.setText(date_of_meal);
             }
         }
@@ -389,7 +389,10 @@ public class SalesP extends javax.swing.JPanel {
     }//GEN-LAST:event_txtStaffIdActionPerformed
 
     void listar() {
-        String sql = "SELECT id, amount, id_meals, id_staff, id_customer, date_of_meal FROM public.sales ORDER BY id;";
+        String sql = "SELECT s.id, s.amount, s.id_meals, f.first_name, c.name, s.date_of_meal " +
+             "FROM sales s " +
+             "JOIN staff f ON s.id_staff = f.id " +
+             "JOIN customers c ON s.id_customer = c.id;";
         try {
             con = cn.getConnection();
             st = con.createStatement();
@@ -400,8 +403,8 @@ public class SalesP extends javax.swing.JPanel {
                 meals[0] = rs.getInt("id");
                 meals[1] = rs.getString("amount");
                 meals[2] = rs.getString("id_meals");
-                meals[3] = rs.getString("id_staff");
-                meals[4] = rs.getString("id_customer");
+                meals[3] = rs.getString("first_name");
+                meals[4] = rs.getString("name");
                 meals[5] = rs.getString("date_of_meal");
                 model.addRow(meals);
             }
