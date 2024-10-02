@@ -14,7 +14,7 @@ public class Conexion {
             String ip = "localhost";
             String puerto = "5432";
             String bd = "GastroServerVFinal";
-            con=DriverManager.getConnection("jdbc:postgresql://"+ ip +":"+ puerto + "/"+ bd ,"developer", "sono1306");
+            con=DriverManager.getConnection("jdbc:postgresql://"+ ip +":"+ puerto + "/"+ bd ,"postgres", "12345");
             estCon = true;
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(null, "La base de datos no esta activa.\nIntentelo de nuevo.\n" + e.getMessage(), "Error de Base de datos", JOptionPane.ERROR_MESSAGE);
