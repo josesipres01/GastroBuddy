@@ -13,13 +13,12 @@ public class Conexion {
             Class.forName("org.postgresql.Driver");
             String ip = "localhost";
             String puerto = "5432";
-<<<<<<< HEAD
+
             String bd = "GastroServer";
             con=DriverManager.getConnection("jdbc:postgresql://"+ ip +":"+ puerto + "/"+ bd ,"developer", "sono1306");
-=======
-            String bd = "GastroServerVFinal";
-            con=DriverManager.getConnection("jdbc:postgresql://"+ ip +":"+ puerto + "/"+ bd ,"postgres", "12345");
->>>>>>> c1f8693be81cb7315d24ff57edd46902e3795afb
+
+            
+            con=DriverManager.getConnection("jdbc:postgresql://"+ ip +":"+ puerto + "/"+ bd ,"postgres", "sono1306");
             estCon = true;
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(null, "La base de datos no esta activa.\nIntentelo de nuevo.\n" + e.getMessage(), "Error de Base de datos", JOptionPane.ERROR_MESSAGE);

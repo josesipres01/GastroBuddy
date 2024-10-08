@@ -393,7 +393,7 @@ public class MealDishesP extends javax.swing.JPanel {
             if (bc.getReturnStatus() == 1) {
                 //
                 int code = Integer.parseInt(txtMealId.getText());
-                String sql = "DELETE FROM public.meal_dishes WHERE id=" + code;
+                String sql = "DELETE FROM public.meal_dishes WHERE meal_id=" + code;
                 try {
                     con = cn.getConnection();
                     st = con.createStatement();
