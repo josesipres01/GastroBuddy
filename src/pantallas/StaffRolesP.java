@@ -154,8 +154,6 @@ public class StaffRolesP extends javax.swing.JPanel {
 
         txtCode.setEditable(false);
 
-        txtRoleName.setEditable(false);
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("role_name");
@@ -303,6 +301,13 @@ public class StaffRolesP extends javax.swing.JPanel {
     private void btnNvoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNvoRegistroActionPerformed
 
         nuevoRegistro();
+       if(btnNvoRegistro.getText()=="Nuevo Registro"){
+        txtCode.setVisible(true);
+        jLabel2.setVisible(true);
+        }else{
+        txtCode.setVisible(false);
+        jLabel2.setVisible(false);
+        }
     }//GEN-LAST:event_btnNvoRegistroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -331,21 +336,22 @@ public class StaffRolesP extends javax.swing.JPanel {
     }
 
     void agregarRegistro() {
-        if (txtCode.getText().equals("")) {
+        if (txtRoleName.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "El campo id esta vacio, para agregar un registro es necesario un id.\nIntentelo de nuevo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
             deshabilitarTexts();
         } else {
             try {
-                int code = Integer.parseInt(txtCode.getText());
-                String roleDes = txtRoleDes.getText();
                 String roleName = txtRoleName.getText();
-                String sql = "INSERT INTO reff_staff_roles(code, role_name, role_description) VALUES (" + code + ",'" + roleName + "', '" + roleDes + "');";
+                String roleDes = txtRoleDes.getText();
+                String sql = "INSERT INTO reff_staff_roles(role_name, role_description) VALUES ('" + roleName + "', '" + roleDes + "');";
                 con = cn.getConnection();
                 st = con.createStatement();
                 st.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "¡Registro Agregado Exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
                 deshabilitarTexts();
                 limpiarTexts();
+                txtCode.setVisible(true);
+                jLabel2.setVisible(true);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
                 deshabilitarTexts();

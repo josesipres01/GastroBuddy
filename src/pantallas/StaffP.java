@@ -156,8 +156,6 @@ public class StaffP extends javax.swing.JPanel {
 
         txtId.setEditable(false);
 
-        txtFirstName.setEditable(false);
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("first_name");
@@ -320,6 +318,13 @@ public class StaffP extends javax.swing.JPanel {
     private void btnNvoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNvoRegistroActionPerformed
 
         nuevoRegistro();
+          if(btnNvoRegistro.getText()=="Nuevo Registro"){
+        txtId.setVisible(true);
+        jLabel2.setVisible(true);
+        }else{
+        txtId.setVisible(false);
+        jLabel2.setVisible(false);
+        }
     }//GEN-LAST:event_btnNvoRegistroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -351,22 +356,23 @@ public class StaffP extends javax.swing.JPanel {
     }
 
     void agregarRegistro() {
-        if (txtId.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, para agregar un registro es necesario un id.\nIntentelo de nuevo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        if (txtLastName.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "El nombre del empleado esta vacio, para agregar un registro es necesario un nombre.\nIntentelo de nuevo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
             deshabilitarTexts();
         } else {
             try {
-                int id = Integer.parseInt(txtId.getText());
                 String lastName = txtLastName.getText();
                 String firstName = txtFirstName.getText();
                 int roleCode = Integer.parseInt(txtRoleCode.getText());
-                String sql = "INSERT INTO public.staff (id, first_name, last_name, role_code) VALUES (" + id + ",'" + firstName + "', '" + lastName + "'," + roleCode + ");";
+                String sql = "INSERT INTO public.staff (first_name, last_name, role_code) VALUES ('" + firstName + "', '" + lastName + "'," + roleCode + ");";
                 con = cn.getConnection();
                 st = con.createStatement();
                 st.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "¡Registro Agregado Exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
                 deshabilitarTexts();
                 limpiarTexts();
+                txtId.setVisible(true);
+                jLabel2.setVisible(true);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
                 deshabilitarTexts();

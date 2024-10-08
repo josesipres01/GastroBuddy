@@ -373,6 +373,13 @@ public class SalesP extends javax.swing.JPanel {
     private void btnNvoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNvoRegistroActionPerformed
 
         nuevoRegistro();
+         if(btnNvoRegistro.getText()=="Nuevo Registro"){
+        txtId.setVisible(true);
+        jLabel2.setVisible(true);
+        }else{
+        txtId.setVisible(false);
+        jLabel2.setVisible(false);
+        }
     }//GEN-LAST:event_btnNvoRegistroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -415,12 +422,11 @@ public class SalesP extends javax.swing.JPanel {
     }
 
     void agregarRegistro() {
-        if(txtId.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, para agregar un registro es necesario un id.\nIntentelo de nuevo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        if(txtCustomer.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "El nombre del cliente esta vacio, para agregar un registro es necesario un nombre.\nIntentelo de nuevo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
             deshabilitarTexts();
         }else{
             try {
-                int id = Integer.parseInt(txtId.getText());
                 int IdCustomer = Integer.parseInt(txtCustomer.getText());
                 int IdMeals = Integer.parseInt(txtMealsId.getText());
                 int IdStaff = Integer.parseInt(txtStaffId.getText());
@@ -432,13 +438,15 @@ public class SalesP extends javax.swing.JPanel {
                 java.sql.Date dateToSql = new java.sql.Date(dateDateTo.getTime());
                 //terminan Dates
                 //String sql = "INSERT INTO public.menu(id, name, available_date_from, available_date_to, type, season) VALUES (" + id + ",'" + name + "', '" + dateFromSql +"','" + dateToSql +"', '"+ type +"', '" + season +"');";
-                String sql ="INSERT INTO public.sales(id, amount, id_meals, id_staff, id_customer, date_of_meal) VALUES("+ id + "," + amount + "," + IdMeals + "," + IdStaff + "," + IdCustomer + ",'" + dateToSql + "');";
+                String sql ="INSERT INTO public.sales(amount, id_meals, id_staff, id_customer, date_of_meal) VALUES(" + amount + "," + IdMeals + "," + IdStaff + "," + IdCustomer + ",'" + dateToSql + "');";
                 con = cn.getConnection();
                 st = con.createStatement();
                 st.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "¡Registro Agregado Exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
                 deshabilitarTexts();
                 limpiarTexts();
+                txtId.setVisible(true);
+                jLabel2.setVisible(true);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
                 deshabilitarTexts();
@@ -506,6 +514,7 @@ public class SalesP extends javax.swing.JPanel {
     void limpiarTexts() {
         txtId.setText("");
         txtCustomer.setText("");
+        txtStaffId.setText("");
         txtAmount.setText("");
         txtMealsId.setText("");
         dateOfMeal.setText("");

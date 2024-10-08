@@ -12,8 +12,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import java.lang.NumberFormatException;
 import javax.swing.table.DefaultTableModel;
-
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 /**
  *
  * @author luisi
@@ -282,6 +284,7 @@ public class CustomersP extends javax.swing.JPanel {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         agregarRegistro();
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -302,6 +305,13 @@ public class CustomersP extends javax.swing.JPanel {
     private void btnNvoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNvoRegistroActionPerformed
 
         nuevoRegistro();
+        if(btnNvoRegistro.getText()=="Nuevo Registro"){
+        txtId.setVisible(true);
+        jLabel2.setVisible(true);
+        }else{
+        txtId.setVisible(false);
+        jLabel2.setVisible(false);
+        }
     }//GEN-LAST:event_btnNvoRegistroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -329,30 +339,44 @@ public class CustomersP extends javax.swing.JPanel {
         }
     }
 
-    void agregarRegistro() {
-        if (txtId.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, para agregar un registro es necesario un id.\nIntentelo de nuevo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-            deshabilitarTexts();
-        } else {
-            try {
-                int code = Integer.parseInt(txtId.getText());
-                String roleDes = txtPhone.getText();
-                String roleName = txtName.getText();
-                String sql = "INSERT INTO customers (id, name, phone) VALUES (" + code + ",'" + roleName + "', '" + roleDes + "');";
-                con = cn.getConnection();
-                st = con.createStatement();
-                st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "¡Registro Agregado Exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
-                deshabilitarTexts();
-                limpiarTexts();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
-                deshabilitarTexts();
-                limpiarTexts();
+void agregarRegistro() {
+    if (txtName.getText().equals("")) {
+        JOptionPane.showMessageDialog(null, "El campo nombre está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        deshabilitarTexts();
+    } else {
+        try {
+            String phone = txtPhone.getText();
+            if (!phone.matches("\\d+")) {  
+                throw new IllegalArgumentException("El campo teléfono solo debe contener números.");
             }
+
+            String roleName = txtName.getText();
+            
+            String sql = "INSERT INTO customers (name, phone) VALUES ('" + roleName + "', '" + phone + "');";
+            con = cn.getConnection();
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            
+            JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
+            deshabilitarTexts();
+            limpiarTexts();
+            txtId.setVisible(true);
+            jLabel2.setVisible(true);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Agregar registro", JOptionPane.WARNING_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos. Intente nuevamente más tarde.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro. Por favor, intente nuevamente.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
         }
-        actualizar();
+        deshabilitarTexts();
+        limpiarTexts();
     }
+    actualizar();
+}
+
+
+
 
     void borrarRegistro() {
         if (!txtId.getText().equals("")) {
@@ -389,7 +413,7 @@ public class CustomersP extends javax.swing.JPanel {
                 String roleDes = txtPhone.getText();
                 String roleName = txtName.getText();
                 //sql
-                String sql = "UPDATE customers SET phone='" + roleDes + "', name='" + roleName + "' WHERE code=" + code + ";";
+                String sql = "UPDATE customers SET phone='" + roleDes + "', name='" + roleName + "' WHERE id=" + code + ";";
                 con = cn.getConnection();
                 st = con.createStatement();
                 st.executeUpdate(sql);
@@ -427,7 +451,7 @@ public class CustomersP extends javax.swing.JPanel {
             txtPhone.setText("");
             txtName.setText("");
             btnNvoRegistro.setText("Cancelar");
-            txtId.requestFocus();
+            txtId.setEnabled(false); // Deshabilita el campo ID
         } else {
             deshabilitarTexts();
             limpiarTexts();

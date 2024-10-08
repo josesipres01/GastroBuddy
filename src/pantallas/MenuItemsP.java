@@ -62,9 +62,9 @@ public class MenuItemsP extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtPrice = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtPrice = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         btnNvoRegistro = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -169,11 +169,11 @@ public class MenuItemsP extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("price");
+        jLabel4.setText("name");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("name");
+        jLabel6.setText("price");
 
         btnNvoRegistro.setBackground(new java.awt.Color(255, 153, 51));
         btnNvoRegistro.setText("Nuevo Registro");
@@ -194,6 +194,8 @@ public class MenuItemsP extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("description");
+
+        cBoxMenuId.setEditable(true);
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
@@ -227,11 +229,11 @@ public class MenuItemsP extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
@@ -270,12 +272,12 @@ public class MenuItemsP extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cBoxMenuId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtName))
+                        .addComponent(txtPrice))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -311,8 +313,8 @@ public class MenuItemsP extends javax.swing.JPanel {
 
             // Asigna los valores obtenidos a los campos correspondientes
             txtId.setText(id);
-            txtPrice.setText(price);
-            txtName.setText(name);
+            txtName.setText(price);
+            txtPrice.setText(name);
             txtDescription.setText(description);
 
             // Para el ComboBox, si el nombre del menú ya está en el ComboBox, lo selecciona
@@ -352,6 +354,13 @@ public class MenuItemsP extends javax.swing.JPanel {
     private void btnNvoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNvoRegistroActionPerformed
 
         nuevoRegistro();
+         if(btnNvoRegistro.getText()=="Nuevo Registro"){
+        txtId.setVisible(true);
+        jLabel2.setVisible(true);
+        }else{
+        txtId.setVisible(false);
+        jLabel2.setVisible(false);
+        }
     }//GEN-LAST:event_btnNvoRegistroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -360,9 +369,9 @@ public class MenuItemsP extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     void listar() {
-    String sql = "SELECT m.id, l.name AS menu_name, m.price, m.name, m.description " +
+    String sql = "SELECT m.id, l.name AS menu_name, m.name, m.price, m.description " +
                  "FROM menu_items m " +
-                 "JOIN menu l ON l.id = m.menu_id;"; // Aquí se selecciona el menu_name en lugar de menu_id
+                 "JOIN menu l ON l.id = m.menu_id;"; 
     try {
         con = cn.getConnection();
         st = con.createStatement();
@@ -390,28 +399,31 @@ public class MenuItemsP extends javax.swing.JPanel {
 }
 
     void agregarRegistro() {
-        if (txtId.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, para agregar un registro es necesario un id.\nIntentelo de nuevo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        if (txtPrice.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "El nombre del producto esta vacio, para agregar un registro es necesario un nombre.\nIntentelo de nuevo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
             deshabilitarTexts();
         } else {
             try {
-                int id = Integer.parseInt(txtId.getText());
                 String idMenu[] = cBoxMenuId.getSelectedItem().toString().split("-");
                 int menuId = Integer.parseInt(idMenu[0]);
                 int price = Integer.parseInt(txtPrice.getText());
                 String name = txtName.getText();
                 String description = txtDescription.getText();
-                String sql = "INSERT INTO public.menu_items(id, menu_id, price, name, description) VALUES(" + id + ", " + menuId + "," + price + " ,'" + name + "','" + description + "');";
+                String sql = "INSERT INTO public.menu_items(menu_id, name, price, description) VALUES(" + menuId + ",'" + name + "' ," + price + ",'" + description + "');";
                 con = cn.getConnection();
                 st = con.createStatement();
                 st.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "¡Registro Agregado Exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
                 deshabilitarTexts();
                 limpiarTexts();
+                txtId.setVisible(true);
+                jLabel2.setVisible(true);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
                 deshabilitarTexts();
                 limpiarTexts();
+                 txtId.setVisible(true);
+                jLabel2.setVisible(true);
             }
         }
         actualizar();
@@ -447,13 +459,12 @@ public class MenuItemsP extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "El campo id esta vacio, Para modificar un registro es necesario un id.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-                // solicitando valores
                 int id = Integer.parseInt(txtId.getText());
                 double price = Double.parseDouble(txtPrice.getText());
                 String description = txtDescription.getText();
                 String name = txtName.getText();
                 //sql
-                String sql = "UPDATE public.menu_items SET price='" + price + "', name='" + name + "', description='" + description + "' WHERE id=" + id + ";";
+                String sql = "UPDATE public.menu_items SET name='" + name + "', price='" + price + "', description='" + description + "' WHERE id=" + id + ";";
                 con = cn.getConnection();
                 st = con.createStatement();
                 st.executeUpdate(sql);
@@ -491,8 +502,8 @@ public class MenuItemsP extends javax.swing.JPanel {
     
     void limpiarTexts() {
         txtId.setText("");
-        txtPrice.setText("");
         txtName.setText("");
+        txtPrice.setText("");
     }
 
     void limpiarTabla(DefaultTableModel model) {
@@ -511,9 +522,9 @@ public class MenuItemsP extends javax.swing.JPanel {
         if (btnNvoRegistro.getText().equals("Nuevo Registro")) {
             habilitarTexts();
             txtId.setText("");
-            txtPrice.setText("");
-            //txtMenuId.setText("");
             txtName.setText("");
+            //txtMenuId.setText("");
+            txtPrice.setText("");
             //cBoxMenuId.setEditable(true);
             btnNvoRegistro.setText("Cancelar");
             txtId.requestFocus();
@@ -525,7 +536,7 @@ public class MenuItemsP extends javax.swing.JPanel {
 
     void habilitarTexts() {
         txtId.setEditable(true);
-        txtPrice.setEditable(true);
+        txtName.setEditable(true);
         //txtMenuId.setEditable(true);
         btnAgregar.setEnabled(true);
         btnModificar.setEnabled(false);
@@ -536,7 +547,7 @@ public class MenuItemsP extends javax.swing.JPanel {
 
     void deshabilitarTexts() {
         txtId.setEditable(false);
-        txtPrice.setEditable(false);
+        txtName.setEditable(false);
         //cBoxMenuId.setEditable(false);
         //txtMenuId.setEditable(false);
         btnAgregar.setEnabled(false);

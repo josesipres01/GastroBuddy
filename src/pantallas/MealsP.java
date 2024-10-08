@@ -379,6 +379,13 @@ public class MealsP extends javax.swing.JPanel {
     private void btnNvoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNvoRegistroActionPerformed
 
         nuevoRegistro();
+        if(btnNvoRegistro.getText()=="Nuevo Registro"){
+        txtId.setVisible(true);
+        jLabel2.setVisible(true);
+        }else{
+        txtId.setVisible(false);
+        jLabel2.setVisible(false);
+        }
     }//GEN-LAST:event_btnNvoRegistroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -446,6 +453,9 @@ void listar() {
                     st.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null, "¡Registro Agregado Exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
                     deshabilitarTexts();
+                    limpiarTexts();
+                    txtId.setVisible(true);
+                     jLabel2.setVisible(true);
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);

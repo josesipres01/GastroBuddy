@@ -224,11 +224,14 @@ public class MenuP extends javax.swing.JPanel {
                 .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel2)
+                                .addGap(132, 132, 132))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -295,14 +298,15 @@ public class MenuP extends javax.swing.JPanel {
                         .addComponent(jLabel6)
                         .addComponent(jLabel7)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtSeason, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jForDateFrom, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jForDateTo, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSeason, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jForDateFrom, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jForDateTo, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -365,6 +369,13 @@ public class MenuP extends javax.swing.JPanel {
     private void btnNvoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNvoRegistroActionPerformed
 
         nuevoRegistro();
+         if(btnNvoRegistro.getText()=="Nuevo Registro"){
+        txtId.setVisible(true);
+        jLabel2.setVisible(true);
+        }else{
+        txtId.setVisible(false);
+        jLabel2.setVisible(false);
+        }
     }//GEN-LAST:event_btnNvoRegistroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -400,12 +411,11 @@ public class MenuP extends javax.swing.JPanel {
     }
 
     void agregarRegistro() {
-        if(txtId.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, para agregar un registro es necesario un id.\nIntentelo de nuevo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        if(txtName.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "El campo name esta vacio, para agregar un registro es necesario un id.\nIntentelo de nuevo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
             deshabilitarTexts();
         }else{
             try {
-                int id = Integer.parseInt(txtId.getText());
                 String type = txtType.getText();
                 String name = txtName.getText();
                 String season = txtSeason.getText();
@@ -418,13 +428,15 @@ public class MenuP extends javax.swing.JPanel {
                 java.sql.Date dateFromSql = new java.sql.Date(dateDateFrom.getTime());
                 java.sql.Date dateToSql = new java.sql.Date(dateDateTo.getTime());
                 //terminan Dates
-                    String sql = "INSERT INTO public.menu(id, name, available_date_from, available_date_to, type, season) VALUES (" + id + ",'" + name + "', '" + dateFromSql +"','" + dateToSql +"', '"+ type +"', '" + season +"');";
+                    String sql = "INSERT INTO public.menu(name, available_date_from, available_date_to, type, season) VALUES ('" + name + "', '" + dateFromSql +"','" + dateToSql +"', '"+ type +"', '" + season +"');";
                     con = cn.getConnection();
                     st = con.createStatement();
                     st.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null, "¡Registro Agregado Exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
                     deshabilitarTexts();
                     limpiarTexts();
+                    txtId.setVisible(true);
+                jLabel2.setVisible(true);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
                 deshabilitarTexts();
@@ -445,7 +457,7 @@ public class MenuP extends javax.swing.JPanel {
                     con = cn.getConnection();
                     st = con.createStatement();
                     st.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null, "Usuario Eliminado");
+                    JOptionPane.showMessageDialog(null, "Menú Eliminado");
                     limpiarTexts();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error al borrar el registro: " + e.getMessage(), "Borrar registro", JOptionPane.ERROR_MESSAGE);

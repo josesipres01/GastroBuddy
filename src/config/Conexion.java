@@ -13,7 +13,7 @@ public class Conexion {
             Class.forName("org.postgresql.Driver");
             String ip = "localhost";
             String puerto = "5432";
-            String bd = "GastroServerVFinal";
+            String bd = "GastroServer";
             con=DriverManager.getConnection("jdbc:postgresql://"+ ip +":"+ puerto + "/"+ bd ,"developer", "sono1306");
             estCon = true;
         } catch (Exception e) {

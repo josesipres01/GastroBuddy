@@ -69,12 +69,12 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtPrice" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
+                              <Component id="txtName" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtName" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
+                              <Component id="txtPrice" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -124,14 +124,14 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="txtId" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="txtPrice" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txtName" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="cBoxMenuId" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtName" max="32767" attributes="0"/>
+                          <Component id="txtPrice" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
@@ -291,7 +291,7 @@
             <Property name="text" type="java.lang.String" value="menu_id"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtPrice">
+        <Component class="javax.swing.JTextField" name="txtName">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -301,10 +301,10 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="price"/>
+            <Property name="text" type="java.lang.String" value="name"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtName">
+        <Component class="javax.swing.JTextField" name="txtPrice">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
@@ -314,7 +314,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="name"/>
+            <Property name="text" type="java.lang.String" value="price"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnNvoRegistro">
@@ -354,6 +354,7 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="cBoxMenuId">
           <Properties>
+            <Property name="editable" type="boolean" value="true"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
