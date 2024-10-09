@@ -230,6 +230,7 @@ public class Login extends javax.swing.JPanel {
             // Si la autenticación falla, mostrar un mensaje de error
             JOptionPane.showMessageDialog(this, "Wrong username or password. Please try again.");
         }
+        
     }//GEN-LAST:event_boton1ActionPerformed
 
     private void userTxfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTxfActionPerformed

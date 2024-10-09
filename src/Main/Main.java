@@ -17,7 +17,7 @@ import pantallas.Login;
  */
 public class Main {
     public static void main(String[] args) {
-        /*
+        
         // Crear un JFrame
         JFrame frame = new JFrame("Login Screen");
         
@@ -34,8 +34,8 @@ public class Main {
         
         // Hacer visible el JFrame
         frame.setVisible(true);
-        */
-
+        
+/*
         try {
             UIManager.setLookAndFeel( new FlatLightLaf() );
         } catch( UnsupportedLookAndFeelException ex ) {
@@ -47,7 +47,9 @@ public class Main {
                 new VentanaPrincipal().setVisible(true);
             }
         });
+*/
 
     }
+
     
 }
