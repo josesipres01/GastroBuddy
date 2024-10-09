@@ -6,8 +6,10 @@ package Main;
 
 
 import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import pantallas.Login;
 
 /**
  *
@@ -15,6 +17,24 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class Main {
     public static void main(String[] args) {
+        /*
+        // Crear un JFrame
+        JFrame frame = new JFrame("Login Screen");
+        
+        // Crear una instancia del panel Login
+        Login loginPanel = new Login();
+        
+        // Configurar el JFrame
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar aplicación al cerrar ventana
+        frame.setSize(1100, 750); // Tamaño del JFrame
+        frame.setLocationRelativeTo(null); // Centrar la ventana en la pantalla
+        
+        // Agregar el panel Login al JFrame
+        frame.setContentPane(loginPanel);
+        
+        // Hacer visible el JFrame
+        frame.setVisible(true);
+        */
 
         try {
             UIManager.setLookAndFeel( new FlatLightLaf() );
@@ -27,6 +47,7 @@ public class Main {
                 new VentanaPrincipal().setVisible(true);
             }
         });
+
     }
     
 }
