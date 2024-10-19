@@ -8,6 +8,7 @@ import Dialogos.CommitConf;
 import EnumPantalla.Pantalla;
 import Main.VentanaPrincipal;
 import config.Conexion;
+import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -218,6 +220,11 @@ public class MealsP extends javax.swing.JPanel {
         });
 
         cBoxStaffId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cBoxStaffId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cBoxStaffIdActionPerformed(evt);
+            }
+        });
 
         cBoxCustId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         cBoxCustId.addActionListener(new java.awt.event.ActionListener() {
@@ -378,14 +385,9 @@ public class MealsP extends javax.swing.JPanel {
 
     private void btnNvoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNvoRegistroActionPerformed
 
-        nuevoRegistro();
-        if(btnNvoRegistro.getText()=="Nuevo Registro"){
-        txtId.setVisible(true);
-        jLabel2.setVisible(true);
-        }else{
-        txtId.setVisible(false);
-        jLabel2.setVisible(false);
-        }
+    Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
+    AgregarMeals dialog = new AgregarMeals(parentFrame, model, this);
+    dialog.setVisible(true); // Muestra el diálogo
     }//GEN-LAST:event_btnNvoRegistroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -401,6 +403,10 @@ public class MealsP extends javax.swing.JPanel {
     private void cBoxCustIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBoxCustIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cBoxCustIdActionPerformed
+
+    private void cBoxStaffIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBoxStaffIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cBoxStaffIdActionPerformed
 
 void listar() {
     String sql ="SELECT m.id, s.first_name AS staff_name, c.name AS customer_name, m.date_of_meal, m.cost_of_meal " +
@@ -466,7 +472,7 @@ void listar() {
     }
     
     void pagarMeal(){
-        if(txtId.getText().equals("")){
+        if(cBoxStaffId.equals("")){
             JOptionPane.showMessageDialog(null, "El campo id esta vacio, para pagar es necesario un id.\nIntentelo de nuevo.", "Pagar meal", JOptionPane.ERROR_MESSAGE);
             deshabilitarTexts();
         }else{
@@ -485,7 +491,7 @@ void listar() {
                 con = cn.getConnection();
                 con.setAutoCommit(false);
                 
-                String sqlInsert = "INSERT INTO sales(amount, id_meals, id_staff, id_customer, date_of_meal) VALUES (" + costOfMeal + ", " + id + ", " + staffId + ", " + customersId + ",'" + dateSql + "');";
+                String sqlInsert = "INSERT INTO sales(amount, id_meals, id_staff, id_customer, date_of_meal) VALUES (" + costOfMeal + ", " + staffId + ", " + customersId + ",'" + dateSql + "');";
                 st = con.createStatement();
                 st.executeUpdate(sqlInsert);
                 

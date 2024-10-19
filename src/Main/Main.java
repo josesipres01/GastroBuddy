@@ -35,19 +35,13 @@ public class Main {
         // Hacer visible el JFrame
         frame.setVisible(true);
         
-/*
+
         try {
             UIManager.setLookAndFeel( new FlatLightLaf() );
         } catch( UnsupportedLookAndFeelException ex ) {
             System.err.println( "[ERROR]: No fue posible establecer el L&F" );
         }
 
-        java.awt.EventQueue.invokeLater(new Runnable() { 
-            public void run(){
-                new VentanaPrincipal().setVisible(true);
-            }
-        });
-*/
 
     }
 

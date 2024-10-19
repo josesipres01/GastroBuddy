@@ -8,10 +8,12 @@ import Dialogos.BorrarConf;
 import EnumPantalla.Pantalla;
 import Main.VentanaPrincipal;
 import config.Conexion;
+import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -300,14 +302,9 @@ public class StaffRolesP extends javax.swing.JPanel {
 
     private void btnNvoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNvoRegistroActionPerformed
 
-        nuevoRegistro();
-       if(btnNvoRegistro.getText()=="Nuevo Registro"){
-        txtCode.setVisible(true);
-        jLabel2.setVisible(true);
-        }else{
-        txtCode.setVisible(false);
-        jLabel2.setVisible(false);
-        }
+     Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
+     AgregarRoles dialog = new AgregarRoles(parentFrame, model, this);
+     dialog.setVisible(true); // Muestra el diálogo
     }//GEN-LAST:event_btnNvoRegistroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -8,6 +8,7 @@ import Dialogos.BorrarConf;
 import EnumPantalla.Pantalla;
 import Main.VentanaPrincipal;
 import config.Conexion;
+import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -319,8 +321,9 @@ public class MealDishesP extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnNvoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNvoRegistroActionPerformed
-
-        nuevoRegistro();
+    Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
+    AgregarDishes dialog = new AgregarDishes(parentFrame, model, this);
+    dialog.setVisible(true); // Muestra el diálogo  
    
     }//GEN-LAST:event_btnNvoRegistroActionPerformed
 
