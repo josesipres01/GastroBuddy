@@ -182,14 +182,14 @@ public class AgregarDishes extends javax.swing.JDialog {
       void agregarRegistro() {
     if ((cBoxMealId.getSelectedItem() == null || cBoxMealId.getSelectedItem().toString().isEmpty())) {
         JOptionPane.showMessageDialog(null, "El campo nombre está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        return; // Salir del método si el nombre está vacío
+        return;
     }
     if ((cboxItemId.getSelectedItem() == null || cboxItemId.getSelectedItem().toString().isEmpty())) {
         JOptionPane.showMessageDialog(null, "El campo de item está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        return; // Salir del método si el nombre está vacío
+        return; 
     }
 
-    Connection con = null; // Asegúrate de que la conexión sea local
+    Connection con = null; 
     PreparedStatement pst = null;
 
     try {
@@ -200,20 +200,20 @@ public class AgregarDishes extends javax.swing.JDialog {
                 int quantity = Integer.parseInt(txtQuantity.getText());
                
 
-        // Verifica la conexión a la base de datos
+        
         con = cn.getConnection();
         
         // Preparar la consulta SQL
         String sql = "INSERT INTO public.meal_dishes(meal_id, item_id, quantity) VALUES(?, ?, ?)";
-        pst = con.prepareStatement(sql); // Aquí inicializas el PreparedStatement
+        pst = con.prepareStatement(sql); 
         pst.setInt(1, meals);
         pst.setInt(2, items);
         pst.setInt(3, quantity);
 
         
-        int rowsAffected = pst.executeUpdate(); // Ejecutar la consulta y guardar el número de filas afectadas
+        int rowsAffected = pst.executeUpdate(); 
 
-        // Si rowsAffected es mayor que 0, significa que la inserción fue exitosa
+        
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
             dishes.actualizar();
@@ -230,7 +230,7 @@ public class AgregarDishes extends javax.swing.JDialog {
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } finally {
-        // Cierra el PreparedStatement y la conexión
+        
         try {
             if (pst != null) {
                 pst.close();

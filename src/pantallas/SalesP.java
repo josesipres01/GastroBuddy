@@ -189,11 +189,11 @@ public class SalesP extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("id_staff");
+        jLabel5.setText("staff_name");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("id_customer");
+        jLabel7.setText("customer_name");
 
         txtStaffId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,7 +224,7 @@ public class SalesP extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel7))
                             .addGroup(panelPrincipalLayout.createSequentialGroup()
                                 .addComponent(txtMealsId, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -407,36 +407,58 @@ public class SalesP extends javax.swing.JPanel {
     }
 
     void modificarRegistro() {
-        if(txtId.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, Para modificar un registro es necesario un id.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
-        }else{
-            try{
-                // solicitando valores
-                int id = Integer.parseInt(txtId.getText());
-                int idStaff = Integer.parseInt(txtStaffId.getText());
-                int idCustomer = Integer.parseInt(txtCustomer.getText());
-                int mealsId = Integer.parseInt(txtMealsId.getText());
-                double amount = Double.parseDouble(txtAmount.getText());
-                //
-                String dateTAdateTo = dateOfMeal.getText();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date dateDateTo = dateFormat.parse(dateTAdateTo);
-                java.sql.Date dateToSql = new java.sql.Date(dateDateTo.getTime());
-                //sql
-                //String sql = "UPDATE public.menu SET name='"+ name + "', available_date_from='"+ dateFromSql + "', available_date_to='"+ dateToSql + "', type='"+ type + "', season='"+ season + "' WHERE id="+ id + ";";
-                String sql = "UPDATE sales SET amount=" + amount + ", id_meals=" + mealsId +", id_staff=" + idStaff + ", id_customer=" + idCustomer + ", date_of_meal='" + dateToSql + "' WHERE id="+ id + ";";
-                con = cn.getConnection();
-                st = con.createStatement();
-                st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "¡Registro modificado Exitosamente!", "Modificar registro", JOptionPane.INFORMATION_MESSAGE);
+    if (txtId.getText().equals("")) {
+        JOptionPane.showMessageDialog(null, "El campo id está vacío. Para modificar un registro es necesario un id.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
+    } else {
+        try {
+            // solicitando valores
+            int id = Integer.parseInt(txtId.getText());
+            String staffName = txtStaffId.getText();  // Ahora contiene el nombre del staff
+            String customerName = txtCustomer.getText();  // Ahora contiene el nombre del cliente
+            int mealsId = Integer.parseInt(txtMealsId.getText());
+            double amount = Double.parseDouble(txtAmount.getText());
 
+            String dateTAdateTo = dateOfMeal.getText();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date dateDateTo = dateFormat.parse(dateTAdateTo);
+            java.sql.Date dateToSql = new java.sql.Date(dateDateTo.getTime());
 
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Error al modificar el registro: " + e.getMessage(), "Modificar registro", JOptionPane.ERROR_MESSAGE);
+            // Buscar el ID del staff basado en el nombre
+            String sqlStaff = "SELECT id FROM staff WHERE first_name = '" + staffName + "'";
+            con = cn.getConnection();
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sqlStaff);
+            int idStaff = 0;
+            if (rs.next()) {
+                idStaff = rs.getInt("id");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el staff con el nombre: " + staffName, "Modificar registro", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            // Buscar el ID del cliente basado en el nombre
+            String sqlCustomer = "SELECT id FROM customers WHERE name = '" + customerName + "'";
+            rs = st.executeQuery(sqlCustomer);
+            int idCustomer = 0;
+            if (rs.next()) {
+                idCustomer = rs.getInt("id");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el cliente con el nombre: " + customerName, "Modificar registro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Actualizar el registro en la tabla sales
+            String sqlUpdate = "UPDATE sales SET amount=" + amount + ", id_meals=" + mealsId + ", id_staff=" + idStaff + ", id_customer=" + idCustomer + ", date_of_meal='" + dateToSql + "' WHERE id=" + id + ";";
+            st.executeUpdate(sqlUpdate);
+            JOptionPane.showMessageDialog(null, "¡Registro modificado exitosamente!", "Modificar registro", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar el registro: " + e.getMessage(), "Modificar registro", JOptionPane.ERROR_MESSAGE);
         }
-        actualizar();
     }
+    actualizar();
+}
+
 
     void limpiarTexts() {
         txtId.setText("");

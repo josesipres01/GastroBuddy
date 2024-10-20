@@ -40,8 +40,8 @@ public class AgregarMeals extends javax.swing.JDialog {
      * Creates new form AgregarMeals
      */
     public AgregarMeals(Frame parent,DefaultTableModel tableModel, MealsP meals) {
-        super(parent, "Nuevo Registro", true); // Usando parent como Frame
-        this.tableModel = model; // Inicializar el modelo de la tabla
+        super(parent, "Nuevo Registro", true); 
+        this.tableModel = model;
         this.meals = meals; 
         initComponents();
         generarMenus();
@@ -203,10 +203,10 @@ public class AgregarMeals extends javax.swing.JDialog {
      void agregarRegistro() {
     if (txtCostofmeal.getText().isEmpty()) {
         JOptionPane.showMessageDialog(null, "El campo nombre está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        return; // Salir del método si el nombre está vacío
+        return; 
     }
 
-    Connection con = null; // Asegúrate de que la conexión sea local
+    Connection con = null; 
     PreparedStatement pst = null;
 
     try {
@@ -221,7 +221,7 @@ public class AgregarMeals extends javax.swing.JDialog {
                 Date date = dateFormat.parse(sqlDatetime);
                 java.sql.Date dateSql = new java.sql.Date(date.getTime());
 
-        // Verifica la conexión a la base de datos
+       
         con = cn.getConnection();
         
         // Preparar la consulta SQL
@@ -233,9 +233,9 @@ public class AgregarMeals extends javax.swing.JDialog {
         pst.setInt(4,staffId ); 
        
         
-        int rowsAffected = pst.executeUpdate(); // Ejecutar la consulta y guardar el número de filas afectadas
+        int rowsAffected = pst.executeUpdate();
 
-        // Si rowsAffected es mayor que 0, significa que la inserción fue exitosa
+        
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
             meals.actualizar();
@@ -252,7 +252,7 @@ public class AgregarMeals extends javax.swing.JDialog {
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } finally {
-        // Cierra el PreparedStatement y la conexión
+       
         try {
             if (pst != null) {
                 pst.close();

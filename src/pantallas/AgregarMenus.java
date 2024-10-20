@@ -212,7 +212,7 @@ public class AgregarMenus extends javax.swing.JDialog {
         return; 
     }
 
-    Connection con = null; // Asegúrate de que la conexión sea local
+    Connection con = null; 
     PreparedStatement pst = null;
 
     try {
@@ -228,9 +228,7 @@ public class AgregarMenus extends javax.swing.JDialog {
         java.sql.Date sqlDateFrom = java.sql.Date.valueOf(dateTAdatefrom);
          java.sql.Date sqlDateTo = java.sql.Date.valueOf(dateTAdateTo);
     
-        //terminan Dates
-
-        // Verifica la conexión a la base de datos
+       
         con = cn.getConnection();
         
         // Preparar la consulta SQL
@@ -263,7 +261,7 @@ public class AgregarMenus extends javax.swing.JDialog {
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } finally {
-        // Cierra el PreparedStatement y la conexión
+        
         try {
             if (pst != null) {
                 pst.close();
