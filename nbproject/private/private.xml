@@ -3,14 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/pantallas/MenuP.java</file>
+            <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/Adds/Connect.java</file>
             <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/pantallas/AgregarMeals.java</file>
+            <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/Main/VentanaPrincipal.java</file>
             <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/pantallas/AgregarCustomers.java</file>
-            <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/pantallas/AgregarMenus.java</file>
+            <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/config/Conexion.java</file>
+            <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/Adds/Authentication.java</file>
+            <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/pantallas/AgregarDishes.java</file>
             <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/pantallas/AgregarStaff.java</file>
-            <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/pantallas/AgregarRoles.java</file>
+            <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/pantallas/CustomersP.java</file>
             <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/pantallas/AgregarMenuItems.java</file>
-            <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/pantallas/MealsP.java</file>
+            <file>file:/C:/Users/joses/Documents/Clases%20Desarrollo/GastroBuddy/src/Main/Main.java</file>
         </group>
     </open-files>
 </project-private>

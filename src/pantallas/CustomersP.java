@@ -51,8 +51,6 @@ public class CustomersP extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaDeDatosStaff = new javax.swing.JTable();
-        btnAgregar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -111,24 +109,6 @@ public class CustomersP extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        btnAgregar.setBackground(new java.awt.Color(255, 153, 51));
-        btnAgregar.setText("Agregar");
-        btnAgregar.setEnabled(false);
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
-
-        btnLimpiar.setBackground(new java.awt.Color(255, 153, 51));
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.setEnabled(false);
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
 
         btnModificar.setBackground(new java.awt.Color(255, 153, 51));
         btnModificar.setText("Modificar");
@@ -196,10 +176,8 @@ public class CustomersP extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnNvoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -229,14 +207,10 @@ public class CustomersP extends javax.swing.JPanel {
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addComponent(btnNvoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)))
+                        .addGap(239, 239, 239)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -281,17 +255,6 @@ public class CustomersP extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_TablaDeDatosStaffMouseClicked
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-        agregarRegistro();
-        
-    }//GEN-LAST:event_btnAgregarActionPerformed
-
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-
-        limpiarTexts();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
-
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
         modificarRegistro();
@@ -333,41 +296,7 @@ public class CustomersP extends javax.swing.JPanel {
         }
     }
 
-void agregarRegistro() {
-    if (txtName.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "El campo nombre está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        deshabilitarTexts();
-    } else {
-        try {
-            String phone = txtPhone.getText();
-            if (!phone.matches("\\d+")) {  
-                throw new IllegalArgumentException("El campo teléfono solo debe contener números.");
-            }
 
-            String roleName = txtName.getText();
-            
-            String sql = "INSERT INTO customers (name, phone) VALUES ('" + roleName + "', '" + phone + "');";
-            con = cn.getConnection();
-            st = con.createStatement();
-            st.executeUpdate(sql);
-            
-            JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
-            deshabilitarTexts();
-            limpiarTexts();
-            txtId.setVisible(true);
-            jLabel2.setVisible(true);
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Agregar registro", JOptionPane.WARNING_MESSAGE);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos. Intente nuevamente más tarde.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro. Por favor, intente nuevamente.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        }
-        deshabilitarTexts();
-        limpiarTexts();
-    }
-    actualizar();
-}
 
 
 
@@ -438,47 +367,11 @@ void agregarRegistro() {
         listar();
     }
 
-    void nuevoRegistro() {
-        if (btnNvoRegistro.getText().equals("Nuevo Registro")) {
-            habilitarTexts();
-            txtId.setText("");
-            txtPhone.setText("");
-            txtName.setText("");
-            btnNvoRegistro.setText("Cancelar");
-            txtId.setEnabled(false); // Deshabilita el campo ID
-        } else {
-            deshabilitarTexts();
-            limpiarTexts();
-        }
-    }
 
-    void habilitarTexts() {
-        txtId.setEditable(true);
-        txtPhone.setEditable(true);
-        txtId.setFocusable(true);
-        btnAgregar.setEnabled(true);
-        btnModificar.setEnabled(false);
-        btnBorrar.setEnabled(false);
-        btnLimpiar.setEnabled(true);
-        TablaDeDatosStaff.setFocusable(false);
-    }
-
-    void deshabilitarTexts() {
-        txtId.setEditable(false);
-        txtPhone.setEditable(false);
-        btnAgregar.setEnabled(false);
-        btnModificar.setEnabled(true);
-        btnBorrar.setEnabled(true);
-        btnLimpiar.setEnabled(false);
-        btnNvoRegistro.setText("Nuevo Registro");
-        TablaDeDatosStaff.setFocusable(true);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaDeDatosStaff;
-    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBorrar;
-    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNvoRegistro;
     private javax.swing.JButton jButton1;

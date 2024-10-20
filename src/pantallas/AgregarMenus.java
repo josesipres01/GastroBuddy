@@ -33,6 +33,7 @@ public class AgregarMenus extends javax.swing.JDialog {
      * Creates new form AgregarMenus
      */
     public AgregarMenus(Frame parent,DefaultTableModel tableModel, MenuP menu) {
+        
         super(parent, "Nuevo Registro", true); 
         this.tableModel = model; 
         this.menu = menu;
@@ -63,10 +64,11 @@ public class AgregarMenus extends javax.swing.JDialog {
         javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocation(new java.awt.Point(500, 200));
 
-        txtType.setBackground(new java.awt.Color(255, 153, 51));
+        txtType.setBackground(new java.awt.Color(81, 81, 201));
 
-        btnAgregar7.setBackground(new java.awt.Color(81, 81, 201));
+        btnAgregar7.setBackground(new java.awt.Color(255, 153, 51));
         btnAgregar7.setText("Guardar");
         btnAgregar7.setFocusable(false);
         btnAgregar7.addActionListener(new java.awt.event.ActionListener() {
@@ -77,7 +79,7 @@ public class AgregarMenus extends javax.swing.JDialog {
 
         jLabel24.setBackground(new java.awt.Color(255, 153, 51));
         jLabel24.setFont(new java.awt.Font("Calling Heart", 0, 86)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(81, 81, 201));
+        jLabel24.setForeground(new java.awt.Color(255, 153, 51));
         jLabel24.setText(" New Menu");
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -97,6 +99,8 @@ public class AgregarMenus extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("available_date_from");
+
+        jForDateFrom1.setToolTipText("Año-Mes-Dia");
 
         jForDateTo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
         jForDateTo.setToolTipText("Año-Mes-Dia");
@@ -143,9 +147,9 @@ public class AgregarMenus extends javax.swing.JDialog {
         txtTypeLayout.setVerticalGroup(
             txtTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(txtTypeLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addGroup(txtTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))

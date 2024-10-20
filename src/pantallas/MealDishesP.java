@@ -56,8 +56,6 @@ public class MealDishesP extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaDeDatosStaff = new javax.swing.JTable();
-        btnAgregar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -116,24 +114,6 @@ public class MealDishesP extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        btnAgregar.setBackground(new java.awt.Color(255, 153, 51));
-        btnAgregar.setText("Agregar");
-        btnAgregar.setEnabled(false);
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
-
-        btnLimpiar.setBackground(new java.awt.Color(255, 153, 51));
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.setEnabled(false);
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
 
         btnModificar.setBackground(new java.awt.Color(255, 153, 51));
         btnModificar.setText("Modificar");
@@ -203,10 +183,8 @@ public class MealDishesP extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnNvoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -236,14 +214,10 @@ public class MealDishesP extends javax.swing.JPanel {
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addComponent(btnNvoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)))
+                        .addGap(239, 239, 239)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -299,17 +273,6 @@ public class MealDishesP extends javax.swing.JPanel {
     }
     }//GEN-LAST:event_TablaDeDatosStaffMouseClicked
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-        agregarRegistro();
-        
-    }//GEN-LAST:event_btnAgregarActionPerformed
-
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-
-        limpiarTexts();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
-
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
         modificarRegistro();
@@ -361,33 +324,7 @@ public class MealDishesP extends javax.swing.JPanel {
 }
 
 
-    void agregarRegistro() {
-        if (txtMealId.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, para agregar un registro es necesario un id.\nIntentelo de nuevo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-            deshabilitarTexts();
-        } else {
-            try {
-                int code = Integer.parseInt(txtMealId.getText());
-                int Quantity = Integer.parseInt(txtQuantity.getText());
-                String idMenu[] = cboxItemId.getSelectedItem().toString().split("-");
-                int ItemID = Integer.parseInt(idMenu[0]);
-                String sql = "INSERT INTO public.meal_dishes(meal_id, item_id, quantity) VALUES(" + code + "," + ItemID + ", " + Quantity + ");";
-                con = cn.getConnection();
-                st = con.createStatement();
-                st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "¡Registro Agregado Exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
-                deshabilitarTexts();
-                limpiarTexts();
-                txtMealId.setVisible(true);
-                 jLabel2.setVisible(true);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
-                deshabilitarTexts();
-                limpiarTexts();
-            }
-        }
-        actualizar();
-    }
+   
 
     void borrarRegistro() {
         if (!txtMealId.getText().equals("")) {
@@ -456,49 +393,11 @@ public class MealDishesP extends javax.swing.JPanel {
         listar();
     }
 
-    void nuevoRegistro() {
-        if (btnNvoRegistro.getText().equals("Nuevo Registro")) {
-            habilitarTexts();
-            txtMealId.setText("");
-            txtQuantity.setText("");
-            cboxItemId.setEditable(true);
-            //txtItemID.setText("");
-            btnNvoRegistro.setText("Cancelar");
-            txtMealId.requestFocus();
-        } else {
-            deshabilitarTexts();
-            limpiarTexts();
-        }
-    }
 
-    void habilitarTexts() {
-        txtMealId.setEditable(true);
-        txtQuantity.setEditable(true);
-        txtMealId.setFocusable(true);
-        btnAgregar.setEnabled(true);
-        btnModificar.setEnabled(false);
-        btnBorrar.setEnabled(false);
-        btnLimpiar.setEnabled(true);
-        TablaDeDatosStaff.setFocusable(false);
-    }
-
-    void deshabilitarTexts() {
-                    cboxItemId.setEditable(true);
-        txtMealId.setEditable(false);
-        txtQuantity.setEditable(false);
-        btnAgregar.setEnabled(false);
-        btnModificar.setEnabled(true);
-        btnBorrar.setEnabled(true);
-        btnLimpiar.setEnabled(false);
-        btnNvoRegistro.setText("Nuevo Registro");
-        TablaDeDatosStaff.setFocusable(true);
-    }
-
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaDeDatosStaff;
-    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBorrar;
-    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNvoRegistro;
     private javax.swing.JComboBox<String> cboxItemId;

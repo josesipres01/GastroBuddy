@@ -18,6 +18,9 @@ import pantallas.Login;
 public class Main {
     public static void main(String[] args) {
         
+  
+    
+        
         // Crear un JFrame
         JFrame frame = new JFrame("Login Screen");
         
@@ -45,5 +48,5 @@ public class Main {
 
     }
 
-    
-}
+ }  
+
