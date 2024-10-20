@@ -60,7 +60,7 @@ public class StaffP extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         txtLastName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtRoleCode = new javax.swing.JTextField();
+        txtRoleName = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         btnNvoRegistro = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -137,14 +137,37 @@ public class StaffP extends javax.swing.JPanel {
         jLabel2.setText("id");
 
         txtId.setEditable(false);
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
+
+        txtFirstName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFirstNameActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("first_name");
 
+        txtLastName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLastNameActionPerformed(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("last_name");
+
+        txtRoleName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRoleNameActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -200,7 +223,7 @@ public class StaffP extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(txtRoleCode, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(34, 34, 34))
         );
         panelPrincipalLayout.setVerticalGroup(
@@ -236,7 +259,7 @@ public class StaffP extends javax.swing.JPanel {
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtRoleCode)))
+                        .addComponent(txtRoleName)))
                 .addGap(28, 28, 28))
         );
 
@@ -255,18 +278,22 @@ public class StaffP extends javax.swing.JPanel {
     private void TablaDeDatosStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosStaffMouseClicked
 
         if (TablaDeDatosStaff.isFocusable()) {
-            int row = TablaDeDatosStaff.getSelectedRow();
-            if (row == -1) {
-                JOptionPane.showMessageDialog(null, "No se Selecciono");
-            } else {
-                String id = (String) TablaDeDatosStaff.getValueAt(row, 0).toString();
-                String lastName = (String) TablaDeDatosStaff.getValueAt(row, 1);
-                String firstName = (String) TablaDeDatosStaff.getValueAt(row, 2);
-                String role_name = (String) TablaDeDatosStaff.getValueAt(row, 3).toString();
-                txtId.setText(id);
-                txtFirstName.setText(lastName);
-                txtLastName.setText(firstName);
-                txtRoleCode.setText(role_name);
+        int row = TablaDeDatosStaff.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "No se Seleccionó");
+        } else {
+            String id = (String) TablaDeDatosStaff.getValueAt(row, 0).toString();
+            String lastName = (String) TablaDeDatosStaff.getValueAt(row, 1);
+            String firstName = (String) TablaDeDatosStaff.getValueAt(row, 2);
+            
+            // Obtener el rol en el nuevo formato
+            String roleWithCode = (String) TablaDeDatosStaff.getValueAt(row, 3);
+            String roleCode = roleWithCode.split(" - ")[0]; // Extraer el código del rol
+            
+            txtId.setText(id);
+            txtFirstName.setText(lastName);
+            txtLastName.setText(firstName);
+            txtRoleName.setText(roleCode); // Guardar solo el código en el campo de texto
             }
         }
     }//GEN-LAST:event_TablaDeDatosStaffMouseClicked
@@ -293,26 +320,47 @@ public class StaffP extends javax.swing.JPanel {
         ventana.setPantalla(Pantalla.PrincipalP);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    void listar() {
-        String sql = "SELECT id, first_name, last_name, reff_staff_roles.role_name " +
-             "FROM staff " +
-             "JOIN reff_staff_roles ON reff_staff_roles.code = staff.role_code;";
-        try {
-            con = cn.getConnection();
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
-            Object[] meals = new Object[5];
-            model = (DefaultTableModel) TablaDeDatosStaff.getModel();
-            while (rs.next()) {
-                meals[0] = rs.getInt("id");
-                meals[1] = rs.getString("first_name");
-                meals[2] = rs.getString("last_name");
-                meals[3] = rs.getString("role_name");
-                model.addRow(meals);
-            }
-            TablaDeDatosStaff.setModel(model);
-        } catch (Exception e) {
+    private void txtRoleNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRoleNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRoleNameActionPerformed
 
+    private void txtLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLastNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLastNameActionPerformed
+
+    private void txtFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFirstNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFirstNameActionPerformed
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdActionPerformed
+
+    void listar() {
+         String sql = "SELECT staff.id, staff.first_name, staff.last_name, staff.role_code, reff_staff_roles.role_name " +
+                 "FROM staff " +
+                 "JOIN reff_staff_roles ON reff_staff_roles.code = staff.role_code;";
+    try {
+        con = cn.getConnection();
+        st = con.createStatement();
+        rs = st.executeQuery(sql);
+        Object[] staffData = new Object[5]; // Asegúrate de que coincida con la cantidad de columnas a mostrar
+        model = (DefaultTableModel) TablaDeDatosStaff.getModel();
+        while (rs.next()) {
+            staffData[0] = rs.getInt("id");               // ID del staff
+            staffData[1] = rs.getString("first_name");    // Nombre del staff
+            staffData[2] = rs.getString("last_name");     // Apellido del staff
+            
+            // Concatenar role_code y role_name en el formato "codigo - nombre"
+            int roleCode = rs.getInt("role_code");
+            String roleName = rs.getString("role_name");
+            staffData[3] = roleCode + " - " + roleName;  // Asignar valor combinado al modelo de la tabla
+
+            model.addRow(staffData);  // Añadir fila al modelo
+        }
+        TablaDeDatosStaff.setModel(model);
+    } catch (Exception e) {
+        e.printStackTrace();
         }
 
     }
@@ -344,33 +392,32 @@ public class StaffP extends javax.swing.JPanel {
 
     void modificarRegistro() {
         if (txtId.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, Para modificar un registro es necesario un id.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
-        } else {
-            try {
-                // solicitando valores
-                int id = Integer.parseInt(txtId.getText());
-                String lastName = txtLastName.getText();
-                String firstName = txtFirstName.getText();
-                int roleCode = Integer.parseInt(txtRoleCode.getText());
-                //sql
-                String sql = "UPDATE  public.staff SET first_name='" + firstName + "', last_name='" + lastName + "', role_code=" + roleCode + " WHERE id=" + id + ";";
-                con = cn.getConnection();
-                st = con.createStatement();
-                st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "¡Registro modificado Exitosamente!", "Modificar registro", JOptionPane.INFORMATION_MESSAGE);
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al modificar el registro: " + e.getMessage(), "Modificar registro", JOptionPane.ERROR_MESSAGE);
-            }
+        JOptionPane.showMessageDialog(null, "El campo id está vacío, Para modificar un registro es necesario un id.\nInténtelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
+    } else {
+        try {
+            // solicitando valores
+            int id = Integer.parseInt(txtId.getText());
+            String lastName = txtLastName.getText();
+            String firstName = txtFirstName.getText();
+            int roleCode = Integer.parseInt(txtRoleName.getText()); // Se obtiene solo el código
+            //sql
+            String sql = "UPDATE public.staff SET first_name='" + firstName + "', last_name='" + lastName + "', role_code=" + roleCode + " WHERE id=" + id + ";";
+            con = cn.getConnection();
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            JOptionPane.showMessageDialog(null, "¡Registro modificado Exitosamente!", "Modificar registro", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar el registro: " + e.getMessage(), "Modificar registro", JOptionPane.ERROR_MESSAGE);
         }
-        actualizar();
+    }
+    actualizar();
     }
 
     void limpiarTexts() {
         txtId.setText("");
         txtLastName.setText("");
         txtFirstName.setText("");
-        txtRoleCode.setText("");
+        txtRoleName.setText("");
     }
 
     void limpiarTabla(DefaultTableModel model) {
@@ -405,6 +452,6 @@ public class StaffP extends javax.swing.JPanel {
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtLastName;
-    private javax.swing.JTextField txtRoleCode;
+    private javax.swing.JTextField txtRoleName;
     // End of variables declaration//GEN-END:variables
 }
