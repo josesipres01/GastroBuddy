@@ -32,8 +32,8 @@ public class AgregarStaff extends javax.swing.JDialog {
      * Creates new form AgregarStaff
      */
     public AgregarStaff(Frame parent,DefaultTableModel tableModel, StaffP staff) {
-        super(parent, "Nuevo Registro", true); // Usando parent como Frame
-        this.tableModel = model; // Inicializar el modelo de la tabla
+        super(parent, "Nuevo Registro", true); 
+        this.tableModel = model; 
         this.staff = staff;
         initComponents();
     }
@@ -168,10 +168,10 @@ public class AgregarStaff extends javax.swing.JDialog {
    void agregarRegistro() {
     if (txtFirstName.getText().isEmpty()) {
         JOptionPane.showMessageDialog(null, "El campo nombre está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        return; // Salir del método si el nombre está vacío
+        return;
     }
 
-    Connection con = null; // Asegúrate de que la conexión sea local
+    Connection con = null; 
     PreparedStatement pst = null;
 
     try {
@@ -180,21 +180,18 @@ public class AgregarStaff extends javax.swing.JDialog {
         String last_name = txtLastName.getText();
         String code = txtRoleCode.getText();
 
-        // Verifica la conexión a la base de datos
         con = cn.getConnection();
         
-        // Preparar la consulta SQL
         String sql = "INSERT INTO public.staff (first_name, last_name, role_code) VALUES (?, ?, ?)";
         pst = con.prepareStatement(sql); // Aquí inicializas el PreparedStatement
 
         // Asignar los valores a los parámetros de la consulta
         pst.setString(1, first_name);   // Asignar el nombre
-        pst.setString(2, last_name);   // Asignar el nombre
-        pst.setInt(3, Integer.parseInt(code));  // Convertir phone a entero antes de insertarlo
+        pst.setString(2, last_name);   // Asignar el apellido
+        pst.setInt(3, Integer.parseInt(code));  // Convertir code a entero antes de insertarlo
         
-        int rowsAffected = pst.executeUpdate(); // Ejecutar la consulta y guardar el número de filas afectadas
-
-        // Si rowsAffected es mayor que 0, significa que la inserción fue exitosa
+        int rowsAffected = pst.executeUpdate(); 
+        
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
             staff.actualizar();

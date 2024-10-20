@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import javax.swing.SwingUtilities;
+import java.sql.PreparedStatement;
+
 /**
  *
  * @author luisi
@@ -301,53 +303,94 @@ public class CustomersP extends javax.swing.JPanel {
 
 
 
-    void borrarRegistro() {
-        if (!txtId.getText().equals("")) {
-            BorrarConf bc = new BorrarConf(this.ventana, true);
-            bc.setVisible(true);
-            if (bc.getReturnStatus() == 1) {
-                //
+  void borrarRegistro() {
+    // Verificar que el campo de ID no esté vacío
+    if (!txtId.getText().equals("")) {
+        BorrarConf bc = new BorrarConf(this.ventana, true);
+        bc.setVisible(true);
+        if (bc.getReturnStatus() == 1) {
+            try {
+                // Obtener el ID del cliente
                 int code = Integer.parseInt(txtId.getText());
-                String sql = "DELETE FROM customers WHERE  id=" + code;
-                try {
-                    con = cn.getConnection();
-                    st = con.createStatement();
-                    st.executeUpdate(sql);
+
+                // Verificar conexión a la base de datos
+                con = cn.getConnection();
+                // Preparar la consulta SQL
+                String sql = "DELETE FROM customers WHERE id = ?";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setInt(1, code); // Asignar el código al PreparedStatement
+
+                int rowsAffected = pst.executeUpdate(); // Ejecutar la consulta
+
+                // Verificar si se eliminó un registro
+                if (rowsAffected > 0) {
                     JOptionPane.showMessageDialog(null, "Usuario Eliminado");
                     limpiarTexts();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error al borrar el registro: " + e.getMessage(), "Borrar registro", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontró el registro con ese ID.", "Borrar registro", JOptionPane.WARNING_MESSAGE);
                 }
-                //
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, para borrar un registro es necesario un id.\nIntentelo de nuevo.", "Borrar registro", JOptionPane.ERROR_MESSAGE);
-        }
-        actualizar();
-    }
 
-    void modificarRegistro() {
-        if (txtId.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, Para modificar un registro es necesario un id.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
-        } else {
-            try {
-                // solicitando valores
-                int code = Integer.parseInt(txtId.getText());
-                String roleDes = txtPhone.getText();
-                String roleName = txtName.getText();
-                //sql
-                String sql = "UPDATE customers SET phone='" + roleDes + "', name='" + roleName + "' WHERE id=" + code + ";";
-                con = cn.getConnection();
-                st = con.createStatement();
-                st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "¡Registro modificado Exitosamente!", "Modificar registro", JOptionPane.INFORMATION_MESSAGE);
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al modificar el registro: " + e.getMessage(), "Modificar registro", JOptionPane.ERROR_MESSAGE);
+                // Cerrar el PreparedStatement
+                pst.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al borrar el registro: " + e.getMessage(), "Borrar registro", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "El ID debe ser un número válido.", "Borrar registro", JOptionPane.ERROR_MESSAGE);
             }
         }
-        actualizar();
+    } else {
+        JOptionPane.showMessageDialog(null, "El campo ID está vacío, para borrar un registro es necesario un ID.\nIntentelo de nuevo.", "Borrar registro", JOptionPane.ERROR_MESSAGE);
     }
+    actualizar();
+}
+
+
+  void modificarRegistro() {
+    if (txtId.getText().equals("")) {
+        JOptionPane.showMessageDialog(null, "El campo ID está vacío, para modificar un registro es necesario un ID.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
+    } else {
+        try {
+            int code = Integer.parseInt(txtId.getText());
+            String phone = txtPhone.getText();
+            String name = txtName.getText();
+
+            if (!phone.matches("\\d+")) {
+                throw new IllegalArgumentException("El campo teléfono solo debe contener números.");
+            }
+            if (!phone.matches("\\d{10}")) {
+                throw new IllegalArgumentException("El campo teléfono debe contener exactamente 10 dígitos.");
+            }
+
+            // Preparar la consulta SQL
+            String sql = "UPDATE customers SET phone = ?, name = ? WHERE id = ?";
+            con = cn.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setDouble(1, Double.parseDouble(phone)); // Asignar el teléfono
+            pst.setString(2, name); // Asignar el nombre
+            pst.setInt(3, code); // Asignar el ID
+
+            int rowsAffected = pst.executeUpdate(); // Ejecutar la consulta
+
+            // Verificar si se modificó un registro
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "¡Registro modificado exitosamente!", "Modificar registro", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el registro con ese ID.", "Modificar registro", JOptionPane.WARNING_MESSAGE);
+            }
+
+            // Cerrar el PreparedStatement
+            pst.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar el registro: " + e.getMessage(), "Modificar registro", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "El ID debe ser un número válido.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Modificar registro", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    actualizar();
+}
+
 
     void limpiarTexts() {
         txtId.setText("");

@@ -173,34 +173,35 @@ public class AgregarCustomers extends javax.swing.JDialog {
 void agregarRegistro() {
     if (txtName.getText().isEmpty()) {
         JOptionPane.showMessageDialog(null, "El campo nombre está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        return; // Salir del método si el nombre está vacío
+        return; 
     }
 
-    Connection con = null; // Asegúrate de que la conexión sea local
+    Connection con = null; 
     PreparedStatement pst = null;
 
     try {
         String phone = txtPhone.getText();
         if (!phone.matches("\\d+")) {  
             throw new IllegalArgumentException("El campo teléfono solo debe contener números.");
-        }
+        }if (!phone.matches("\\d{10}")) {  
+        throw new IllegalArgumentException("El campo teléfono debe contener exactamente 10 dígitos.");
+    }
 
         String name = txtName.getText();
 
-        // Verifica la conexión a la base de datos
+       
         con = cn.getConnection();
         
-        // Preparar la consulta SQL
-        String sql = "INSERT INTO customers (name, phone) VALUES (?, ?)";
-        pst = con.prepareStatement(sql); // Aquí inicializas el PreparedStatement
-
-        // Asignar los valores a los parámetros de la consulta
-        pst.setString(1, name);   // Asignar el nombre
-        pst.setInt(2, Integer.parseInt(phone));  // Convertir phone a entero antes de insertarlo
         
-        int rowsAffected = pst.executeUpdate(); // Ejecutar la consulta y guardar el número de filas afectadas
+        String sql = "INSERT INTO customers (name, phone) VALUES (?, ?)";
+        pst = con.prepareStatement(sql); 
 
-        // Si rowsAffected es mayor que 0, significa que la inserción fue exitosa
+        
+        pst.setString(1, name);   // Asignar el nombre
+        pst.setDouble(2, Double.parseDouble(phone));  
+        int rowsAffected = pst.executeUpdate(); 
+
+       
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
             customer.actualizar();
