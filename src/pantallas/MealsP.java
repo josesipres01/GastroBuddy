@@ -47,8 +47,7 @@ public class MealsP extends javax.swing.JPanel {
         this.ventana = v;
         LocalDate date = LocalDate.now();
         String dateSql = date.format(formatter);
-        jForDateofmeal.setText(dateSql.toString());
-        generarMenus();
+        jForDateofmeal.setText(dateSql);
         listar();
     }
 
@@ -79,8 +78,8 @@ public class MealsP extends javax.swing.JPanel {
         jForDateofmeal = new javax.swing.JFormattedTextField();
         jButton1 = new javax.swing.JButton();
         btnPagar = new javax.swing.JButton();
-        cBoxStaffId = new javax.swing.JComboBox<>();
-        cBoxCustId = new javax.swing.JComboBox<>();
+        txtStaffId = new javax.swing.JTextField();
+        txtCustId = new javax.swing.JTextField();
 
         panelPrincipal.setBackground(new java.awt.Color(81, 81, 201));
 
@@ -199,20 +198,6 @@ public class MealsP extends javax.swing.JPanel {
             }
         });
 
-        cBoxStaffId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-        cBoxStaffId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cBoxStaffIdActionPerformed(evt);
-            }
-        });
-
-        cBoxCustId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-        cBoxCustId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cBoxCustIdActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
@@ -247,10 +232,10 @@ public class MealsP extends javax.swing.JPanel {
                                         .addGap(91, 91, 91)
                                         .addComponent(jLabel4))
                                     .addGroup(panelPrincipalLayout.createSequentialGroup()
-                                        .addComponent(cBoxStaffId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtStaffId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(cBoxCustId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
+                                        .addComponent(txtCustId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(44, 44, 44)
                                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jForDateofmeal, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -291,13 +276,14 @@ public class MealsP extends javax.swing.JPanel {
                         .addComponent(jLabel5)
                         .addComponent(jLabel6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtCostofmeal)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cBoxStaffId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cBoxCustId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jForDateofmeal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtCostofmeal)
+                        .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jForDateofmeal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtStaffId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCustId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(29, 29, 29))
         );
 
@@ -315,24 +301,25 @@ public class MealsP extends javax.swing.JPanel {
 
     private void TablaDeDatosPrinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosPrinMouseClicked
 
-        if (TablaDeDatosPrin.isFocusable()) {
-        int row = TablaDeDatosPrin.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(null, "No se seleccionó ninguna fila");
-        } else {
+         if (TablaDeDatosPrin.isFocusable()) {
+            int row = TablaDeDatosPrin.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(null, "No se seleccionó ninguna fila");
+            } else {
             // Obtén los valores de las celdas, asegurando el tipo correcto
-            String id = TablaDeDatosPrin.getValueAt(row, 0).toString();
-            String staffName = TablaDeDatosPrin.getValueAt(row, 1).toString(); // Nombre del staff
-            String customerName = TablaDeDatosPrin.getValueAt(row, 2).toString(); // Nombre del cliente
-            String dateString = TablaDeDatosPrin.getValueAt(row, 3).toString(); // Fecha de la comida
-            String costOfMeal = TablaDeDatosPrin.getValueAt(row, 4).toString(); // Costo de la comida
+                String id = TablaDeDatosPrin.getValueAt(row, 0).toString();
+                String staffName = TablaDeDatosPrin.getValueAt(row, 1).toString();// Nombre del staff
+                String customerName = TablaDeDatosPrin.getValueAt(row, 2).toString();// Nombre del cliente
+                String dateString = TablaDeDatosPrin.getValueAt(row, 3).toString();// Fecha de la comida
+                String costOfMeal = TablaDeDatosPrin.getValueAt(row, 4).toString();// Costo de la comida
 
-            // Asigna valores a los campos correspondientes
-            txtId.setText(id);
-            cBoxStaffId.setSelectedItem(staffName);  // Selecciona el nombre del staff
-            cBoxCustId.setSelectedItem(customerName);  // Selecciona el nombre del cliente
-            jForDateofmeal.setText(dateString);  // Asigna la fecha
-            txtCostofmeal.setText(costOfMeal);  // Asigna el costo
+                // Asigna valores a los campos correspondientes
+                txtId.setText(id);
+                txtStaffId.setText(staffName);  // Asignación a TextField de StaffId
+                txtCustId.setText(customerName);  // Asignación a TextField de CustId
+                jForDateofmeal.setText(dateString);  // Asigna la fecha
+                txtCostofmeal.setText(costOfMeal);// Asigna el costo
+        
         }
     }
     }//GEN-LAST:event_TablaDeDatosPrinMouseClicked
@@ -364,87 +351,103 @@ public class MealsP extends javax.swing.JPanel {
         pagarMeal();
     }//GEN-LAST:event_btnPagarActionPerformed
 
-    private void cBoxCustIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBoxCustIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cBoxCustIdActionPerformed
-
-    private void cBoxStaffIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBoxStaffIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cBoxStaffIdActionPerformed
-
 void listar() {
-    String sql ="SELECT m.id, s.first_name AS staff_name, c.name AS customer_name, m.date_of_meal, m.cost_of_meal " +
-             "FROM meals m " +
-             "JOIN staff s ON m.staff_id = s.id " +
-             "JOIN customers c ON m.customers_id = c.id;";
-    try {
-        con = cn.getConnection();
-        st = con.createStatement();
-        rs = st.executeQuery(sql);
-        Object[] meals = new Object[5];  
-        model = (DefaultTableModel) TablaDeDatosPrin.getModel();
-        
-        // Limpia el modelo antes de añadir nuevas filas
-        model.setRowCount(0);
+     String sql = "SELECT m.id, s.first_name AS staff_name, c.name AS customer_name, m.date_of_meal, m.cost_of_meal FROM meals m JOIN staff s ON m.staff_id = s.id JOIN customers c ON m.customers_id = c.id;";
+        try {
+            con = cn.getConnection();
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            Object[] meals = new Object[5];
+            model = (DefaultTableModel) TablaDeDatosPrin.getModel();
 
-        while (rs.next()) {
-            meals[0] = rs.getInt("id");               
-            meals[1] = rs.getString("staff_name");     
-            meals[2] = rs.getString("customer_name"); 
-            meals[3] = rs.getString("date_of_meal");   
-            meals[4] = rs.getDouble("cost_of_meal");   
-            model.addRow(meals);
-        }
-        TablaDeDatosPrin.setModel(model);
-    } catch (Exception e) {
-        e.printStackTrace();
+            model.setRowCount(0);  // Limpiar tabla
+
+            while (rs.next()) {
+                meals[0] = rs.getInt("id");
+                meals[1] = rs.getString("staff_name");
+                meals[2] = rs.getString("customer_name");
+                meals[3] = rs.getString("date_of_meal");
+                meals[4] = rs.getDouble("cost_of_meal");
+                model.addRow(meals);
+            }
+            TablaDeDatosPrin.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
     }
 }
 
 
     
-    void pagarMeal(){
-        if(cBoxStaffId.equals("")){
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, para pagar es necesario un id.\nIntentelo de nuevo.", "Pagar meal", JOptionPane.ERROR_MESSAGE);
-        }else{
-            try {
-                int id = Integer.parseInt(txtId.getText());
-                String idStaff[] = cBoxStaffId.getSelectedItem().toString().split("-");
-                String idCust[] = cBoxCustId.getSelectedItem().toString().split("-");
-                int customersId = Integer.parseInt(idCust[0]);
-                int staffId = Integer.parseInt(idStaff[0]);
-                double costOfMeal = Double.parseDouble(txtCostofmeal.getText());
-                String sqlDatetime = jForDateofmeal.getText();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = dateFormat.parse(sqlDatetime);
-                java.sql.Date dateSql = new java.sql.Date(date.getTime());
-                
-                con = cn.getConnection();
-                con.setAutoCommit(false);
-                
-                String sqlInsert = "INSERT INTO sales(amount, id_meals, id_staff, id_customer, date_of_meal) VALUES (" + costOfMeal + ", " + staffId + ", " + customersId + ",'" + dateSql + "');";
-                st = con.createStatement();
-                st.executeUpdate(sqlInsert);
-                
-                String sqlDelete ="DELETE FROM meals WHERE Id=" + id +";";
-                st = con.createStatement();
-                st.executeUpdate(sqlDelete);
-                
-                CommitConf com = new CommitConf(this.ventana, true);
-                com.setVisible(true);
-                
-                if(com.getReturnStatus() == 1){
-                    JOptionPane.showMessageDialog(null, "¡El pago se ha realizado Exitosamente!", "Pago Exitoso", JOptionPane.INFORMATION_MESSAGE);
-                    con.commit();
-                }else if(com.getReturnStatus() == 0){
-                    con.rollback();
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al realizar el pago: " + e.getMessage(), "Error Pago", JOptionPane.ERROR_MESSAGE);
+    void pagarMeal() {
+    if (txtStaffId.getText().equals("") || txtCustId.getText().equals("")) {
+        JOptionPane.showMessageDialog(null, "Los campos Staff y Cliente no pueden estar vacíos. Intentelo de nuevo.", "Pagar meal", JOptionPane.ERROR_MESSAGE);
+    } else {
+        try {
+            int id = Integer.parseInt(txtId.getText());
+            String staffName = txtStaffId.getText();  // Obtiene el nombre del staff del TextField
+            String customerName = txtCustId.getText();  // Obtiene el nombre del cliente del TextField
+            double costOfMeal = Double.parseDouble(txtCostofmeal.getText());
+            String sqlDatetime = jForDateofmeal.getText();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse(sqlDatetime);
+            java.sql.Date dateSql = new java.sql.Date(date.getTime());
+            
+            con = cn.getConnection();
+            con.setAutoCommit(false);
+            
+            // Obtener el ID del staff basado en el nombre del staff
+            String sqlStaffId = "SELECT id FROM staff WHERE first_name='" + staffName + "'";
+            Statement stStaff = con.createStatement();
+            ResultSet rsStaff = stStaff.executeQuery(sqlStaffId);
+            
+            int staffId = 0;
+            if (rsStaff.next()) {
+                staffId = rsStaff.getInt("id");
             }
+            rsStaff.close();  // Cierra el ResultSet de Staff
+            stStaff.close();  // Cierra el Statement de Staff
+            
+            // Obtener el ID del cliente basado en el nombre del cliente
+            String sqlCustomerId = "SELECT id FROM customers WHERE name='" + customerName + "'";
+            Statement stCustomer = con.createStatement();
+            ResultSet rsCustomer = stCustomer.executeQuery(sqlCustomerId);
+            
+            int customerId = 0;
+            if (rsCustomer.next()) {
+                customerId = rsCustomer.getInt("id");
+            }
+            rsCustomer.close();  // Cierra el ResultSet de Customer
+            stCustomer.close();  // Cierra el Statement de Customer
+
+            // Inserta en la tabla de ventas
+            String sqlInsert = "INSERT INTO sales(amount, id_meals, id_staff, id_customer, date_of_meal) " +
+                    "VALUES (" + costOfMeal + ", " + id + ", " + staffId + ", " + customerId + ",'" + dateSql + "');";
+            Statement stInsert = con.createStatement();
+            stInsert.executeUpdate(sqlInsert);
+            stInsert.close();  // Cierra el Statement de Insert
+
+            // Borra de la tabla meals
+            String sqlDelete = "DELETE FROM meals WHERE Id=" + id + ";";
+            Statement stDelete = con.createStatement();
+            stDelete.executeUpdate(sqlDelete);
+            stDelete.close();  // Cierra el Statement de Delete
+
+            CommitConf com = new CommitConf(this.ventana, true);
+            com.setVisible(true);
+
+            if (com.getReturnStatus() == 1) {
+                JOptionPane.showMessageDialog(null, "¡El pago se ha realizado Exitosamente!", "Pago Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                con.commit();
+            } else if (com.getReturnStatus() == 0) {
+                con.rollback();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al realizar el pago: " + e.getMessage(), "Error Pago", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            actualizar();
+            limpiarTexts();
         }
-        actualizar();
-        limpiarTexts();
+    }
     }
 
     void borrarRegistro() {
@@ -471,30 +474,27 @@ void listar() {
     }
 
     void modificarRegistro() {
-        if(txtId.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, Para modificar un registro es necesario un id.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
-        }else{
-            try{
-                // solicitando valores
+         if(txtId.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "El campo id está vacío, Para modificar un registro es necesario un id.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                // Obtener los valores de los TextFields
                 int id = Integer.parseInt(txtId.getText());
-                String idStaff[] = cBoxStaffId.getSelectedItem().toString().split("-");
-                String idCust[] = cBoxCustId.getSelectedItem().toString().split("-");
-                int customersId = Integer.parseInt(idCust[0]);
-                int staffId = Integer.parseInt(idStaff[0]);
+                String staffName = txtStaffId.getText();  // Obtener el nombre del staff del TextField
+                String customerName = txtCustId.getText();  // Obtener el nombre del cliente del TextField
                 double costOfMeal = Double.parseDouble(txtCostofmeal.getText());
                 String sqlDatetime = jForDateofmeal.getText();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = dateFormat.parse(sqlDatetime);
                 java.sql.Date dateSql = new java.sql.Date(date.getTime());
-                //sql
-                String sql = "UPDATE  public.meals SET cost_of_meal=" + costOfMeal +", customers_id="+customersId+", staff_id="+ staffId +" WHERE id=" + id + ";";
+
+                // Sentencia SQL para actualizar el registro
+                String sql = "UPDATE meals SET cost_of_meal=" + costOfMeal + ", staff_id=(SELECT id FROM staff WHERE first_name='" + staffName + "'), customers_id=(SELECT id FROM customers WHERE name='" + customerName + "') WHERE id=" + id + ";";
                 con = cn.getConnection();
                 st = con.createStatement();
                 st.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "¡Registro modificado Exitosamente!", "Modificar registro", JOptionPane.INFORMATION_MESSAGE);
-
-
-            }catch(Exception e){
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al modificar el registro: " + e.getMessage(), "Modificar registro", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -507,46 +507,36 @@ void listar() {
     }
     
     void generarMenuStaff(){
-        //
-        try{
-            Conexion cn = new Conexion();
-            Connection con;
-            Statement st;
-            ResultSet rs;
+        // Consulta para obtener el nombre de los staff desde la base de datos
+    try {
+        String sql = "SELECT id, first_name, last_name FROM staff ORDER BY id;";
+        con = cn.getConnection();
+        st = con.createStatement();
+        rs = st.executeQuery(sql);
 
-            String sql = "SELECT id, first_name, last_name FROM staff ORDER BY id;";
-            con = cn.getConnection();
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
-
-            while (rs.next()) {
-                cBoxStaffId.addItem(rs.getString(1) + "-" + rs.getString(2) + " " + rs.getString(3));
-                mStaff.put(rs.getInt(1), "-" + rs.getString(2) + " " + rs.getString(3));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        while (rs.next()) {
+            // Guardar los nombres de los Staff si es necesario para otra lógica
+            mStaff.put(rs.getInt(1), rs.getString(2) + " " + rs.getString(3));
+        }
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
         }
     }
 
     void generarMenuClientes(){
-        //
-        try{
-            Conexion cn = new Conexion();
-            Connection con;
-            Statement st;
-            ResultSet rs;
+       // Consulta para obtener los nombres de los clientes desde la base de datos
+    try {
+        String sql = "SELECT id, name FROM customers ORDER BY id;";
+        con = cn.getConnection();
+        st = con.createStatement();
+        rs = st.executeQuery(sql);
 
-            String sql = "SELECT id, name FROM customers ORDER BY id;";
-            con = cn.getConnection();
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
-
-            while (rs.next()) {
-                cBoxCustId.addItem(rs.getString(1) + "-" + rs.getString(2));
-                mCliente.put(rs.getInt(1), "-" + rs.getString(2));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        while (rs.next()) {
+            // Guardar los nombres de los Clientes si es necesario para otra lógica
+            mCliente.put(rs.getInt(1), rs.getString(2));
+        }
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
         }
     }
     
@@ -577,8 +567,6 @@ void listar() {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNvoRegistro;
     private javax.swing.JButton btnPagar;
-    private javax.swing.JComboBox<String> cBoxCustId;
-    private javax.swing.JComboBox<String> cBoxStaffId;
     private javax.swing.JButton jButton1;
     private javax.swing.JFormattedTextField jForDateofmeal;
     private javax.swing.JLabel jLabel1;
@@ -591,6 +579,8 @@ void listar() {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JTextField txtCostofmeal;
+    private javax.swing.JTextField txtCustId;
     private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtStaffId;
     // End of variables declaration//GEN-END:variables
 }
