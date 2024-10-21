@@ -310,7 +310,7 @@ public class StaffRolesP extends javax.swing.JPanel {
                     con = cn.getConnection();
                     st = con.createStatement();
                     st.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null, "Usuario Eliminado");
+                    JOptionPane.showMessageDialog(null, "Role Deleted");
                     limpiarTexts();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error al borrar el registro: " + e.getMessage(), "Borrar registro", JOptionPane.ERROR_MESSAGE);

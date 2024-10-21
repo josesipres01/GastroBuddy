@@ -461,7 +461,7 @@ void listar() {
                     con = cn.getConnection();
                     st = con.createStatement();
                     st.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null, "Usuario Eliminado");
+                    JOptionPane.showMessageDialog(null, "Meal Deleted");
                 } catch (Exception e) {
                                 JOptionPane.showMessageDialog(null, "Error al borrar el registro: " + e.getMessage(), "Borrar registro", JOptionPane.ERROR_MESSAGE);
                 }
