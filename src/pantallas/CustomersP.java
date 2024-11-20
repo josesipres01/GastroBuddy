@@ -324,7 +324,7 @@ public class CustomersP extends javax.swing.JPanel {
 
                 // Verificar si se eliminó un registro
                 if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(null, "Usuario Eliminado");
+                    JOptionPane.showMessageDialog(null, "Customer Deleted");
                     limpiarTexts();
                 } else {
                     JOptionPane.showMessageDialog(null, "No se encontró el registro con ese ID.", "Borrar registro", JOptionPane.WARNING_MESSAGE);

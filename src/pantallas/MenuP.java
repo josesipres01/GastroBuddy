@@ -384,7 +384,7 @@ public class MenuP extends javax.swing.JPanel {
                     con = cn.getConnection();
                     st = con.createStatement();
                     st.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null, "Menú Eliminado");
+                    JOptionPane.showMessageDialog(null, "Menu Deleted");
                     limpiarTexts();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error al borrar el registro: " + e.getMessage(), "Borrar registro", JOptionPane.ERROR_MESSAGE);
