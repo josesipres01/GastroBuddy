@@ -5,15 +5,19 @@
 package pantallas;
 
 import config.Conexion;
+import java.awt.Color;
 import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -62,6 +66,8 @@ public class AgregarMenus extends javax.swing.JDialog {
         jForDateFrom1 = new javax.swing.JFormattedTextField();
         jForDateTo = new javax.swing.JFormattedTextField();
         javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(500, 200));
@@ -109,6 +115,10 @@ public class AgregarMenus extends javax.swing.JDialog {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("available_date_to");
 
+        jLabel1.setText("2024-12-31");
+
+        jLabel2.setText("2024-12-31");
+
         javax.swing.GroupLayout txtTypeLayout = new javax.swing.GroupLayout(txtType);
         txtType.setLayout(txtTypeLayout);
         txtTypeLayout.setHorizontalGroup(
@@ -124,15 +134,15 @@ public class AgregarMenus extends javax.swing.JDialog {
                             .addComponent(txtSeason, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(txtTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(txtTypeLayout.createSequentialGroup()
-                                .addGap(85, 85, 85)
-                                .addComponent(btnAgregar7, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(txtTypeLayout.createSequentialGroup()
                                 .addGap(46, 46, 46)
                                 .addGroup(txtTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(txtTypeLayout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(jForDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel5)))))
+                                    .addComponent(jForDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5)))
+                            .addGroup(txtTypeLayout.createSequentialGroup()
+                                .addGap(85, 85, 85)
+                                .addGroup(txtTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnAgregar7, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(txtTypeLayout.createSequentialGroup()
                         .addGroup(txtTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,6 +153,10 @@ public class AgregarMenus extends javax.swing.JDialog {
                             .addComponent(jForDateFrom1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))))
                 .addContainerGap(39, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtTypeLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(104, 104, 104))
         );
         txtTypeLayout.setVerticalGroup(
             txtTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,7 +171,9 @@ public class AgregarMenus extends javax.swing.JDialog {
                 .addGroup(txtTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(jForDateFrom1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(txtTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel23))
@@ -165,8 +181,10 @@ public class AgregarMenus extends javax.swing.JDialog {
                 .addGroup(txtTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jForDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtType1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(txtTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel25)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(txtTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(txtTypeLayout.createSequentialGroup()
@@ -206,62 +224,118 @@ public class AgregarMenus extends javax.swing.JDialog {
             }
         });
     }
-    void agregarRegistro() {
-    if (txtName.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "El campo nombre está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        return; 
+  void agregarRegistro() {
+    boolean valid = true; // Control de validaciones
+
+    // Validación del campo Nombre
+    if (txtName.getText().trim().isEmpty()) {
+        txtName.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'Menu_name' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        valid = false;
+    } else {
+        txtName.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
     }
 
-    Connection con = null; 
+    // Validación del campo Tipo
+    if (txtType1.getText().trim().isEmpty()) {
+        txtType1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'Type' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        valid = false;
+    } else {
+        txtType1.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
+    }
+
+    // Validación del campo Temporada
+    if (txtSeason.getText().trim().isEmpty()) {
+        txtSeason.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'Season' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        valid = false;
+    } else {
+        txtSeason.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
+    }
+
+    // Validación del campo Fecha Desde
+    Date dateDateFrom = null;
+    if (jForDateFrom1.getText().trim().isEmpty()) {
+        jForDateFrom1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'available_date_from' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        valid = false;
+    } else {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateDateFrom = dateFormat.parse(jForDateFrom1.getText().trim());
+            jForDateFrom1.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
+        } catch (ParseException e) {
+            jForDateFrom1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            JOptionPane.showMessageDialog(null, "El campo 'available_date_from' debe tener un formato válido (yyyy-MM-dd).", "Validación", JOptionPane.WARNING_MESSAGE);
+            valid = false;
+        }
+    }
+
+    // Validación del campo Fecha Hasta
+    Date dateDateTo = null;
+    if (jForDateTo.getText().trim().isEmpty()) {
+        jForDateTo.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'available_date_to es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        valid = false;
+    } else {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateDateTo = dateFormat.parse(jForDateTo.getText().trim());
+            jForDateTo.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
+        } catch (ParseException e) {
+            jForDateTo.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            JOptionPane.showMessageDialog(null, "El campo 'available_date_to' debe tener un formato válido (yyyy-MM-dd).", "Validación", JOptionPane.WARNING_MESSAGE);
+            valid = false;
+        }
+    }
+
+    // Detener el proceso si hay errores de validación
+    if (!valid) {
+        return;
+    }
+
+    Connection con = null;
     PreparedStatement pst = null;
 
     try {
-       
-        String name = txtName.getText();
-        String type = txtType1.getText();
-        String season = txtSeason.getText();
-        String dateTAdatefrom = jForDateFrom1.getText();
-        String dateTAdateTo = jForDateTo.getText();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateDateFrom = dateFormat.parse(dateTAdatefrom);
-        Date dateDateTo = dateFormat.parse(dateTAdateTo);
-        java.sql.Date sqlDateFrom = java.sql.Date.valueOf(dateTAdatefrom);
-         java.sql.Date sqlDateTo = java.sql.Date.valueOf(dateTAdateTo);
-    
-       
+        // Convertir fechas a formato SQL
+        java.sql.Date sqlDateFrom = new java.sql.Date(dateDateFrom.getTime());
+        java.sql.Date sqlDateTo = new java.sql.Date(dateDateTo.getTime());
+
+        // Obtener valores de los campos
+        String name = txtName.getText().trim();
+        String type = txtType1.getText().trim();
+        String season = txtSeason.getText().trim();
+
+        // Establecer conexión
         con = cn.getConnection();
-        
+
         // Preparar la consulta SQL
         String sql = "INSERT INTO public.menu (name, available_date_from, available_date_to, type, season) VALUES (?, ?, ?, ?, ?)";
-        pst = con.prepareStatement(sql); // Aquí inicializas el PreparedStatement
-
-        // Asignar los valores a los parámetros de la consulta
-        pst.setString(1, name);   // Asignar el nombre
+        pst = con.prepareStatement(sql);
+        pst.setString(1, name);
         pst.setDate(2, sqlDateFrom);
         pst.setDate(3, sqlDateTo);
         pst.setString(4, type);
         pst.setString(5, season);
 
-        int rowsAffected = pst.executeUpdate(); // Ejecutar la consulta y guardar el número de filas afectadas
+        // Ejecutar la consulta
+        int rowsAffected = pst.executeUpdate();
 
-        
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
-            menu.actualizar();
-            this.dispose();
-            
+            menu.actualizar(); // Actualizar datos
+            this.dispose(); // Cerrar ventana
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
-    } catch (IllegalArgumentException ex) {
-        JOptionPane.showMessageDialog(null, ex.getMessage(), "Agregar registro", JOptionPane.WARNING_MESSAGE);
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } finally {
-        
         try {
             if (pst != null) {
                 pst.close();
@@ -273,11 +347,13 @@ public class AgregarMenus extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField jForDateFrom1;
     private javax.swing.JFormattedTextField jForDateTo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtSeason;
     private javax.swing.JTextField txtType1;

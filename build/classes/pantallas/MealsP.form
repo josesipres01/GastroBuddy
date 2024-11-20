@@ -326,6 +326,9 @@
             <Property name="toolTipText" type="java.lang.String" value="A&#xf1;o-Mes-Dia"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="MealsP_jForDateofmeal"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>

@@ -4,16 +4,21 @@
  */
 package pantallas;
 
+import config.ComboBoxItem;
 import config.Conexion;
+import java.awt.Color;
 import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -37,6 +42,9 @@ public class AgregarSales extends javax.swing.JDialog {
         this.tableModel = model; 
         this.sales = sales;
         initComponents();
+        poblarComboBoxes(); // Llama al método para llenar los combos        
+
+        
     }
 
     /**
@@ -54,13 +62,14 @@ public class AgregarSales extends javax.swing.JDialog {
         javax.swing.JLabel jLabel24 = new javax.swing.JLabel();
         javax.swing.JLabel jLabel22 = new javax.swing.JLabel();
         txtAmount = new javax.swing.JTextField();
-        txtMealsId = new javax.swing.JTextField();
         javax.swing.JLabel jLabel23 = new javax.swing.JLabel();
         javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
         dateOfMeal = new javax.swing.JFormattedTextField();
-        txtStaffId = new javax.swing.JTextField();
-        txtCustomer = new javax.swing.JTextField();
         javax.swing.JLabel jLabel26 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        comboStaff = new javax.swing.JComboBox<>();
+        comboMeals = new javax.swing.JComboBox<>();
+        comboCustomer = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(500, 200));
@@ -69,7 +78,7 @@ public class AgregarSales extends javax.swing.JDialog {
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("id_staff");
+        jLabel25.setText("staff_name");
 
         btnAgregar7.setBackground(new java.awt.Color(255, 153, 51));
         btnAgregar7.setText("Guardar");
@@ -90,6 +99,11 @@ public class AgregarSales extends javax.swing.JDialog {
         jLabel22.setText("Amount");
 
         txtAmount.setFocusCycleRoot(true);
+        txtAmount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAmountActionPerformed(evt);
+            }
+        });
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
@@ -100,11 +114,20 @@ public class AgregarSales extends javax.swing.JDialog {
         jLabel4.setText("date_of_meal");
 
         dateOfMeal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
-        dateOfMeal.setText("2024-10-19");
+        dateOfMeal.setToolTipText("Año-Mes-Dia");
+        dateOfMeal.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("id_customer");
+        jLabel26.setText("customer_name");
+
+        jLabel2.setText("2024-12-31");
+
+        comboStaff.setModel(new javax.swing.DefaultComboBoxModel<>());
+
+        comboMeals.setModel(new javax.swing.DefaultComboBoxModel<>());
+
+        comboCustomer.setModel(new javax.swing.DefaultComboBoxModel<>());
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -113,33 +136,35 @@ public class AgregarSales extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(76, 76, 76)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(comboMeals, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel23)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(104, 104, 104))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtStaffId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addGap(55, 55, 55))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel26)
+                                        .addComponent(comboCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(55, 55, 55)
+                                    .addComponent(btnAgregar7, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(txtCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(btnAgregar7, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(6, 6, 6)
-                                    .addComponent(jLabel22))
-                                .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(40, 40, 40)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(dateOfMeal, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4))))
-                    .addComponent(jLabel25)
-                    .addComponent(jLabel23)
-                    .addComponent(txtMealsId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel22)
+                                        .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(40, 40, 40)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(dateOfMeal, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel4))))
+                            .addComponent(jLabel25)
+                            .addComponent(comboStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(59, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,26 +176,28 @@ public class AgregarSales extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(dateOfMeal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE))
-                    .addComponent(txtAmount))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dateOfMeal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel23)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtMealsId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
+                        .addComponent(comboMeals, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel25)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtStaffId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel26)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnAgregar7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAgregar7, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(24, 24, 24))
         );
 
@@ -193,6 +220,10 @@ public class AgregarSales extends javax.swing.JDialog {
         agregarRegistro();
     }//GEN-LAST:event_btnAgregar7ActionPerformed
 
+    private void txtAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAmountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAmountActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -204,77 +235,220 @@ public class AgregarSales extends javax.swing.JDialog {
         });
     }
    
-   void agregarRegistro() {
-    if (txtMealsId.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "El campo nombre está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        return; 
-    }
-
-    Connection con = null; 
+void agregarRegistro() {
+    Connection con = null;
     PreparedStatement pst = null;
 
     try {
-        
-                int IdCustomer = Integer.parseInt(txtCustomer.getText());
-                int IdMeals = Integer.parseInt(txtMealsId.getText());
-                int IdStaff = Integer.parseInt(txtStaffId.getText());
-                double amount = Double.parseDouble(txtAmount.getText());
-                //dates
-                String dateTAdateTo = dateOfMeal.getText();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date dateDateTo = dateFormat.parse(dateTAdateTo);
-                java.sql.Date dateToSql = new java.sql.Date(dateDateTo.getTime());
+        // Validación de selección en los ComboBox
+        if (comboStaff.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Staff.", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (comboCustomer.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Cliente.", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (comboMeals.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Meal.", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-        
+        // Obtener los IDs seleccionados
+        int idStaff = ((ComboBoxItem) comboStaff.getSelectedItem()).getId();
+        int idCustomer = ((ComboBoxItem) comboCustomer.getSelectedItem()).getId();
+        int idMeal = ((ComboBoxItem) comboMeals.getSelectedItem()).getId();
+
+        System.out.println("ID Staff seleccionado: " + idStaff);
+        System.out.println("ID Cliente seleccionado: " + idCustomer);
+        System.out.println("ID Meal seleccionado: " + idMeal);
+
+        // Validar el monto
+        double amount;
+        if (txtAmount.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo 'Amount' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            try {
+                amount = Double.parseDouble(txtAmount.getText().trim());
+                if (amount < 0) {
+                    JOptionPane.showMessageDialog(null, "El campo 'Amount' no puede ser negativo.", "Validación", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "El campo 'Amount' debe ser un número válido.", "Validación", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        System.out.println("Monto seleccionado: " + amount);
+
+        // Validar la fecha
+        java.sql.Date dateToSql = null;
+        if (dateOfMeal.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo 'date_of_meal' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            try {
+                String dateInput = dateOfMeal.getText().trim();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date parsedDate = dateFormat.parse(dateInput);
+                dateToSql = new java.sql.Date(parsedDate.getTime());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese una fecha válida en formato YYYY-MM-DD.", "Validación", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        System.out.println("Fecha seleccionada: " + dateToSql);
+
         con = cn.getConnection();
-        
+        if (con != null && !con.isClosed()) {
+            System.out.println("La conexión está abierta antes de ejecutar la consulta.");
+        } else {
+            System.out.println("La conexión está cerrada antes de ejecutar la consulta.");
+            return;
+}
+
+        System.out.println("Conexión establecida correctamente: " + !con.isClosed());
+
         // Preparar la consulta SQL
         String sql = "INSERT INTO public.sales(amount, id_meals, id_staff, id_customer, date_of_meal) VALUES(?, ?, ?, ?, ?)";
-        pst = con.prepareStatement(sql); 
-        pst.setDouble(1, amount);   
-        pst.setInt(2,IdMeals );  
-        pst.setInt(3,IdStaff ); 
-        pst.setInt(4,IdCustomer ); 
+        pst = con.prepareStatement(sql);
+
+        // Asignar los valores a los parámetros de la consulta
+        pst.setDouble(1, amount);
+        pst.setInt(2, idMeal); // ID de la comida
+        pst.setInt(3, idStaff); // ID del staff
+        pst.setInt(4, idCustomer); // ID del cliente
         pst.setDate(5, dateToSql);
-        
-        int rowsAffected = pst.executeUpdate(); 
+
+        // Verificar estado de la conexión justo antes de ejecutar la consulta
+        if (con == null || con.isClosed()) {
+            System.out.println("La conexión está cerrada antes de ejecutar la consulta.");
+            return;
+        }
+
+        // Ejecutar la consulta
+        int rowsAffected = pst.executeUpdate();
+        System.out.println("Filas afectadas: " + rowsAffected);
 
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
-            sales.actualizar();
-            this.dispose();
-            
+            sales.actualizar(); // Actualizar la lista o vista
+            this.dispose(); // Cerrar el formulario
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
+        System.out.println("Error SQL: " + ex.getMessage());
         JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
-    } catch (IllegalArgumentException ex) {
-        JOptionPane.showMessageDialog(null, ex.getMessage(), "Agregar registro", JOptionPane.WARNING_MESSAGE);
     } catch (Exception e) {
+        System.out.println("Error inesperado: " + e.getMessage());
         JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } finally {
+    try {
+        if (pst != null) {
+            pst.close();
+        }
+        if (con != null && !con.isClosed()) {
+            System.out.println("Conexión cerrada correctamente.");
+            con.close();
+        }
+    } catch (SQLException e) {
+        System.out.println("Error al cerrar la conexión: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+}
+
+
+
+
+
+
+private void poblarComboBoxes() {
+    Connection con = null;
+    PreparedStatement pstStaff = null;
+    PreparedStatement pstCustomer = null;
+    PreparedStatement pstMeals = null;
+    ResultSet rsStaff = null;
+    ResultSet rsCustomer = null;
+    ResultSet rsMeals = null;
+
+    try {
+        con = cn.getConnection();
+        if (con == null) {
+            System.out.println("Error: No se pudo establecer la conexión con la base de datos.");
+            return;
+        }
+
+        // Poblar JComboBox para "Staff"
+        String sqlStaff = "SELECT id, first_name FROM staff";
+        pstStaff = con.prepareStatement(sqlStaff);
+        rsStaff = pstStaff.executeQuery();
+        while (rsStaff.next()) {
+            int id = rsStaff.getInt("id");
+            String nombre = rsStaff.getString("first_name");
+            comboStaff.addItem(new ComboBoxItem(id, nombre));
+            System.out.println("Staff agregado: ID = " + id + ", Nombre = " + nombre);
+        }
+
+        // Poblar JComboBox para "Customers"
+        String sqlCustomer = "SELECT id, name FROM customers";
+        pstCustomer = con.prepareStatement(sqlCustomer);
+        rsCustomer = pstCustomer.executeQuery();
+        while (rsCustomer.next()) {
+            int id = rsCustomer.getInt("id");
+            String nombre = rsCustomer.getString("name");
+            comboCustomer.addItem(new ComboBoxItem(id, nombre));
+            System.out.println("Cliente agregado: ID = " + id + ", Nombre = " + nombre);
+        }
+
+        // Poblar JComboBox para "Meals"
+        String sqlMeals = "SELECT id FROM meals";
+        pstMeals = con.prepareStatement(sqlMeals);
+        rsMeals = pstMeals.executeQuery();
+        while (rsMeals.next()) {
+            int id = rsMeals.getInt("id");
+            comboMeals.addItem(new ComboBoxItem(id, "ID: " + id)); // El texto será "ID: {id}"
+            System.out.println("Comida agregada: ID = " + id);
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al poblar los ComboBox: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error al poblar los ComboBox: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
         try {
-            if (pst != null) {
-                pst.close();
-            }
-            if (con != null && !con.isClosed()) {
-                con.close();
-            }
+            if (rsStaff != null) rsStaff.close();
+            if (pstStaff != null) pstStaff.close();
+            if (rsCustomer != null) rsCustomer.close();
+            if (pstCustomer != null) pstCustomer.close();
+            if (rsMeals != null) rsMeals.close();
+            if (pstMeals != null) pstMeals.close();
+            if (con != null && !con.isClosed()) con.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al cerrar la conexión: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
 
 
+
+
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<ComboBoxItem
+    > comboCustomer;
+    private javax.swing.JComboBox<ComboBoxItem> comboMeals;
+    private javax.swing.JComboBox<ComboBoxItem> comboStaff;
     private javax.swing.JFormattedTextField dateOfMeal;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtAmount;
-    private javax.swing.JTextField txtCustomer;
-    private javax.swing.JTextField txtMealsId;
-    private javax.swing.JTextField txtStaffId;
     // End of variables declaration//GEN-END:variables
 }

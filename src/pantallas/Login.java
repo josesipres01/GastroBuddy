@@ -49,6 +49,7 @@ public class Login extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(102, 102, 255));
         jLabel1.setText(" Gastro Buddy ");
 
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(1100, 750));
 
         jPanel5.setBackground(new java.awt.Color(102, 102, 255));
@@ -235,7 +236,7 @@ public class Login extends javax.swing.JPanel {
         } else {
             // Si la autenticación falla, mostrar un mensaje de error
             JOptionPane.showMessageDialog(this, "Wrong username or password. Please try again.");
-        }
+        }         
         
         
         

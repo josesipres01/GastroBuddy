@@ -5,6 +5,7 @@
 package pantallas;
 
 import config.Conexion;
+import java.awt.Color;
 import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +14,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -179,58 +182,90 @@ public class AgregarDishes extends javax.swing.JDialog {
             }
         });
     }
-      void agregarRegistro() {
-    if ((cBoxMealId.getSelectedItem() == null || cBoxMealId.getSelectedItem().toString().isEmpty())) {
-        JOptionPane.showMessageDialog(null, "El campo nombre está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    if ((cboxItemId.getSelectedItem() == null || cboxItemId.getSelectedItem().toString().isEmpty())) {
-        JOptionPane.showMessageDialog(null, "El campo de item está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        return; 
+    void agregarRegistro() {
+    boolean valid = true; 
+
+    // Validación del campo MealId
+    if (cBoxMealId.getSelectedItem() == null || cBoxMealId.getSelectedItem().toString().trim().isEmpty()) {
+        cBoxMealId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'meal_id' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        valid = false;
+    } else {
+        cBoxMealId.setBorder(UIManager.getBorder("ComboBox.border")); 
     }
 
-    Connection con = null; 
+    // Validación del campo ItemId
+    if (cboxItemId.getSelectedItem() == null || cboxItemId.getSelectedItem().toString().trim().isEmpty()) {
+        cboxItemId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'item_id' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        valid = false;
+    } else {
+        cboxItemId.setBorder(UIManager.getBorder("ComboBox.border")); 
+    }
+
+    // Validación del campo Quantity
+    if (txtQuantity.getText().trim().isEmpty()) {
+        txtQuantity.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'quantity' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        valid = false;
+    } else {
+        try {
+            int quantity = Integer.parseInt(txtQuantity.getText().trim());
+            if (quantity <= 0) {
+                throw new IllegalArgumentException("La cantidad debe ser un número positivo.");
+            }
+            txtQuantity.setBorder(UIManager.getBorder("TextField.border")); 
+        } catch (NumberFormatException e) {
+            txtQuantity.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            JOptionPane.showMessageDialog(null, "El campo 'quantity' debe ser un número válido.", "Validación", JOptionPane.WARNING_MESSAGE);
+            valid = false;
+        } catch (IllegalArgumentException e) {
+            txtQuantity.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Validación", JOptionPane.WARNING_MESSAGE);
+            valid = false;
+        }
+    }
+
+    // Si algún campo no es válido, no continuar con el registro
+    if (!valid) {
+        return;
+    }
+
+    Connection con = null;
     PreparedStatement pst = null;
 
     try {
-                String idMeal[] = cBoxMealId.getSelectedItem().toString().split("-");
-                int meals = Integer.parseInt(idMeal[0]);
-                 String idItem[] = cboxItemId.getSelectedItem().toString().split("-");
-                int items = Integer.parseInt(idItem[0]);
-                int quantity = Integer.parseInt(txtQuantity.getText());
-               
+        String idMeal[] = cBoxMealId.getSelectedItem().toString().split("-");
+        int meals = Integer.parseInt(idMeal[0]);
+        String idItem[] = cboxItemId.getSelectedItem().toString().split("-");
+        int items = Integer.parseInt(idItem[0]);
+        int quantity = Integer.parseInt(txtQuantity.getText().trim());
 
-        
         con = cn.getConnection();
-        
+
         // Preparar la consulta SQL
         String sql = "INSERT INTO public.meal_dishes(meal_id, item_id, quantity) VALUES(?, ?, ?)";
-        pst = con.prepareStatement(sql); 
+        pst = con.prepareStatement(sql);
         pst.setInt(1, meals);
         pst.setInt(2, items);
         pst.setInt(3, quantity);
 
-        
-        int rowsAffected = pst.executeUpdate(); 
+        int rowsAffected = pst.executeUpdate();
 
-        
+        // Confirmar si el registro fue exitoso
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
             dishes.actualizar();
             this.dispose();
-            
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
-    } catch (IllegalArgumentException ex) {
-        JOptionPane.showMessageDialog(null, ex.getMessage(), "Agregar registro", JOptionPane.WARNING_MESSAGE);
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } finally {
-        
         try {
             if (pst != null) {
                 pst.close();
@@ -243,6 +278,8 @@ public class AgregarDishes extends javax.swing.JDialog {
         }
     }
 }
+
+
       void generarMenus(){
         generarMenuMeals();
         generarMenuItem();

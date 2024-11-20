@@ -4,19 +4,26 @@
  */
 package pantallas;
 
+import static Adds.Connect.connection;
 import config.Conexion;
+import java.awt.Color;
 import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -68,6 +75,7 @@ public class AgregarMeals extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         javax.swing.JButton btnAgregar7 = new javax.swing.JButton();
         javax.swing.JLabel jLabel24 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(500, 200));
@@ -83,6 +91,25 @@ public class AgregarMeals extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("date_of_meal");
+
+        jForDateofmeal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+        jForDateofmeal.setToolTipText("Año-Mes-Dia");
+        jForDateofmeal.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jForDateofmealFocusLost(evt);
+            }
+        });
+        jForDateofmeal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jForDateofmealActionPerformed(evt);
+            }
+        });
+
+        txtCostofmeal.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCostofmealFocusLost(evt);
+            }
+        });
 
         cBoxCustId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         cBoxCustId.addActionListener(new java.awt.event.ActionListener() {
@@ -113,54 +140,69 @@ public class AgregarMeals extends javax.swing.JDialog {
         jLabel24.setForeground(new java.awt.Color(255, 153, 51));
         jLabel24.setText(" New Meal");
 
+        jLabel1.setText("2024-12-31");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addGap(82, 82, 82)
                         .addComponent(btnAgregar7, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCostofmeal, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cBoxCustId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3)
-                            .addComponent(cBoxStaffId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel25))
-                        .addGap(40, 40, 40)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jForDateofmeal, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))))
+                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jForDateofmeal, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtCostofmeal, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cBoxCustId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel3)
+                                        .addComponent(cBoxStaffId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel25))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(40, 40, 40)
+                                            .addComponent(jLabel4))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(76, 76, 76)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(37, 37, 37))))))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jForDateofmeal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cBoxStaffId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cBoxStaffId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jForDateofmeal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cBoxCustId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel25)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCostofmeal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addGap(25, 25, 25)))
+                .addComponent(cBoxCustId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCostofmeal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(btnAgregar7, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55))
@@ -189,6 +231,22 @@ public class AgregarMeals extends javax.swing.JDialog {
         agregarRegistro();
     }//GEN-LAST:event_btnAgregar7ActionPerformed
 
+    private void jForDateofmealFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jForDateofmealFocusLost
+        // TODO add your handling code here:     
+         
+           
+    }//GEN-LAST:event_jForDateofmealFocusLost
+
+    private void jForDateofmealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jForDateofmealActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jForDateofmealActionPerformed
+
+    private void txtCostofmealFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCostofmealFocusLost
+      
+    
+
+    }//GEN-LAST:event_txtCostofmealFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -200,59 +258,116 @@ public class AgregarMeals extends javax.swing.JDialog {
         });
     }
     
-     void agregarRegistro() {
-    if (txtCostofmeal.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "El campo nombre está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        return; 
+void agregarRegistro() {
+    boolean valid = true; // Control de validaciones
+
+    // Validación del campo Cost of Meal
+    if (txtCostofmeal.getText().trim().isEmpty()) {
+        txtCostofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'cost of meal' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        valid = false;
+    } else {
+        try {
+            double costOfMeal = Double.parseDouble(txtCostofmeal.getText().trim());
+            if (costOfMeal < 0) {
+                throw new IllegalArgumentException("cost of meal no puede ser negativo.");
+            }
+            txtCostofmeal.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
+        } catch (NumberFormatException e) {
+            txtCostofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            JOptionPane.showMessageDialog(null, "El campo 'cost of meal' debe contener un número válido.", "Validación", JOptionPane.WARNING_MESSAGE);
+            valid = false;
+        } catch (IllegalArgumentException e) {
+            txtCostofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Validación", JOptionPane.WARNING_MESSAGE);
+            valid = false;
+        }
     }
 
-    Connection con = null; 
+    // Validación del ComboBox StaffId
+    if (cBoxStaffId.getSelectedItem() == null || cBoxStaffId.getSelectedItem().toString().trim().isEmpty()) {
+        cBoxStaffId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'staff_id' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        valid = false;
+    } else {
+        cBoxStaffId.setBorder(UIManager.getBorder("ComboBox.border")); // Restaurar borde original
+    }
+
+    // Validación del ComboBox CustId
+    if (cBoxCustId.getSelectedItem() == null || cBoxCustId.getSelectedItem().toString().trim().isEmpty()) {
+        cBoxCustId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'customer_id' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        valid = false;
+    } else {
+        cBoxCustId.setBorder(UIManager.getBorder("ComboBox.border")); // Restaurar borde original
+    }
+
+    // Validación del campo jForDateofmeal
+    if (jForDateofmeal.getText().trim().isEmpty()) {
+        jForDateofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'date of meal' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        valid = false;
+    } else {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateFormat.setLenient(false); // Asegurarse de que la fecha sea estrictamente válida
+            dateFormat.parse(jForDateofmeal.getText().trim());
+            jForDateofmeal.setBorder(UIManager.getBorder("FormattedTextField.border")); // Restaurar borde original
+        } catch (ParseException e) {
+            jForDateofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            JOptionPane.showMessageDialog(null, "El campo 'date of meal' debe tener un formato válido (yyyy-MM-dd).", "Validación", JOptionPane.WARNING_MESSAGE);
+            valid = false;
+        }
+    }
+
+    // Detener el proceso si hay errores de validación
+    if (!valid) {
+        return;
+    }
+
+    Connection con = null;
     PreparedStatement pst = null;
 
     try {
-        
-                String idStaff[] = cBoxStaffId.getSelectedItem().toString().split("-");
-                String idCust[] = cBoxCustId.getSelectedItem().toString().split("-");
-                int customersId = Integer.parseInt(idCust[0]);
-                int staffId = Integer.parseInt(idStaff[0]);
-                double costOfMeal = Double.parseDouble(txtCostofmeal.getText());
-                String sqlDatetime = jForDateofmeal.getText();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = dateFormat.parse(sqlDatetime);
-                java.sql.Date dateSql = new java.sql.Date(date.getTime());
+        // Obtener valores de los combos y el texto
+        String idStaff[] = cBoxStaffId.getSelectedItem().toString().split("-");
+        String idCust[] = cBoxCustId.getSelectedItem().toString().split("-");
+        int customersId = Integer.parseInt(idCust[0]);
+        int staffId = Integer.parseInt(idStaff[0]);
+        double costOfMeal = Double.parseDouble(txtCostofmeal.getText().trim());
 
-       
+        // Convertir la fecha de la comida a formato SQL
+        String sqlDatetime = jForDateofmeal.getText();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = dateFormat.parse(sqlDatetime);
+        java.sql.Date dateSql = new java.sql.Date(date.getTime());
+
         con = cn.getConnection();
-        
+
         // Preparar la consulta SQL
         String sql = "INSERT INTO public.meals (date_of_meal, cost_of_meal, customers_id, staff_id) VALUES (?, ?, ?, ?)";
-        pst = con.prepareStatement(sql); // Aquí inicializas el PreparedStatement
-        pst.setDate(1, dateSql);   
-        pst.setDouble(2, costOfMeal );  
-        pst.setInt(3,customersId ); 
-        pst.setInt(4,staffId ); 
-       
-        
+        pst = con.prepareStatement(sql);
+        pst.setDate(1, dateSql);
+        pst.setDouble(2, costOfMeal);
+        pst.setInt(3, customersId);
+        pst.setInt(4, staffId);
+
+        // Ejecutar la consulta
         int rowsAffected = pst.executeUpdate();
 
-        
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
-            meals.actualizar();
-            this.dispose();
-            
+            meals.actualizar(); // Actualizar datos
+            this.dispose(); // Cerrar ventana
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
-    } catch (IllegalArgumentException ex) {
-        JOptionPane.showMessageDialog(null, ex.getMessage(), "Agregar registro", JOptionPane.WARNING_MESSAGE);
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } finally {
-       
         try {
             if (pst != null) {
                 pst.close();
@@ -265,6 +380,9 @@ public class AgregarMeals extends javax.swing.JDialog {
         }
     }
 }
+
+
+
       void generarMenus(){
         generarMenuStaff();
         generarMenuClientes();
@@ -319,6 +437,7 @@ public class AgregarMeals extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cBoxCustId;
     private javax.swing.JComboBox<String> cBoxStaffId;
     private javax.swing.JFormattedTextField jForDateofmeal;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;

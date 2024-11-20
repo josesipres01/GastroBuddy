@@ -7,6 +7,9 @@ package Main;
 
 import EnumPantalla.Pantalla;
 import java.awt.IllegalComponentStateException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import pantallas.CustomersP;
@@ -30,7 +33,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         boolean principal = true;
    
-    public VentanaPrincipal() {
+    public VentanaPrincipal() throws SQLException {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Recursos/gastroServerIcon.png")).getImage());
         setLocationRelativeTo(null);
@@ -185,7 +188,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * actualizarContenido() segun la pantalla seleccionada
      * @param p 
      */
-    public void setPantalla(Pantalla p){
+    public void setPantalla(Pantalla p) throws SQLException{
         if(p == Pantalla.PrincipalP){ this.actualizarContenido(new PrincipalP(this) ); principal=true;  }
         if(p == Pantalla.MealsP){ this.actualizarContenido(new MealsP(this)); principal=false; }
         if(p == Pantalla.StaffP){ this.actualizarContenido(new StaffP(this)); principal=false; }
@@ -224,7 +227,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaPrincipal().setVisible(true);
+                try {
+                    new VentanaPrincipal().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

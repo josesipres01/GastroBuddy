@@ -21,23 +21,20 @@ public class PrincipalP extends javax.swing.JPanel {
     /**
      * Creates new form PrincipalP
      */
-    public PrincipalP(VentanaPrincipal v) {
+    public PrincipalP(VentanaPrincipal v) throws SQLException {
         initComponents();
         this.ventana = v;
         checkEstado();
         
     }
 
-    void checkEstado (){
-        try {
-            if (cn.getEstado()){
-                labelEstado.setText("Estado de BD: Activo");
-            }else{
-                labelEstado.setText("Estado de BD: Inactiva");
-            }
-            cn.closeConnection();
-        } catch (SQLException ex) {
+    void checkEstado () throws SQLException{
+        if (cn.getEstado()){
+            labelEstado.setText("Estado de BD: Activo");
+        }else{
+            labelEstado.setText("Estado de BD: Inactiva");
         }
+        cn.closeConnection();
     }
     
     /**
