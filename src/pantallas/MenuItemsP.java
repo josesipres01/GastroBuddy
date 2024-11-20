@@ -373,7 +373,7 @@ public class MenuItemsP extends javax.swing.JPanel {
                     con = cn.getConnection();
                     st = con.createStatement();
                     st.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null, "Item Deleted");
+                    JOptionPane.showMessageDialog(null, "Menu Deleted");
                     limpiarTexts();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error al borrar el registro: " + e.getMessage(), "Borrar registro", JOptionPane.ERROR_MESSAGE);
