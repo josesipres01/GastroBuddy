@@ -33,11 +33,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         boolean principal = true;
    
-    public VentanaPrincipal() throws SQLException {
-        initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/Recursos/gastroServerIcon.png")).getImage());
-        setLocationRelativeTo(null);
-        this.setContentPane(new PrincipalP(this));
+    public VentanaPrincipal() {
+            try {
+                initComponents();
+                setIconImage(new ImageIcon(getClass().getResource("/Recursos/gastroServerIcon.png")).getImage());
+                setLocationRelativeTo(null);
+                this.setContentPane(new PrincipalP(this));
+            } catch (SQLException ex) {
+                Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 
 
@@ -188,8 +192,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * actualizarContenido() segun la pantalla seleccionada
      * @param p 
      */
-    public void setPantalla(Pantalla p) throws SQLException{
-        if(p == Pantalla.PrincipalP){ this.actualizarContenido(new PrincipalP(this) ); principal=true;  }
+    public void setPantalla(Pantalla p){
+        if(p == Pantalla.PrincipalP){ try {
+            this.actualizarContenido(new PrincipalP(this) ); principal=true;
+            } catch (SQLException ex) {
+                Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+ }
         if(p == Pantalla.MealsP){ this.actualizarContenido(new MealsP(this)); principal=false; }
         if(p == Pantalla.StaffP){ this.actualizarContenido(new StaffP(this)); principal=false; }
         if(p == Pantalla.MenusP){ this.actualizarContenido(new MenuP(this)); principal=false; }
@@ -227,11 +236,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new VentanaPrincipal().setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new VentanaPrincipal().setVisible(true);
             }
         });
     }
