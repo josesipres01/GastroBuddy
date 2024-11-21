@@ -259,10 +259,6 @@ void agregarRegistro() {
         int idCustomer = ((ComboBoxItem) comboCustomer.getSelectedItem()).getId();
         int idMeal = ((ComboBoxItem) comboMeals.getSelectedItem()).getId();
 
-        System.out.println("ID Staff seleccionado: " + idStaff);
-        System.out.println("ID Cliente seleccionado: " + idCustomer);
-        System.out.println("ID Meal seleccionado: " + idMeal);
-
         // Validar el monto
         double amount;
         if (txtAmount.getText().trim().isEmpty()) {
@@ -281,8 +277,6 @@ void agregarRegistro() {
             }
         }
 
-        System.out.println("Monto seleccionado: " + amount);
-
         // Validar la fecha
         java.sql.Date dateToSql = null;
         if (dateOfMeal.getText().trim().isEmpty()) {
@@ -300,17 +294,13 @@ void agregarRegistro() {
             }
         }
 
-        System.out.println("Fecha seleccionada: " + dateToSql);
-
+        // Establecer la conexión
+        Conexion cn = new Conexion();
         con = cn.getConnection();
-        if (con != null && !con.isClosed()) {
-            System.out.println("La conexión está abierta antes de ejecutar la consulta.");
-        } else {
-            System.out.println("La conexión está cerrada antes de ejecutar la consulta.");
+        if (con == null) {
+            JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión con la base de datos.", "Error de conexión", JOptionPane.ERROR_MESSAGE);
             return;
-}
-
-        System.out.println("Conexión establecida correctamente: " + !con.isClosed());
+        }
 
         // Preparar la consulta SQL
         String sql = "INSERT INTO public.sales(amount, id_meals, id_staff, id_customer, date_of_meal) VALUES(?, ?, ?, ?, ?)";
@@ -318,24 +308,16 @@ void agregarRegistro() {
 
         // Asignar los valores a los parámetros de la consulta
         pst.setDouble(1, amount);
-        pst.setInt(2, idMeal); // ID de la comida
-        pst.setInt(3, idStaff); // ID del staff
-        pst.setInt(4, idCustomer); // ID del cliente
+        pst.setInt(2, idMeal);
+        pst.setInt(3, idStaff);
+        pst.setInt(4, idCustomer);
         pst.setDate(5, dateToSql);
-
-        // Verificar estado de la conexión justo antes de ejecutar la consulta
-        if (con == null || con.isClosed()) {
-            System.out.println("La conexión está cerrada antes de ejecutar la consulta.");
-            return;
-        }
 
         // Ejecutar la consulta
         int rowsAffected = pst.executeUpdate();
-        System.out.println("Filas afectadas: " + rowsAffected);
-
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
-            sales.actualizar(); // Actualizar la lista o vista
+            sales.actualizar();
             this.dispose(); // Cerrar el formulario
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
@@ -343,26 +325,20 @@ void agregarRegistro() {
 
     } catch (SQLException ex) {
         System.out.println("Error SQL: " + ex.getMessage());
-        JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } catch (Exception e) {
         System.out.println("Error inesperado: " + e.getMessage());
-        JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } finally {
-    try {
-        if (pst != null) {
-            pst.close();
+        try {
+            if (pst != null) pst.close();
+            if (con != null && !con.isClosed()) con.close();
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar la conexión: " + e.getMessage());
         }
-        if (con != null && !con.isClosed()) {
-            System.out.println("Conexión cerrada correctamente.");
-            con.close();
-        }
-    } catch (SQLException e) {
-        System.out.println("Error al cerrar la conexión: " + e.getMessage());
-        JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     }
 }
 
-}
 
 
 

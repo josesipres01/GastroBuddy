@@ -7,7 +7,6 @@ package Main;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.JFrame;
-import javax.swing.JRootPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import pantallas.Login;
@@ -17,9 +16,7 @@ import pantallas.Login;
  * @author luisi
  */
 public class Main {
-    public static void main(String[] args) {
-        
-  
+    public static void main(String[] args) {  
     
         
         // Crear un JFrame
@@ -50,6 +47,7 @@ public class Main {
             System.err.println( "[ERROR]: No fue posible establecer el L&F" );
         }
 
+        
 
     }
 
