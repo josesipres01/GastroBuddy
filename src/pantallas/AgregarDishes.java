@@ -4,6 +4,7 @@
  */
 package pantallas;
 
+import config.ComboBoxItem;
 import config.Conexion;
 import java.awt.Color;
 import java.awt.Frame;
@@ -60,9 +61,9 @@ public class AgregarDishes extends javax.swing.JDialog {
         javax.swing.JButton btnAgregar7 = new javax.swing.JButton();
         javax.swing.JLabel jLabel24 = new javax.swing.JLabel();
         txtQuantity = new javax.swing.JTextField();
-        cBoxMealId = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         cboxItemId = new javax.swing.JComboBox<>();
+        cBoxMealId = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBounds(new java.awt.Rectangle(500, 200, 200, 200));
@@ -92,13 +93,13 @@ public class AgregarDishes extends javax.swing.JDialog {
         jLabel24.setForeground(new java.awt.Color(255, 153, 51));
         jLabel24.setText(" New Dishe");
 
-        cBoxMealId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("meal_id");
 
         cboxItemId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+
+        cBoxMealId.setModel(new javax.swing.DefaultComboBoxModel<>());
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,20 +107,18 @@ public class AgregarDishes extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(123, 123, 123)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel25)
-                            .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel25)
+                        .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(8, 8, 8)
                                 .addComponent(jLabel3))
                             .addComponent(jLabel5)
-                            .addComponent(cBoxMealId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboxItemId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboxItemId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cBoxMealId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(8, 8, 8)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -182,8 +181,8 @@ public class AgregarDishes extends javax.swing.JDialog {
             }
         });
     }
-    void agregarRegistro() {
-    boolean valid = true; 
+void agregarRegistro() {
+    boolean valid = true;
 
     // Validación del campo MealId
     if (cBoxMealId.getSelectedItem() == null || cBoxMealId.getSelectedItem().toString().trim().isEmpty()) {
@@ -191,7 +190,7 @@ public class AgregarDishes extends javax.swing.JDialog {
         JOptionPane.showMessageDialog(null, "El campo 'meal_id' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
         valid = false;
     } else {
-        cBoxMealId.setBorder(UIManager.getBorder("ComboBox.border")); 
+        cBoxMealId.setBorder(UIManager.getBorder("ComboBox.border"));
     }
 
     // Validación del campo ItemId
@@ -200,21 +199,22 @@ public class AgregarDishes extends javax.swing.JDialog {
         JOptionPane.showMessageDialog(null, "El campo 'item_id' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
         valid = false;
     } else {
-        cboxItemId.setBorder(UIManager.getBorder("ComboBox.border")); 
+        cboxItemId.setBorder(UIManager.getBorder("ComboBox.border"));
     }
 
     // Validación del campo Quantity
+    int quantity = 0;
     if (txtQuantity.getText().trim().isEmpty()) {
         txtQuantity.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         JOptionPane.showMessageDialog(null, "El campo 'quantity' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
         valid = false;
     } else {
         try {
-            int quantity = Integer.parseInt(txtQuantity.getText().trim());
+            quantity = Integer.parseInt(txtQuantity.getText().trim());
             if (quantity <= 0) {
                 throw new IllegalArgumentException("La cantidad debe ser un número positivo.");
             }
-            txtQuantity.setBorder(UIManager.getBorder("TextField.border")); 
+            txtQuantity.setBorder(UIManager.getBorder("TextField.border"));
         } catch (NumberFormatException e) {
             txtQuantity.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
             JOptionPane.showMessageDialog(null, "El campo 'quantity' debe ser un número válido.", "Validación", JOptionPane.WARNING_MESSAGE);
@@ -235,18 +235,25 @@ public class AgregarDishes extends javax.swing.JDialog {
     PreparedStatement pst = null;
 
     try {
-        String idMeal[] = cBoxMealId.getSelectedItem().toString().split("-");
-        int meals = Integer.parseInt(idMeal[0]);
-        String idItem[] = cboxItemId.getSelectedItem().toString().split("-");
+        int idMeal = ((ComboBoxItem) cBoxMealId.getSelectedItem()).getId();
+        String[] idItem = cboxItemId.getSelectedItem().toString().split("-");
+        if (idItem.length < 1) {
+            JOptionPane.showMessageDialog(null, "Formato inválido en 'item_id'.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         int items = Integer.parseInt(idItem[0]);
-        int quantity = Integer.parseInt(txtQuantity.getText().trim());
 
+        Conexion cn = new Conexion();
         con = cn.getConnection();
+        if (con == null) {
+            JOptionPane.showMessageDialog(null, "Error al establecer la conexión con la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         // Preparar la consulta SQL
         String sql = "INSERT INTO public.meal_dishes(meal_id, item_id, quantity) VALUES(?, ?, ?)";
         pst = con.prepareStatement(sql);
-        pst.setInt(1, meals);
+        pst.setInt(1, idMeal);
         pst.setInt(2, items);
         pst.setInt(3, quantity);
 
@@ -267,12 +274,8 @@ public class AgregarDishes extends javax.swing.JDialog {
         JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } finally {
         try {
-            if (pst != null) {
-                pst.close();
-            }
-            if (con != null && !con.isClosed()) {
-                con.close();
-            }
+            if (pst != null) pst.close();
+            if (con != null && !con.isClosed()) con.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
         }
@@ -281,32 +284,48 @@ public class AgregarDishes extends javax.swing.JDialog {
 
 
       void generarMenus(){
-        generarMenuMeals();
+        poblarComboBoxMeals();
         generarMenuItem();
         
     }
     
-    public void generarMenuMeals(){
-        //
-        try{
-            Conexion cn = new Conexion();
-            Connection con;
-            Statement st;
-            ResultSet rs;
+  private void poblarComboBoxMeals() {
+    Connection con = null;
+    PreparedStatement pstMeals = null;
+    ResultSet rsMeals = null;
 
-            String sql = "SELECT id FROM meals;";
-            con = cn.getConnection();
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
+    try {
+        con = cn.getConnection();
+        if (con == null) {
+            System.out.println("Error: No se pudo establecer la conexión con la base de datos.");
+            return;
+        }
 
-            while (rs.next()) {
-                cBoxMealId.addItem(rs.getString(1));
-                hashMap.put(rs.getInt(1), "-" + rs.getString(2));
-            }
+         // Poblar JComboBox para "Meals"
+        String sqlMeals = "SELECT id FROM meals";
+        pstMeals = con.prepareStatement(sqlMeals);
+        rsMeals = pstMeals.executeQuery();
+        while (rsMeals.next()) {
+            int id = rsMeals.getInt("id");
+            cBoxMealId.addItem(new ComboBoxItem(id, "ID: " + id)); // El texto será "ID: {id}"
+            System.out.println("Comida agregada: ID = " + id);
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al poblar el ComboBox: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error al poblar los ComboBox: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            if (rsMeals != null) rsMeals.close();
+            if (pstMeals != null) pstMeals.close();
+            if (con != null && !con.isClosed()) con.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error al cerrar la conexión: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+}
+
     
         public void generarMenuItem(){
         //
@@ -332,7 +351,7 @@ public class AgregarDishes extends javax.swing.JDialog {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cBoxMealId;
+    private javax.swing.JComboBox<ComboBoxItem> cBoxMealId;
     private javax.swing.JComboBox<String> cboxItemId;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
