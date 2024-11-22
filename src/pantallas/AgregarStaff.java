@@ -47,8 +47,8 @@ public class AgregarStaff extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
         txtLastName = new javax.swing.JTextField();
@@ -57,14 +57,14 @@ public class AgregarStaff extends javax.swing.JDialog {
         txtRoleCode = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
+        jLabel1.setFont(new java.awt.Font("Calling Heart", 0, 86)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 153, 51));
+        jLabel1.setText(" New Staff");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(500, 200));
 
         jPanel1.setBackground(new java.awt.Color(81, 81, 201));
-
-        jLabel1.setFont(new java.awt.Font("Calling Heart", 0, 86)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 153, 51));
-        jLabel1.setText(" New Staff");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -104,21 +104,14 @@ public class AgregarStaff extends javax.swing.JDialog {
                     .addComponent(txtRoleCode, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(159, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(113, 113, 113)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -166,61 +159,105 @@ public class AgregarStaff extends javax.swing.JDialog {
     }
    
    void agregarRegistro() {
-    if (txtFirstName.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "El campo nombre está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+    // Verificar que el campo de nombre no esté vacío
+    if (txtFirstName.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "El campo 'First Name' está vacío. Por favor, ingréselo.", 
+                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    Connection con = null; 
+    // Verificar que el campo de apellido no esté vacío
+    if (txtLastName.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "El campo 'Last Name' está vacío. Por favor, ingréselo.", 
+                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validar que First Name solo contenga letras
+    if (!txtFirstName.getText().trim().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+        JOptionPane.showMessageDialog(null, "El campo 'First Name' solo debe contener texto.", 
+                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validar que Last Name solo contenga letras
+    if (!txtLastName.getText().trim().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+        JOptionPane.showMessageDialog(null, "El campo 'Last Name' solo debe contener texto.", 
+                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Verificar que el campo de código no esté vacío
+    if (txtRoleCode.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "El campo 'Role Code' está vacío. Por favor, ingréselo.", 
+                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validar que el código del rol sea numérico
+    int roleCode;
+    try {
+        roleCode = Integer.parseInt(txtRoleCode.getText().trim());
+        if (roleCode <= 0) {
+            JOptionPane.showMessageDialog(null, "El 'Role Code' debe ser un número mayor que 0.", 
+                                          "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "El 'Role Code' debe ser un número válido.", 
+                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    Connection con = null;
     PreparedStatement pst = null;
 
     try {
-       
-        String first_name = txtFirstName.getText();
-        String last_name = txtLastName.getText();
-        String code = txtRoleCode.getText();
+        // Obtener los valores de los campos
+        String first_name = txtFirstName.getText().trim();
+        String last_name = txtLastName.getText().trim();
 
+        // Establecer conexión con la base de datos
         con = cn.getConnection();
-        
-        String sql = "INSERT INTO public.staff (first_name, last_name, role_code) VALUES (?, ?, ?)";
-        pst = con.prepareStatement(sql); // Aquí inicializas el PreparedStatement
 
-        // Asignar los valores a los parámetros de la consulta
-        pst.setString(1, first_name);   // Asignar el nombre
-        pst.setString(2, last_name);   // Asignar el apellido
-        pst.setInt(3, Integer.parseInt(code));  // Convertir code a entero antes de insertarlo
-        
-        int rowsAffected = pst.executeUpdate(); 
-        
+        // Preparar consulta SQL
+        String sql = "INSERT INTO public.staff (first_name, last_name, role_code) VALUES (?, ?, ?)";
+        pst = con.prepareStatement(sql);
+
+        // Asignar valores a los parámetros de la consulta
+        pst.setString(1, first_name);
+        pst.setString(2, last_name);
+        pst.setInt(3, roleCode);
+
+        // Ejecutar la consulta
+        int rowsAffected = pst.executeUpdate();
+
+        // Verificar si el registro fue exitoso
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
-            staff.actualizar();
-            this.dispose();
-            
+            JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", 
+                                          "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
+            staff.actualizar(); // Actualizar la tabla en la pantalla principal
+            this.dispose(); // Cerrar el diálogo
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", 
+                                          "Agregar registro", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
-    } catch (IllegalArgumentException ex) {
-        JOptionPane.showMessageDialog(null, ex.getMessage(), "Agregar registro", JOptionPane.WARNING_MESSAGE);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Error en la base de datos: " + ex.getMessage(), 
+                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } finally {
-        // Cierra el PreparedStatement y la conexión
+        // Cerrar el PreparedStatement y la conexión
         try {
-            if (pst != null) {
-                pst.close();
-            }
-            if (con != null && !con.isClosed()) {
-                con.close();
-            }
+            if (pst != null) pst.close();
+            if (con != null && !con.isClosed()) con.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), 
+                                          "Agregar registro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -187,7 +187,7 @@ void agregarRegistro() {
     // Validación del campo MealId
     if (cBoxMealId.getSelectedItem() == null || cBoxMealId.getSelectedItem().toString().trim().isEmpty()) {
         cBoxMealId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'meal_id' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'meal_id' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         cBoxMealId.setBorder(UIManager.getBorder("ComboBox.border"));
@@ -196,7 +196,7 @@ void agregarRegistro() {
     // Validación del campo ItemId
     if (cboxItemId.getSelectedItem() == null || cboxItemId.getSelectedItem().toString().trim().isEmpty()) {
         cboxItemId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'item_id' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'item_id' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         cboxItemId.setBorder(UIManager.getBorder("ComboBox.border"));
@@ -206,7 +206,7 @@ void agregarRegistro() {
     int quantity = 0;
     if (txtQuantity.getText().trim().isEmpty()) {
         txtQuantity.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'quantity' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'quantity' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         try {
@@ -217,11 +217,11 @@ void agregarRegistro() {
             txtQuantity.setBorder(UIManager.getBorder("TextField.border"));
         } catch (NumberFormatException e) {
             txtQuantity.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, "El campo 'quantity' debe ser un número válido.", "Validación", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El campo 'quantity' debe ser un número válido.", "Validación", JOptionPane.ERROR_MESSAGE);
             valid = false;
         } catch (IllegalArgumentException e) {
             txtQuantity.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Validación", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Validación", JOptionPane.ERROR_MESSAGE);
             valid = false;
         }
     }

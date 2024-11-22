@@ -230,25 +230,35 @@ public class AgregarMenus extends javax.swing.JDialog {
     // Validación del campo Nombre
     if (txtName.getText().trim().isEmpty()) {
         txtName.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Menu_name' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'Menu_name' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         txtName.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
     }
 
     // Validación del campo Tipo
-    if (txtType1.getText().trim().isEmpty()) {
+    String type = txtType1.getText().trim();
+    if (type.isEmpty()) {
         txtType1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Type' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'Type' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        valid = false;
+    } else if (!type.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) { // Solo letras
+        txtType1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'Type' solo debe contener texto.", "Validación", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         txtType1.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
     }
 
     // Validación del campo Temporada
-    if (txtSeason.getText().trim().isEmpty()) {
+    String season = txtSeason.getText().trim();
+    if (season.isEmpty()) {
         txtSeason.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Season' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'Season' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        valid = false;
+    } else if (!season.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) { // Solo letras
+        txtSeason.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'Season' solo debe contener texto.", "Validación", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         txtSeason.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
@@ -258,7 +268,7 @@ public class AgregarMenus extends javax.swing.JDialog {
     Date dateDateFrom = null;
     if (jForDateFrom1.getText().trim().isEmpty()) {
         jForDateFrom1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'available_date_from' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'available_date_from' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         try {
@@ -267,7 +277,7 @@ public class AgregarMenus extends javax.swing.JDialog {
             jForDateFrom1.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
         } catch (ParseException e) {
             jForDateFrom1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, "El campo 'available_date_from' debe tener un formato válido (yyyy-MM-dd).", "Validación", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El campo 'available_date_from' debe tener un formato válido (yyyy-MM-dd).", "Validación", JOptionPane.ERROR_MESSAGE);
             valid = false;
         }
     }
@@ -276,7 +286,7 @@ public class AgregarMenus extends javax.swing.JDialog {
     Date dateDateTo = null;
     if (jForDateTo.getText().trim().isEmpty()) {
         jForDateTo.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'available_date_to es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'available_date_to' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         try {
@@ -285,7 +295,7 @@ public class AgregarMenus extends javax.swing.JDialog {
             jForDateTo.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
         } catch (ParseException e) {
             jForDateTo.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, "El campo 'available_date_to' debe tener un formato válido (yyyy-MM-dd).", "Validación", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El campo 'available_date_to' debe tener un formato válido (yyyy-MM-dd).", "Validación", JOptionPane.ERROR_MESSAGE);
             valid = false;
         }
     }
@@ -305,8 +315,6 @@ public class AgregarMenus extends javax.swing.JDialog {
 
         // Obtener valores de los campos
         String name = txtName.getText().trim();
-        String type = txtType1.getText().trim();
-        String season = txtSeason.getText().trim();
 
         // Establecer conexión
         con = cn.getConnection();

@@ -159,69 +159,65 @@ public class AgregarRoles extends javax.swing.JDialog {
         });
     }
     
-void agregarRegistro() {
-    if (txtName7.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "El campo nombre está vacío. Por favor, ingréselo.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
-        return; // Salir del método si el nombre está vacío
+ void agregarRegistro() {
+    String name = txtName7.getText().trim(); // Elimina espacios en blanco
+    String descrip = txtDescription.getText().trim(); // Elimina espacios en blanco
+
+    // Validar que los campos no estén vacíos
+    if (name.isEmpty() || descrip.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        return; // Salir del método si los campos están vacíos
     }
 
-    Connection con = null; // Asegúrate de que la conexión sea local
+    // Validar que solo contengan letras (incluye acentos y espacios para nombres)
+    if (!name.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+        JOptionPane.showMessageDialog(null, "El campo 'Role name' solo debe contener texto.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        return; // Salir del método si el nombre no es válido
+    }
+
+    if (!descrip.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+        JOptionPane.showMessageDialog(null, "El campo 'Description' solo debe contener texto.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        return; // Salir del método si la descripción no es válida
+    }
+
+    Connection con = null;
     PreparedStatement pst = null;
 
     try {
-        String name = txtName7.getText();
-        String descrip = txtDescription.getText();
-
-        // Si la descripción está vacía, asignar un valor predeterminado
-        if (descrip.isEmpty()) {
-            descrip = "Sin descripción"; 
-        }
-
         // Verifica la conexión a la base de datos
         con = cn.getConnection();
         
         // Preparar la consulta SQL
         String sql = "INSERT INTO reff_staff_roles (role_name, role_description) VALUES (?, ?)";
-        pst = con.prepareStatement(sql); // Aquí inicializas el PreparedStatement
+        pst = con.prepareStatement(sql);
 
         // Asignar los valores a los parámetros de la consulta
-        pst.setString(1, name);   // Asignar el nombre
-        pst.setString(2, descrip); // Asignar la descripción, incluso si es "Sin descripción"
-        int rowsAffected = pst.executeUpdate(); // Ejecutar la consulta y guardar el número de filas afectadas
+        pst.setString(1, name);
+        pst.setString(2, descrip);
+        int rowsAffected = pst.executeUpdate();
 
-        // Si rowsAffected es mayor que 0, significa que la inserción fue exitosa
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
-            roles.actualizar(); // Llamar al método para actualizar la lista o vista
-            this.dispose(); // Cerrar el formulario
+            roles.actualizar();
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
-    } catch (IllegalArgumentException ex) {
-        JOptionPane.showMessageDialog(null, ex.getMessage(), "Agregar registro", JOptionPane.WARNING_MESSAGE);
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } finally {
-        // Cierra el PreparedStatement y la conexión
         try {
-            if (pst != null) {
-                pst.close();
-            }
-            if (con != null && !con.isClosed()) {
-                con.close();
-            }
+            if (pst != null) pst.close();
+            if (con != null && !con.isClosed()) con.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
         }
     }
-}
-
-
-
-
+}   
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar7;
     private javax.swing.JLabel jLabel22;

@@ -187,9 +187,15 @@ void agregarRegistro() {
     boolean valid = true; // Variable para controlar si los datos son válidos
 
     // Validación del campo Nombre
-    if (txtName.getText().isEmpty()) {
+    String name = txtName.getText().trim();
+    if (name.isEmpty()) {
         txtName.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Name' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'Name' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        txtName.requestFocus();
+        valid = false;
+    } else if (!name.matches("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]+$")) { // Validar solo letras y espacios
+        txtName.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "El campo 'Name' solo puede contener texto.", "Validación", JOptionPane.ERROR_MESSAGE);
         txtName.requestFocus();
         valid = false;
     } else {
@@ -197,15 +203,15 @@ void agregarRegistro() {
     }
 
     // Validación del campo Teléfono
-    String phone = txtPhone.getText();
+    String phone = txtPhone.getText().trim();
     if (phone.isEmpty()) {
         txtPhone.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Phone' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'Phone' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
         txtPhone.requestFocus();
         valid = false;
     } else if (!phone.matches("\\d{10}")) { // Validar que el teléfono tenga exactamente 10 dígitos
         txtPhone.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Phone' debe contener exactamente 10 dígitos.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'Phone' debe contener exactamente 10 dígitos.", "Validación", JOptionPane.ERROR_MESSAGE);
         txtPhone.requestFocus();
         valid = false;
     } else {
@@ -221,17 +227,9 @@ void agregarRegistro() {
     PreparedStatement pst = null;
 
     try {
-        String name = txtName.getText();
-        
         // Convertir el valor de phone a entero dentro de un bloque try-catch
-        double phoneDouble = 0;
-        try {
-            phoneDouble = Double.parseDouble(phone); // Intentar convertir el teléfono a entero
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "El teléfono debe ser un número válido.", "Validación", JOptionPane.WARNING_MESSAGE);
-            return; // Salir del método si no es un número válido
-        }
-        
+        double phoneDouble = Double.parseDouble(phone);
+
         con = cn.getConnection();
 
         // Preparar la consulta SQL
@@ -240,7 +238,7 @@ void agregarRegistro() {
 
         // Asignar valores a los parámetros
         pst.setString(1, name);
-        pst.setDouble(2, phoneDouble); // Mandar el teléfono como entero
+        pst.setDouble(2, phoneDouble);
 
         int rowsAffected = pst.executeUpdate();
 
@@ -255,6 +253,8 @@ void agregarRegistro() {
 
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "El teléfono debe ser un número válido.", "Validación", JOptionPane.ERROR_MESSAGE);
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
     } finally {
@@ -271,6 +271,7 @@ void agregarRegistro() {
         }
     }
 }
+
 
 
 

@@ -242,15 +242,15 @@ void agregarRegistro() {
     try {
         // Validación de selección en los ComboBox
         if (comboStaff.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Staff.", "Validación", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Staff.", "Validación", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (comboCustomer.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Cliente.", "Validación", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Cliente.", "Validación", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (comboMeals.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Meal.", "Validación", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Meal.", "Validación", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -262,7 +262,7 @@ void agregarRegistro() {
         // Validar el monto
         double amount;
         if (txtAmount.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El campo 'Amount' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El campo 'Amount' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
             try {
@@ -280,7 +280,7 @@ void agregarRegistro() {
         // Validar la fecha
         java.sql.Date dateToSql = null;
         if (dateOfMeal.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El campo 'date_of_meal' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El campo 'date_of_meal' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
             try {

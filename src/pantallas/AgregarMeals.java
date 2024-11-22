@@ -264,7 +264,7 @@ void agregarRegistro() {
     // Validación del campo Cost of Meal
     if (txtCostofmeal.getText().trim().isEmpty()) {
         txtCostofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'cost of meal' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'cost of meal' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         try {
@@ -275,11 +275,11 @@ void agregarRegistro() {
             txtCostofmeal.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
         } catch (NumberFormatException e) {
             txtCostofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, "El campo 'cost of meal' debe contener un número válido.", "Validación", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El campo 'cost of meal' debe contener un número válido.", "Validación", JOptionPane.ERROR_MESSAGE);
             valid = false;
         } catch (IllegalArgumentException e) {
             txtCostofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Validación", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Validación", JOptionPane.ERROR_MESSAGE);
             valid = false;
         }
     }
@@ -287,7 +287,7 @@ void agregarRegistro() {
     // Validación del ComboBox StaffId
     if (cBoxStaffId.getSelectedItem() == null || cBoxStaffId.getSelectedItem().toString().trim().isEmpty()) {
         cBoxStaffId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'staff_id' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'staff_id' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         cBoxStaffId.setBorder(UIManager.getBorder("ComboBox.border")); // Restaurar borde original
@@ -296,7 +296,7 @@ void agregarRegistro() {
     // Validación del ComboBox CustId
     if (cBoxCustId.getSelectedItem() == null || cBoxCustId.getSelectedItem().toString().trim().isEmpty()) {
         cBoxCustId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'customer_id' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'customer_id' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         cBoxCustId.setBorder(UIManager.getBorder("ComboBox.border")); // Restaurar borde original
@@ -305,7 +305,7 @@ void agregarRegistro() {
     // Validación del campo jForDateofmeal
     if (jForDateofmeal.getText().trim().isEmpty()) {
         jForDateofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'date of meal' es obligatorio.", "Validación", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El campo 'date of meal' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         try {
@@ -315,7 +315,7 @@ void agregarRegistro() {
             jForDateofmeal.setBorder(UIManager.getBorder("FormattedTextField.border")); // Restaurar borde original
         } catch (ParseException e) {
             jForDateofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, "El campo 'date of meal' debe tener un formato válido (yyyy-MM-dd).", "Validación", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El campo 'date of meal' debe tener un formato válido (yyyy-MM-dd).", "Validación", JOptionPane.ERROR_MESSAGE);
             valid = false;
         }
     }
