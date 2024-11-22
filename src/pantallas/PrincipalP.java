@@ -8,6 +8,8 @@ import EnumPantalla.Pantalla;
 import Main.VentanaPrincipal;
 import config.Conexion;
 import java.sql.SQLException;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -59,6 +61,7 @@ public class PrincipalP extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         labelEstado = new javax.swing.JLabel();
+        btncerrar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -224,21 +227,33 @@ public class PrincipalP extends javax.swing.JPanel {
         labelEstado.setFont(new java.awt.Font("Juicebox", 0, 24)); // NOI18N
         labelEstado.setForeground(new java.awt.Color(255, 255, 255));
 
+        btncerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/salir-alt (2).png"))); // NOI18N
+        btncerrar.setPreferredSize(new java.awt.Dimension(50, 50));
+        btncerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncerrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(779, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btncerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(740, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btncerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 150));
@@ -330,6 +345,38 @@ public class PrincipalP extends javax.swing.JPanel {
         ventana.setPantalla(Pantalla.Customers);
     }//GEN-LAST:event_btnCustomersActionPerformed
 
+    private void btncerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncerrarActionPerformed
+        // TODO add your handling code here:
+           int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas cerrar sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    ventana.dispose(); // Cierra la ventana actual
+                    abrirLogin(); // Redirige al login
+                }
+        
+    }//GEN-LAST:event_btncerrarActionPerformed
+
+     private void abrirLogin() {
+   // Crear un JFrame
+        JFrame frame = new JFrame("Login Screen");
+        
+        // Crear una instancia del panel Login
+        Login loginPanel = new Login();
+        
+        // Configurar el JFrame
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar aplicación al cerrar ventana
+        frame.setSize(1100, 750); // Tamaño del JFrame
+        frame.setLocationRelativeTo(null); // Centrar la ventana en la pantalla
+        frame.setResizable(false); // Desactiva el redimensionamiento (y elimina el botón de maximizar)
+
+
+
+        
+        // Agregar el panel Login al JFrame
+        frame.setContentPane(loginPanel);
+        
+        // Hacer visible el JFrame
+        frame.setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCustomers;
@@ -340,6 +387,7 @@ public class PrincipalP extends javax.swing.JPanel {
     private javax.swing.JButton btnSales;
     private javax.swing.JButton btnStaff;
     private javax.swing.JButton btnStaffRoles;
+    private javax.swing.JButton btncerrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
