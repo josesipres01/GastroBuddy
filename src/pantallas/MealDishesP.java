@@ -249,7 +249,7 @@ public class MealDishesP extends javax.swing.JPanel {
          if (TablaDeDatosStaff.isFocusable()) {
         int row = TablaDeDatosStaff.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "No se seleccionó ninguna fila");
+            JOptionPane.showMessageDialog(null, "There is no row selected");
         } else {
             // Obtén los valores de las celdas, asegurando el tipo correcto
             String mealId = TablaDeDatosStaff.getValueAt(row, 0).toString();  // ID de la comida
@@ -341,19 +341,19 @@ public class MealDishesP extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Dish Deleted");
                     limpiarTexts();
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error al borrar el registro: " + e.getMessage(), "Borrar registro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Error deleting record: " + e.getMessage(), "Delete record", JOptionPane.ERROR_MESSAGE);
                 }
                 //
             }
         } else {
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, para borrar un registro es necesario un id.\nIntentelo de nuevo.", "Borrar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The id field is empty, to delete a record an id is required.\nPlease try again.", "Delete record", JOptionPane.ERROR_MESSAGE);
         }
         actualizar();
     }
 
     void modificarRegistro() {
         if (txtMealId.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, Para modificar un registro es necesario un id.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The id field is empty, to modify a record an id is required.\nPlease try again.", "Modify record", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
                 // solicitando valores
@@ -364,10 +364,10 @@ public class MealDishesP extends javax.swing.JPanel {
                 con = cn.getConnection();
                 st = con.createStatement();
                 st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "¡Registro modificado Exitosamente!", "Modificar registro", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Registration modified successfully!", "Modify record", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al modificar el registro: " + e.getMessage(), "Modificar registro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error modifying record: " + e.getMessage(), "Modify record", JOptionPane.ERROR_MESSAGE);
             }
         }
         actualizar();

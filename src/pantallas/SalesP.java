@@ -306,7 +306,7 @@ public class SalesP extends javax.swing.JPanel {
         if(TablaDeDatosStaff.isFocusable()){
             int row = TablaDeDatosStaff.getSelectedRow();
             if (row == -1) {
-                JOptionPane.showMessageDialog(null, "No se Selecciono");
+                JOptionPane.showMessageDialog(null, "There is no row selected");
             } else {
                 //id, amount, id_meals, id_staff, id_customer, date_of_meal
                 String id = (String) TablaDeDatosStaff.getValueAt(row, 0).toString();
@@ -397,18 +397,18 @@ public class SalesP extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Sale Deleted");
                     limpiarTexts();
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error al borrar el registro: " + e.getMessage(), "Borrar registro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Error deleting record: " + e.getMessage(), "Delete record", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }else{
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, para borrar un registro es necesario un id.\nIntentelo de nuevo.", "Borrar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The id field is empty, to delete a record an id is required.\nPlease try again.", "Delete record", JOptionPane.ERROR_MESSAGE);
         }
         actualizar();
     }
 
     void modificarRegistro() {
     if (txtId.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "El campo id está vacío. Para modificar un registro es necesario un id.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The id field is empty, to modify a record an id is required.\nPlease try again.", "Modify record", JOptionPane.ERROR_MESSAGE);
     } else {
         try {
             // solicitando valores
@@ -432,7 +432,7 @@ public class SalesP extends javax.swing.JPanel {
             if (rs.next()) {
                 idStaff = rs.getInt("id");
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el staff con el nombre: " + staffName, "Modificar registro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Staff with name not found: " + staffName, "Modify record", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -443,17 +443,17 @@ public class SalesP extends javax.swing.JPanel {
             if (rs.next()) {
                 idCustomer = rs.getInt("id");
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el cliente con el nombre: " + customerName, "Modificar registro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Customer with name not found: " + customerName, "Modify record", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             // Actualizar el registro en la tabla sales
             String sqlUpdate = "UPDATE sales SET amount=" + amount + ", id_meals=" + mealsId + ", id_staff=" + idStaff + ", id_customer=" + idCustomer + ", date_of_meal='" + dateToSql + "' WHERE id=" + id + ";";
             st.executeUpdate(sqlUpdate);
-            JOptionPane.showMessageDialog(null, "¡Registro modificado exitosamente!", "Modificar registro", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "¡Registration modified successfully!", "Modify record", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al modificar el registro: " + e.getMessage(), "Modificar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error modifying record: " + e.getMessage(), "Modify record", JOptionPane.ERROR_MESSAGE);
         }
     }
     actualizar();

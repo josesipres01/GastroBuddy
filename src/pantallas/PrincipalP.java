@@ -32,9 +32,9 @@ public class PrincipalP extends javax.swing.JPanel {
 
     void checkEstado () throws SQLException{
         if (cn.getEstado()){
-            labelEstado.setText("Estado de BD: Activo");
+            labelEstado.setText("DB status: active");
         }else{
-            labelEstado.setText("Estado de BD: Inactiva");
+            labelEstado.setText("DB status: inactive");
         }
         cn.closeConnection();
     }
@@ -347,7 +347,7 @@ public class PrincipalP extends javax.swing.JPanel {
 
     private void btncerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncerrarActionPerformed
         // TODO add your handling code here:
-           int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas cerrar sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
+           int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Log out", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     ventana.dispose(); // Cierra la ventana actual
                     abrirLogin(); // Redirige al login

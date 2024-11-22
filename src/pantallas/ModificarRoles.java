@@ -32,7 +32,7 @@ public class ModificarRoles extends javax.swing.JDialog {
    private final StaffRolesP roles;
 
     public ModificarRoles(Frame parent, DefaultTableModel tableModel, StaffRolesP roles, int code, String roleName, String description) {
-    super(parent, "Modificar Registro", true); // Usando parent como Frame
+    super(parent, "Modify record", true); // Usando parent como Frame
     this.tableModel = tableModel;
     this.roles = roles;
     initComponents();
@@ -173,7 +173,7 @@ void guardarCambios() {
 
     // Validar los campos
     if (roleName.isEmpty() || roleName.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -187,7 +187,7 @@ void guardarCambios() {
         int filasAfectadas = pst.executeUpdate();
 
         if (filasAfectadas > 0) {
-            JOptionPane.showMessageDialog(this, "Registro actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Registration updated successfully.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
             // Actualizar la tabla principal (opcional: llama a un método para refrescar la tabla)
             actualizarTabla(code, roleName, roleDescr);
@@ -195,10 +195,10 @@ void guardarCambios() {
             // Cerrar la ventana
             dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "No se pudo actualizar el registro.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to update record.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Error en la base de datos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
 

@@ -304,7 +304,7 @@ public class MealsP extends javax.swing.JPanel {
          if (TablaDeDatosPrin.isFocusable()) {
             int row = TablaDeDatosPrin.getSelectedRow();
             if (row == -1) {
-                JOptionPane.showMessageDialog(null, "No se seleccionó ninguna fila");
+                JOptionPane.showMessageDialog(null, "There is no row selected");
             } else {
             // Obtén los valores de las celdas, asegurando el tipo correcto
                 String id = TablaDeDatosPrin.getValueAt(row, 0).toString();
@@ -380,7 +380,7 @@ void listar() {
     
     void pagarMeal() {
     if (txtStaffId.getText().equals("") || txtCustId.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "Los campos Staff y Cliente no pueden estar vacíos. Intentelo de nuevo.", "Pagar meal", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The Personal and Client fields cannot be empty.\nPlease try again.", "Pay meal", JOptionPane.ERROR_MESSAGE);
     } else {
         try {
             int id = Integer.parseInt(txtId.getText());
@@ -436,13 +436,13 @@ void listar() {
             com.setVisible(true);
 
             if (com.getReturnStatus() == 1) {
-                JOptionPane.showMessageDialog(null, "¡El pago se ha realizado Exitosamente!", "Pago Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Payment has been made successfully!", "Payment successful", JOptionPane.INFORMATION_MESSAGE);
                 con.commit();
             } else if (com.getReturnStatus() == 0) {
                 con.rollback();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al realizar el pago: " + e.getMessage(), "Error Pago", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error making payment: " + e.getMessage(), "Payment Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             actualizar();
             limpiarTexts();
@@ -463,11 +463,11 @@ void listar() {
                     st.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null, "Meal Deleted");
                 } catch (Exception e) {
-                                JOptionPane.showMessageDialog(null, "Error al borrar el registro: " + e.getMessage(), "Borrar registro", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Error deleting record: " + e.getMessage(), "Delete record", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }else{
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, para borrar un registro es necesario un id.\nIntentelo de nuevo.", "Borrar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The id field is empty, to delete a record an id is required.\nPlease try again.", "Delete record", JOptionPane.ERROR_MESSAGE);
         }
         actualizar();
         limpiarTexts();
@@ -475,7 +475,7 @@ void listar() {
 
     void modificarRegistro() {
          if(txtId.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo id está vacío, Para modificar un registro es necesario un id.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The ID field is empty, to edit a record an ID is required.\nPlease try again.", "Modify record", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
                 // Obtener los valores de los TextFields
@@ -493,9 +493,9 @@ void listar() {
                 con = cn.getConnection();
                 st = con.createStatement();
                 st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "¡Registro modificado Exitosamente!", "Modificar registro", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Record modified successfully!", "Modify record", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al modificar el registro: " + e.getMessage(), "Modificar registro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error modifying record: " + e.getMessage(), "Modify record", JOptionPane.ERROR_MESSAGE);
             }
         }
         actualizar();

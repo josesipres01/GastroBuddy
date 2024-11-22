@@ -244,7 +244,7 @@ public class CustomersP extends javax.swing.JPanel {
         if (TablaDeDatosCustomer.isFocusable()) {
             int row = TablaDeDatosCustomer.getSelectedRow();
             if (row == -1) {
-                JOptionPane.showMessageDialog(null, "No se Selecciono");
+                JOptionPane.showMessageDialog(null, "Not Selected");
             } else {
                 String code = (String) TablaDeDatosCustomer.getValueAt(row, 0).toString();
                 String roleName = (String) TablaDeDatosCustomer.getValueAt(row, 1);
@@ -261,7 +261,7 @@ public class CustomersP extends javax.swing.JPanel {
         int filaSeleccionada = TablaDeDatosCustomer.getSelectedRow();
 
     if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione un registro para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Select a record to modify.", "Warning", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
@@ -340,19 +340,19 @@ public class CustomersP extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Customer Deleted");
                     limpiarTexts();
                 } else {
-                    JOptionPane.showMessageDialog(null, "No se encontró el registro con ese ID.", "Borrar registro", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The record with that ID was not found.", "Delete record", JOptionPane.WARNING_MESSAGE);
                 }
 
                 // Cerrar el PreparedStatement
                 pst.close();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al borrar el registro: " + e.getMessage(), "Borrar registro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error deleting record: " + e.getMessage(), "Delete record", JOptionPane.ERROR_MESSAGE);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "El ID debe ser un número válido.", "Borrar registro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The ID must be a valid number.", "Delete record", JOptionPane.ERROR_MESSAGE);
             }
         }
     } else {
-        JOptionPane.showMessageDialog(null, "El campo ID está vacío, para borrar un registro es necesario un ID.\nIntentelo de nuevo.", "Borrar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The ID field is empty, to delete a record an ID is required.\nPlease try again.", "Delete record", JOptionPane.ERROR_MESSAGE);
     }
     actualizar();
 }
@@ -360,7 +360,7 @@ public class CustomersP extends javax.swing.JPanel {
 
   void modificarRegistro() {
     if (txtId.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "El campo ID está vacío, para modificar un registro es necesario un ID.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The ID field is empty,to modify a record an ID is required.\nPlease try again.", "Modify record", JOptionPane.ERROR_MESSAGE);
     } else {
         try {
             int code = Integer.parseInt(txtId.getText());
@@ -368,10 +368,10 @@ public class CustomersP extends javax.swing.JPanel {
             String name = txtName.getText();
 
             if (!phone.matches("\\d+")) {
-                throw new IllegalArgumentException("El campo teléfono solo debe contener números.");
+                throw new IllegalArgumentException("The phone field must only contain numbers.");
             }
             if (!phone.matches("\\d{10}")) {
-                throw new IllegalArgumentException("El campo teléfono debe contener exactamente 10 dígitos.");
+                throw new IllegalArgumentException("The phone field must contain exactly 10 digits.");
             }
 
             // Preparar la consulta SQL
@@ -386,19 +386,19 @@ public class CustomersP extends javax.swing.JPanel {
 
             // Verificar si se modificó un registro
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "¡Registro modificado exitosamente!", "Modificar registro", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Registration modified successfully!", "Modify record", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el registro con ese ID.", "Modificar registro", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The record with that ID was not found.", "Modify record", JOptionPane.WARNING_MESSAGE);
             }
 
             // Cerrar el PreparedStatement
             pst.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al modificar el registro: " + e.getMessage(), "Modificar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error modifying record: " + e.getMessage(), "Modify record", JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "El ID debe ser un número válido.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The ID must be a valid number.", "Modify record", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Modificar registro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Modify record", JOptionPane.WARNING_MESSAGE);
         }
     }
     actualizar();

@@ -225,7 +225,7 @@ public class Login extends javax.swing.JPanel {
 
     // Validar si los campos están vacíos
     if (username.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, completa ambos campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Please complete both fields.", "Error", JOptionPane.ERROR_MESSAGE);
         return; // Detener el flujo si hay campos vacíos
     }
 
@@ -238,7 +238,7 @@ public class Login extends javax.swing.JPanel {
         javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
     } else {
         // Si la autenticación falla, mostrar un mensaje de error
-        JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos. Por favor, intenta nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Incorrect username or password.\nPlease try again.", "Error", JOptionPane.ERROR_MESSAGE);
     }    
     }//GEN-LAST:event_boton1ActionPerformed
 

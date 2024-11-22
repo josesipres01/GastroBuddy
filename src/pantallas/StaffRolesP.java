@@ -241,7 +241,7 @@ public class StaffRolesP extends javax.swing.JPanel {
         if (TablaDeDatosRoles.isFocusable()) {
             int row = TablaDeDatosRoles.getSelectedRow();
             if (row == -1) {
-                JOptionPane.showMessageDialog(null, "No se Selecciono");
+                JOptionPane.showMessageDialog(null, "There is no row selected");
             } else {
                 String code = (String) TablaDeDatosRoles.getValueAt(row, 0).toString();
                 String roleName = (String) TablaDeDatosRoles.getValueAt(row, 1);
@@ -258,7 +258,7 @@ public class StaffRolesP extends javax.swing.JPanel {
         int filaSeleccionada = TablaDeDatosRoles.getSelectedRow();
 
         if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un registro para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Select a record to modify.", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -325,19 +325,19 @@ public class StaffRolesP extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Role Deleted");
                     limpiarTexts();
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error al borrar el registro: " + e.getMessage(), "Borrar registro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Error deleting record:  " + e.getMessage(), "Delete record", JOptionPane.ERROR_MESSAGE);
                 }
                 //
             }
         } else {
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, para borrar un registro es necesario un id.\nIntentelo de nuevo.", "Borrar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The id field is empty, to delete a record an id is required.\nPlease try again.", "Delete record", JOptionPane.ERROR_MESSAGE);
         }
         actualizar();
     }
 
     void modificarRegistro() {
         if (txtCode.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo id esta vacio, Para modificar un registro es necesario un id.\nIntentelo de nuevo.", "Modificar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The id field is empty, to modify a record an id is required.\nPlease try again.", "Modify record", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
                 // solicitando valores
@@ -349,10 +349,10 @@ public class StaffRolesP extends javax.swing.JPanel {
                 con = cn.getConnection();
                 st = con.createStatement();
                 st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "¡Registro modificado Exitosamente!", "Modificar registro", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Registration modified successfully!", "Modify record", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al modificar el registro: " + e.getMessage(), "Modificar registro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error modifying record: " + e.getMessage(), "Modify record", JOptionPane.ERROR_MESSAGE);
             }
         }
         actualizar();
