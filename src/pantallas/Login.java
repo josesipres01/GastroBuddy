@@ -219,27 +219,27 @@ public class Login extends javax.swing.JPanel {
     
     
     private void boton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton1ActionPerformed
-         // Obtener el usuario y contraseña ingresados
-         
-         
-        String username = userTxf.getText();
-        String password = new String(passwordTxf.getPassword());
+          // Obtener el usuario y contraseña ingresados
+    String username = userTxf.getText().trim();
+    String password = new String(passwordTxf.getPassword()).trim();
 
-        // Llamar al método de autenticación
-        if (Authentication.authUser(username, password)) {
+    // Validar si los campos están vacíos
+    if (username.isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, completa ambos campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        return; // Detener el flujo si hay campos vacíos
+    }
 
-            // Crear una instancia de la ventana "VentanaPrincipal"            
-            new VentanaPrincipal().setVisible(true);
+    // Llamar al método de autenticación
+    if (Authentication.authUser(username, password)) {
+        // Crear una instancia de la ventana "VentanaPrincipal"            
+        new VentanaPrincipal().setVisible(true);
 
-            // Si este panel está dentro de un JFrame, puedes cerrar o esconder el JFrame de Login
-            javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
-        } else {
-            // Si la autenticación falla, mostrar un mensaje de error
-            JOptionPane.showMessageDialog(this, "Wrong username or password. Please try again.");
-        }         
-        
-        
-        
+        // Cerrar el JFrame actual
+        javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
+    } else {
+        // Si la autenticación falla, mostrar un mensaje de error
+        JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos. Por favor, intenta nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
+    }    
     }//GEN-LAST:event_boton1ActionPerformed
 
     private void userTxfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTxfActionPerformed

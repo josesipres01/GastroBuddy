@@ -5,7 +5,9 @@
  */
 package Main;
 
+import Adds.Connect;
 import EnumPantalla.Pantalla;
+import config.Conexion;
 import java.awt.IllegalComponentStateException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -13,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import pantallas.CustomersP;
+import pantallas.Login;
 import pantallas.MealDishesP;
 import pantallas.MealsP;
 import pantallas.MenuItemsP;
@@ -53,6 +56,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -87,6 +91,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem2);
+
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem5.setText("Cerrar Sesion");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
 
@@ -172,6 +185,32 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+       // Cerrar conexiones activas
+    try {
+        // Usar clase Conexion
+        Conexion conexion = new Conexion(); // Si tienes una instancia global, úsala
+        if (conexion.getEstado()) {
+            conexion.closeConnection();
+        }
+
+        // Usar clase Connect
+        if (Connect.connection != null && !Connect.connection.isClosed()) {
+            Connect.connection.close();
+            System.out.println("Conexión de Connect cerrada correctamente.");
+        }
+    } catch (SQLException ex) {
+        System.err.println("[ERROR]: No fue posible cerrar la conexión.");
+        ex.printStackTrace();
+    }
+
+    // Reemplazar el contenido actual con el Login
+    Login loginPanel = new Login();
+    this.setContentPane(loginPanel);
+    this.revalidate(); // Forzar la actualización del contenido
+    this.repaint(); // Redibujar la ventana
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     public void actualizarContenido(JPanel panel){
         try {
             // Eliminamos el contenido anterior.
@@ -250,5 +289,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     // End of variables declaration//GEN-END:variables
 }
