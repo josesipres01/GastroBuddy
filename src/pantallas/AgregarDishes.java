@@ -39,7 +39,7 @@ public class AgregarDishes extends javax.swing.JDialog {
      * Creates new form AgregarDishes
      */
     public AgregarDishes(Frame parent,DefaultTableModel tableModel, MealDishesP dishes) {
-        super(parent, "Nuevo Registro", true); // Usando parent como Frame
+        super(parent, "New Registration", true); // Usando parent como Frame
         this.tableModel = model; // Inicializar el modelo de la tabla
         this.dishes = dishes; 
         initComponents();
@@ -187,7 +187,7 @@ void agregarRegistro() {
     // Validación del campo MealId
     if (cBoxMealId.getSelectedItem() == null || cBoxMealId.getSelectedItem().toString().trim().isEmpty()) {
         cBoxMealId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'meal_id' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'meal_id' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         cBoxMealId.setBorder(UIManager.getBorder("ComboBox.border"));
@@ -196,7 +196,7 @@ void agregarRegistro() {
     // Validación del campo ItemId
     if (cboxItemId.getSelectedItem() == null || cboxItemId.getSelectedItem().toString().trim().isEmpty()) {
         cboxItemId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'item_id' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'item_id' fiel is obligatoey. ", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         cboxItemId.setBorder(UIManager.getBorder("ComboBox.border"));
@@ -206,22 +206,22 @@ void agregarRegistro() {
     int quantity = 0;
     if (txtQuantity.getText().trim().isEmpty()) {
         txtQuantity.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'quantity' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'quantity' field is obligatory..", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         try {
             quantity = Integer.parseInt(txtQuantity.getText().trim());
             if (quantity <= 0) {
-                throw new IllegalArgumentException("La cantidad debe ser un número positivo.");
+                throw new IllegalArgumentException("The amount should be a positive number.");
             }
             txtQuantity.setBorder(UIManager.getBorder("TextField.border"));
         } catch (NumberFormatException e) {
             txtQuantity.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, "El campo 'quantity' debe ser un número válido.", "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The 'quantity' field must be a valid number.", "Validation", JOptionPane.ERROR_MESSAGE);
             valid = false;
         } catch (IllegalArgumentException e) {
             txtQuantity.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Validation", JOptionPane.ERROR_MESSAGE);
             valid = false;
         }
     }
@@ -238,7 +238,7 @@ void agregarRegistro() {
         int idMeal = ((ComboBoxItem) cBoxMealId.getSelectedItem()).getId();
         String[] idItem = cboxItemId.getSelectedItem().toString().split("-");
         if (idItem.length < 1) {
-            JOptionPane.showMessageDialog(null, "Formato inválido en 'item_id'.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Invalid format in 'item_id'.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int items = Integer.parseInt(idItem[0]);
@@ -246,7 +246,7 @@ void agregarRegistro() {
         Conexion cn = new Conexion();
         con = cn.getConnection();
         if (con == null) {
-            JOptionPane.showMessageDialog(null, "Error al establecer la conexión con la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error establishing connection to database.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -261,23 +261,23 @@ void agregarRegistro() {
 
         // Confirmar si el registro fue exitoso
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "¡Registration added successfully!", "Add record", JOptionPane.INFORMATION_MESSAGE);
             dishes.actualizar();
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registration could not be added.", "Add record", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "A database error occurred: " + ex.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Unexpected error creating the record: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } finally {
         try {
             if (pst != null) pst.close();
             if (con != null && !con.isClosed()) con.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Connection closing error: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
@@ -297,7 +297,7 @@ void agregarRegistro() {
     try {
         con = cn.getConnection();
         if (con == null) {
-            System.out.println("Error: No se pudo establecer la conexión con la base de datos.");
+            System.out.println("Error: The connection to the database could not be established.");
             return;
         }
 
@@ -308,20 +308,20 @@ void agregarRegistro() {
         while (rsMeals.next()) {
             int id = rsMeals.getInt("id");
             cBoxMealId.addItem(new ComboBoxItem(id, "ID: " + id)); // El texto será "ID: {id}"
-            System.out.println("Comida agregada: ID = " + id);
+            System.out.println("Added food: ID = " + id);
         }
 
     } catch (SQLException e) {
-        System.out.println("Error al poblar el ComboBox: " + e.getMessage());
-        JOptionPane.showMessageDialog(null, "Error al poblar los ComboBox: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        System.out.println("Error filling in the ComboBox: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error filling in the ComboBox: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     } finally {
         try {
             if (rsMeals != null) rsMeals.close();
             if (pstMeals != null) pstMeals.close();
             if (con != null && !con.isClosed()) con.close();
         } catch (SQLException e) {
-            System.out.println("Error al cerrar la conexión: " + e.getMessage());
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Connection closing error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Connection closing error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

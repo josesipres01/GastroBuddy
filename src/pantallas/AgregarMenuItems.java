@@ -40,7 +40,7 @@ public class AgregarMenuItems extends javax.swing.JDialog {
      * Creates new form AgregarMenuItems
      */
     public AgregarMenuItems(Frame parent,DefaultTableModel tableModel, MenuItemsP items) {
-        super(parent, "Nuevo Registro", true); // Usando parent como Frame
+        super(parent, "New Registration", true); // Usando parent como Frame
         this.tableModel = model; // Inicializar el modelo de la tabla
         this.items = items; 
         initComponents();
@@ -195,13 +195,13 @@ void agregarRegistro() {
 
     
     if (descrip.isEmpty()) {
-        descrip = "Sin descripción";
+        descrip = "No description";
     }
 
     // Validación del campo Nombre
     if (txtName.getText().trim().isEmpty()) {
         txtName.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Name' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Name' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         txtName.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
@@ -210,7 +210,7 @@ void agregarRegistro() {
     // Validación del ComboBox MenuId
     if (cBoxMenuId.getSelectedItem() == null || cBoxMenuId.getSelectedItem().toString().trim().isEmpty()) {
         cBoxMenuId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Menu_id' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Menu_id' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         cBoxMenuId.setBorder(UIManager.getBorder("ComboBox.border")); // Restaurar borde original
@@ -220,22 +220,22 @@ void agregarRegistro() {
     double price = 0.0;
     if (txtPrice.getText().trim().isEmpty()) {
         txtPrice.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'price' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'price' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         try {
             price = Double.parseDouble(txtPrice.getText().trim());
             if (price < 0) {
-                throw new IllegalArgumentException("El precio no puede ser negativo.");
+                throw new IllegalArgumentException("The price cannot be negative.");
             }
             txtPrice.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
         } catch (NumberFormatException e) {
             txtPrice.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, "El campo 'price' debe contener un número válido.", "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The 'price' field must contain a valid number.", "Validation", JOptionPane.ERROR_MESSAGE);
             valid = false;
         } catch (IllegalArgumentException e) {
             txtPrice.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Validation", JOptionPane.ERROR_MESSAGE);
             valid = false;
         }
     }
@@ -268,17 +268,17 @@ void agregarRegistro() {
         int rowsAffected = pst.executeUpdate();
 
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "¡Registration added successfully!", "Add record", JOptionPane.INFORMATION_MESSAGE);
             items.actualizar(); // Actualizar datos
             this.dispose(); // Cerrar ventana
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registration could not be added.", "Add record", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "A database error occurred: " + ex.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Unexpected error creating the record: " + e.getMessage(), "Ad record", JOptionPane.ERROR_MESSAGE);
     } finally {
         try {
             if (pst != null) {
@@ -288,7 +288,7 @@ void agregarRegistro() {
                 con.close();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Connection closing error: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

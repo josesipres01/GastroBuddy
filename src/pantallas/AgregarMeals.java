@@ -47,7 +47,7 @@ public class AgregarMeals extends javax.swing.JDialog {
      * Creates new form AgregarMeals
      */
     public AgregarMeals(Frame parent,DefaultTableModel tableModel, MealsP meals) {
-        super(parent, "Nuevo Registro", true); 
+        super(parent, "New Registration", true); 
         this.tableModel = model;
         this.meals = meals; 
         initComponents();
@@ -264,18 +264,18 @@ void agregarRegistro() {
     // Validación del campo Cost of Meal
     if (txtCostofmeal.getText().trim().isEmpty()) {
         txtCostofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'cost of meal' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'cost of meal' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         try {
             double costOfMeal = Double.parseDouble(txtCostofmeal.getText().trim());
             if (costOfMeal < 0) {
-                throw new IllegalArgumentException("cost of meal no puede ser negativo.");
+                throw new IllegalArgumentException("'Cost of meal' cannot be negative.");
             }
             txtCostofmeal.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
         } catch (NumberFormatException e) {
             txtCostofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, "El campo 'cost of meal' debe contener un número válido.", "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The 'cost of meal' field must contain a valid number.", "Validation", JOptionPane.ERROR_MESSAGE);
             valid = false;
         } catch (IllegalArgumentException e) {
             txtCostofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
@@ -287,7 +287,7 @@ void agregarRegistro() {
     // Validación del ComboBox StaffId
     if (cBoxStaffId.getSelectedItem() == null || cBoxStaffId.getSelectedItem().toString().trim().isEmpty()) {
         cBoxStaffId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'staff_id' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'staff_id' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         cBoxStaffId.setBorder(UIManager.getBorder("ComboBox.border")); // Restaurar borde original
@@ -296,7 +296,7 @@ void agregarRegistro() {
     // Validación del ComboBox CustId
     if (cBoxCustId.getSelectedItem() == null || cBoxCustId.getSelectedItem().toString().trim().isEmpty()) {
         cBoxCustId.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'customer_id' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'customer_id' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         cBoxCustId.setBorder(UIManager.getBorder("ComboBox.border")); // Restaurar borde original
@@ -305,7 +305,7 @@ void agregarRegistro() {
     // Validación del campo jForDateofmeal
     if (jForDateofmeal.getText().trim().isEmpty()) {
         jForDateofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'date of meal' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'date of meal' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         try {
@@ -315,7 +315,7 @@ void agregarRegistro() {
             jForDateofmeal.setBorder(UIManager.getBorder("FormattedTextField.border")); // Restaurar borde original
         } catch (ParseException e) {
             jForDateofmeal.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, "El campo 'date of meal' debe tener un formato válido (yyyy-MM-dd).", "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The 'date of meal' field must be in a valid format (yyyy-MM-dd).", "Validation", JOptionPane.ERROR_MESSAGE);
             valid = false;
         }
     }
@@ -356,17 +356,17 @@ void agregarRegistro() {
         int rowsAffected = pst.executeUpdate();
 
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "¡Registration added successfully!", "Add record", JOptionPane.INFORMATION_MESSAGE);
             meals.actualizar(); // Actualizar datos
             this.dispose(); // Cerrar ventana
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registration could not be added.", "Add record", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "A database error occurred: " + ex.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Unexpected error creating the record: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } finally {
         try {
             if (pst != null) {
@@ -376,7 +376,7 @@ void agregarRegistro() {
                 con.close();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Connection closing error: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

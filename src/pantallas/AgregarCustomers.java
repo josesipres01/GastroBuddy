@@ -40,7 +40,7 @@ public class AgregarCustomers extends javax.swing.JDialog {
     
      public AgregarCustomers(Frame parent,DefaultTableModel tableModel, CustomersP customer) {
          
-        super(parent, "Nuevo Registro", true); // Usando parent como Frame
+        super(parent, "New Registration", true); // Usando parent como Frame
         this.tableModel = model; // Inicializar el modelo de la tabla
         this.customer = customer;
         initComponents();
@@ -190,12 +190,12 @@ void agregarRegistro() {
     String name = txtName.getText().trim();
     if (name.isEmpty()) {
         txtName.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Name' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Name' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         txtName.requestFocus();
         valid = false;
     } else if (!name.matches("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]+$")) { // Validar solo letras y espacios
         txtName.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Name' solo puede contener texto.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Name' field can only contain text.", "Validation", JOptionPane.ERROR_MESSAGE);
         txtName.requestFocus();
         valid = false;
     } else {
@@ -206,12 +206,12 @@ void agregarRegistro() {
     String phone = txtPhone.getText().trim();
     if (phone.isEmpty()) {
         txtPhone.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Phone' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Phone' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         txtPhone.requestFocus();
         valid = false;
     } else if (!phone.matches("\\d{10}")) { // Validar que el teléfono tenga exactamente 10 dígitos
         txtPhone.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Phone' debe contener exactamente 10 dígitos.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Phone' field must contain exactly 10 digits.", "Validation", JOptionPane.ERROR_MESSAGE);
         txtPhone.requestFocus();
         valid = false;
     } else {
@@ -244,19 +244,19 @@ void agregarRegistro() {
 
         // Confirmar si el registro fue exitoso
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "¡Registration added successfully!", "Add record", JOptionPane.INFORMATION_MESSAGE);
             customer.actualizar();
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registration could not be added.", "Add record", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "A database error occurred: " + ex.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "El teléfono debe ser un número válido.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The phone must be a valid number.", "Validation", JOptionPane.ERROR_MESSAGE);
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Unexpected error creating the record: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } finally {
         // Cerrar recursos
         try {
@@ -267,7 +267,7 @@ void agregarRegistro() {
                 con.close();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Connection closing error: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

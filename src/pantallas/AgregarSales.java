@@ -38,7 +38,7 @@ public class AgregarSales extends javax.swing.JDialog {
      * Creates new form AgregarSales
      */
     public AgregarSales(Frame parent,DefaultTableModel tableModel, SalesP sales) {
-       super(parent, "Nuevo Registro", true); 
+       super(parent, "New Registration", true); 
         this.tableModel = model; 
         this.sales = sales;
         initComponents();
@@ -242,15 +242,15 @@ void agregarRegistro() {
     try {
         // Validación de selección en los ComboBox
         if (comboStaff.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Staff.", "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "You must select a Staff.", "Validation", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (comboCustomer.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Cliente.", "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "You must select a Cliente.", "Validation", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (comboMeals.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Meal.", "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "You must select a Meal.", "Validation", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -262,17 +262,17 @@ void agregarRegistro() {
         // Validar el monto
         double amount;
         if (txtAmount.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El campo 'Amount' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The 'Amount' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
             try {
                 amount = Double.parseDouble(txtAmount.getText().trim());
                 if (amount < 0) {
-                    JOptionPane.showMessageDialog(null, "El campo 'Amount' no puede ser negativo.", "Validación", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The 'Amount' field cannot be negative.", "Validation", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "El campo 'Amount' debe ser un número válido.", "Validación", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The 'Amount' field must be a valid number.", "Validation", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -280,7 +280,7 @@ void agregarRegistro() {
         // Validar la fecha
         java.sql.Date dateToSql = null;
         if (dateOfMeal.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El campo 'date_of_meal' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The 'date_of_meal' field is mandatory.", "Validation", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
             try {
@@ -289,7 +289,7 @@ void agregarRegistro() {
                 Date parsedDate = dateFormat.parse(dateInput);
                 dateToSql = new java.sql.Date(parsedDate.getTime());
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Por favor, ingrese una fecha válida en formato YYYY-MM-DD.", "Validación", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please enter a valid date in YYYY-MM-DD format.", "Validation", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -298,7 +298,7 @@ void agregarRegistro() {
         Conexion cn = new Conexion();
         con = cn.getConnection();
         if (con == null) {
-            JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión con la base de datos.", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The connection to the database could not be established.", "Conection error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -316,25 +316,25 @@ void agregarRegistro() {
         // Ejecutar la consulta
         int rowsAffected = pst.executeUpdate();
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "¡Registration added successfully!", "Add record", JOptionPane.INFORMATION_MESSAGE);
             sales.actualizar();
             this.dispose(); // Cerrar el formulario
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registration could not be added.", "Add record", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
         System.out.println("Error SQL: " + ex.getMessage());
-        JOptionPane.showMessageDialog(null, "Error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "A database error occurred: " + ex.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } catch (Exception e) {
-        System.out.println("Error inesperado: " + e.getMessage());
-        JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        System.out.println("Unexpected error creating the record: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Unexpected error creating the record: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } finally {
         try {
             if (pst != null) pst.close();
             if (con != null && !con.isClosed()) con.close();
         } catch (SQLException e) {
-            System.out.println("Error al cerrar la conexión: " + e.getMessage());
+            System.out.println("Connection closing error: " + e.getMessage());
         }
     }
 }
@@ -357,7 +357,7 @@ private void poblarComboBoxes() {
     try {
         con = cn.getConnection();
         if (con == null) {
-            System.out.println("Error: No se pudo establecer la conexión con la base de datos.");
+            System.out.println("Error: The connection to the database could not be established.");
             return;
         }
 
@@ -395,7 +395,7 @@ private void poblarComboBoxes() {
 
     } catch (SQLException e) {
         System.out.println("Error al poblar los ComboBox: " + e.getMessage());
-        JOptionPane.showMessageDialog(null, "Error al poblar los ComboBox: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Error filling ComboBox: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     } finally {
         try {
             if (rsStaff != null) rsStaff.close();
@@ -406,8 +406,8 @@ private void poblarComboBoxes() {
             if (pstMeals != null) pstMeals.close();
             if (con != null && !con.isClosed()) con.close();
         } catch (SQLException e) {
-            System.out.println("Error al cerrar la conexión: " + e.getMessage());
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Connection closing error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Connection closing error:  " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

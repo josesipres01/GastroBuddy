@@ -38,7 +38,7 @@ public class AgregarMenus extends javax.swing.JDialog {
      */
     public AgregarMenus(Frame parent,DefaultTableModel tableModel, MenuP menu) {
         
-        super(parent, "Nuevo Registro", true); 
+        super(parent, "New Registration", true); 
         this.tableModel = model; 
         this.menu = menu;
         initComponents();
@@ -230,7 +230,7 @@ public class AgregarMenus extends javax.swing.JDialog {
     // Validación del campo Nombre
     if (txtName.getText().trim().isEmpty()) {
         txtName.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Menu_name' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Menu_name' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         txtName.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
@@ -240,11 +240,11 @@ public class AgregarMenus extends javax.swing.JDialog {
     String type = txtType1.getText().trim();
     if (type.isEmpty()) {
         txtType1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Type' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Type' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else if (!type.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) { // Solo letras
         txtType1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Type' solo debe contener texto.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Type' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         txtType1.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
@@ -254,11 +254,11 @@ public class AgregarMenus extends javax.swing.JDialog {
     String season = txtSeason.getText().trim();
     if (season.isEmpty()) {
         txtSeason.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Season' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Season' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else if (!season.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) { // Solo letras
         txtSeason.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'Season' solo debe contener texto.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Season' field should only contain text.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         txtSeason.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
@@ -268,7 +268,7 @@ public class AgregarMenus extends javax.swing.JDialog {
     Date dateDateFrom = null;
     if (jForDateFrom1.getText().trim().isEmpty()) {
         jForDateFrom1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'available_date_from' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'available_date_from' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         try {
@@ -277,7 +277,7 @@ public class AgregarMenus extends javax.swing.JDialog {
             jForDateFrom1.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
         } catch (ParseException e) {
             jForDateFrom1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, "El campo 'available_date_from' debe tener un formato válido (yyyy-MM-dd).", "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The 'available_date_from' field must be in a valid format (yyyy-MM-dd).", "Validation", JOptionPane.ERROR_MESSAGE);
             valid = false;
         }
     }
@@ -286,7 +286,7 @@ public class AgregarMenus extends javax.swing.JDialog {
     Date dateDateTo = null;
     if (jForDateTo.getText().trim().isEmpty()) {
         jForDateTo.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "El campo 'available_date_to' es obligatorio.", "Validación", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'available_date_to' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         try {
@@ -295,7 +295,7 @@ public class AgregarMenus extends javax.swing.JDialog {
             jForDateTo.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
         } catch (ParseException e) {
             jForDateTo.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(null, "El campo 'available_date_to' debe tener un formato válido (yyyy-MM-dd).", "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The 'available_date_to' field must be in a valid format (yyyy-MM-dd).", "Validation", JOptionPane.ERROR_MESSAGE);
             valid = false;
         }
     }
@@ -332,17 +332,17 @@ public class AgregarMenus extends javax.swing.JDialog {
         int rowsAffected = pst.executeUpdate();
 
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "¡Registration added successfully!", "Add record", JOptionPane.INFORMATION_MESSAGE);
             menu.actualizar(); // Actualizar datos
             this.dispose(); // Cerrar ventana
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registration could not be added.", "Add record", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "A database error occurred: " + ex.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Unexpected error creating the record: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } finally {
         try {
             if (pst != null) {
@@ -352,7 +352,7 @@ public class AgregarMenus extends javax.swing.JDialog {
                 con.close();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Connection closing error: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

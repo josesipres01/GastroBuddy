@@ -32,7 +32,7 @@ public class AgregarRoles extends javax.swing.JDialog {
    private final StaffRolesP roles;
 
     public AgregarRoles(Frame parent,DefaultTableModel tableModel, StaffRolesP roles) {
-         super(parent, "Nuevo Registro", true); // Usando parent como Frame
+         super(parent, "New Registration", true); // Usando parent como Frame
         this.tableModel = model; // Inicializar el modelo de la tabla
         this.roles = roles;
         initComponents();
@@ -165,18 +165,18 @@ public class AgregarRoles extends javax.swing.JDialog {
 
     // Validar que los campos no estén vacíos
     if (name.isEmpty() || descrip.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "All fields are required.", "Add record", JOptionPane.ERROR_MESSAGE);
         return; // Salir del método si los campos están vacíos
     }
 
     // Validar que solo contengan letras (incluye acentos y espacios para nombres)
     if (!name.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
-        JOptionPane.showMessageDialog(null, "El campo 'Role name' solo debe contener texto.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Role name' field must only contain text.", "Add record", JOptionPane.ERROR_MESSAGE);
         return; // Salir del método si el nombre no es válido
     }
 
     if (!descrip.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
-        JOptionPane.showMessageDialog(null, "El campo 'Description' solo debe contener texto.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Description' field must only contain text.", "Add record", JOptionPane.ERROR_MESSAGE);
         return; // Salir del método si la descripción no es válida
     }
 
@@ -197,23 +197,23 @@ public class AgregarRoles extends javax.swing.JDialog {
         int rowsAffected = pst.executeUpdate();
 
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "¡Registration added successfully!", "Add record", JOptionPane.INFORMATION_MESSAGE);
             roles.actualizar();
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registration could not be added.", "Add record", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Ocurrió un error en la base de datos: " + ex.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "A database error occurred: " + ex.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error inesperado al crear el registro: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Unexpected error creating the record: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
     } finally {
         try {
             if (pst != null) pst.close();
             if (con != null && !con.isClosed()) con.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Connection closing error: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
         }
     }
 }   

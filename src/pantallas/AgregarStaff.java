@@ -32,7 +32,7 @@ public class AgregarStaff extends javax.swing.JDialog {
      * Creates new form AgregarStaff
      */
     public AgregarStaff(Frame parent,DefaultTableModel tableModel, StaffP staff) {
-        super(parent, "Nuevo Registro", true); 
+        super(parent, "New Registration", true); 
         this.tableModel = model; 
         this.staff = staff;
         initComponents();
@@ -161,36 +161,36 @@ public class AgregarStaff extends javax.swing.JDialog {
    void agregarRegistro() {
     // Verificar que el campo de nombre no esté vacío
     if (txtFirstName.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "El campo 'First Name' está vacío. Por favor, ingréselo.", 
-                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'First Name' field is empty. Please enter it.", 
+                                      "Add record", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     // Verificar que el campo de apellido no esté vacío
     if (txtLastName.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "El campo 'Last Name' está vacío. Por favor, ingréselo.", 
-                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Last Name' field is empty. Please enter it.", 
+                                      "Add record", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     // Validar que First Name solo contenga letras
     if (!txtFirstName.getText().trim().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
-        JOptionPane.showMessageDialog(null, "El campo 'First Name' solo debe contener texto.", 
-                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'First Name' field should only contain text.", 
+                                      "Add record", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     // Validar que Last Name solo contenga letras
     if (!txtLastName.getText().trim().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
-        JOptionPane.showMessageDialog(null, "El campo 'Last Name' solo debe contener texto.", 
-                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Last Name' field should only contain text.", 
+                                      "Add record", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     // Verificar que el campo de código no esté vacío
     if (txtRoleCode.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "El campo 'Role Code' está vacío. Por favor, ingréselo.", 
-                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Role Code' field is empty. Please enter it.", 
+                                      "Add record", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -199,13 +199,13 @@ public class AgregarStaff extends javax.swing.JDialog {
     try {
         roleCode = Integer.parseInt(txtRoleCode.getText().trim());
         if (roleCode <= 0) {
-            JOptionPane.showMessageDialog(null, "El 'Role Code' debe ser un número mayor que 0.", 
-                                          "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The 'Role Code' must be a number greater than 0.", 
+                                          "Add record", JOptionPane.ERROR_MESSAGE);
             return;
         }
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "El 'Role Code' debe ser un número válido.", 
-                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Role Code' must be a valid number.", 
+                                      "Add record", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -234,26 +234,26 @@ public class AgregarStaff extends javax.swing.JDialog {
 
         // Verificar si el registro fue exitoso
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "¡Registro agregado exitosamente!", 
-                                          "Agregar registro", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "¡Registration added successfully!", 
+                                          "Add record", JOptionPane.INFORMATION_MESSAGE);
             staff.actualizar(); // Actualizar la tabla en la pantalla principal
             this.dispose(); // Cerrar el diálogo
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo agregar el registro.", 
-                                          "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registration could not be added.", 
+                                          "Add record", JOptionPane.ERROR_MESSAGE);
         }
 
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error en la base de datos: " + ex.getMessage(), 
-                                      "Agregar registro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "A database error occurred: " + ex.getMessage(), 
+                                      "Add record", JOptionPane.ERROR_MESSAGE);
     } finally {
         // Cerrar el PreparedStatement y la conexión
         try {
             if (pst != null) pst.close();
             if (con != null && !con.isClosed()) con.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), 
-                                          "Agregar registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Connection closing error: " + e.getMessage(), 
+                                          "Add record", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
