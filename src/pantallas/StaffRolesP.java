@@ -50,7 +50,7 @@ public class StaffRolesP extends javax.swing.JPanel {
         panelPrincipal = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TablaDeDatosStaff = new javax.swing.JTable();
+        TablaDeDatosRoles = new javax.swing.JTable();
         btnModificar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -67,8 +67,8 @@ public class StaffRolesP extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(81, 81, 201));
 
-        TablaDeDatosStaff.setBackground(new java.awt.Color(239, 239, 239));
-        TablaDeDatosStaff.setModel(new javax.swing.table.DefaultTableModel(
+        TablaDeDatosRoles.setBackground(new java.awt.Color(239, 239, 239));
+        TablaDeDatosRoles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -84,14 +84,14 @@ public class StaffRolesP extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        TablaDeDatosStaff.setGridColor(new java.awt.Color(153, 153, 153));
-        TablaDeDatosStaff.setShowGrid(true);
-        TablaDeDatosStaff.addMouseListener(new java.awt.event.MouseAdapter() {
+        TablaDeDatosRoles.setGridColor(new java.awt.Color(153, 153, 153));
+        TablaDeDatosRoles.setShowGrid(true);
+        TablaDeDatosRoles.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TablaDeDatosStaffMouseClicked(evt);
+                TablaDeDatosRolesMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(TablaDeDatosStaff);
+        jScrollPane1.setViewportView(TablaDeDatosRoles);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -236,27 +236,39 @@ public class StaffRolesP extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TablaDeDatosStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosStaffMouseClicked
+    private void TablaDeDatosRolesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosRolesMouseClicked
 
-        if (TablaDeDatosStaff.isFocusable()) {
-            int row = TablaDeDatosStaff.getSelectedRow();
+        if (TablaDeDatosRoles.isFocusable()) {
+            int row = TablaDeDatosRoles.getSelectedRow();
             if (row == -1) {
                 JOptionPane.showMessageDialog(null, "No se Selecciono");
             } else {
-                String code = (String) TablaDeDatosStaff.getValueAt(row, 0).toString();
-                String roleName = (String) TablaDeDatosStaff.getValueAt(row, 1);
-                String roleDes = (String) TablaDeDatosStaff.getValueAt(row, 2);
+                String code = (String) TablaDeDatosRoles.getValueAt(row, 0).toString();
+                String roleName = (String) TablaDeDatosRoles.getValueAt(row, 1);
+                String roleDes = (String) TablaDeDatosRoles.getValueAt(row, 2);
                 //String roleCode = (String) TablaDeDatosStaff.getValueAt(row, 3);
                 txtCode.setText(code);
                 txtRoleName.setText(roleName);
                 txtRoleDes.setText(roleDes);
             }
         }
-    }//GEN-LAST:event_TablaDeDatosStaffMouseClicked
+    }//GEN-LAST:event_TablaDeDatosRolesMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int filaSeleccionada = TablaDeDatosRoles.getSelectedRow();
 
-        modificarRegistro();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un registro para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Obtener datos del registro seleccionado
+        int id = (int) TablaDeDatosRoles.getValueAt(filaSeleccionada, 0); // ID en la primera columna
+        String roleName = TablaDeDatosRoles.getValueAt(filaSeleccionada, 1).toString();
+        String description = TablaDeDatosRoles.getValueAt(filaSeleccionada, 2).toString();
+        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
+        ModificarRoles dialog = new ModificarRoles(parentFrame, model, this, id, roleName, description);
+        dialog.setVisible(true); // Muestra el diálogo
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
@@ -283,14 +295,14 @@ public class StaffRolesP extends javax.swing.JPanel {
             st = con.createStatement();
             rs = st.executeQuery(sql);
             Object[] meals = new Object[5];
-            model = (DefaultTableModel) TablaDeDatosStaff.getModel();
+            model = (DefaultTableModel) TablaDeDatosRoles.getModel();
             while (rs.next()) {
                 meals[0] = rs.getInt("code");
                 meals[1] = rs.getString("role_name");
                 meals[2] = rs.getString("role_description");
                 model.addRow(meals);
             }
-            TablaDeDatosStaff.setModel(model);
+            TablaDeDatosRoles.setModel(model);
         } catch (Exception e) {
 
         }
@@ -353,7 +365,7 @@ public class StaffRolesP extends javax.swing.JPanel {
     }
 
     void limpiarTabla(DefaultTableModel model) {
-        for (int i = 0; i < TablaDeDatosStaff.getRowCount(); i++) {
+        for (int i = 0; i < TablaDeDatosRoles.getRowCount(); i++) {
             model.removeRow(i);
             i = i - 1;
         }
@@ -371,7 +383,7 @@ public class StaffRolesP extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablaDeDatosStaff;
+    private javax.swing.JTable TablaDeDatosRoles;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNvoRegistro;
