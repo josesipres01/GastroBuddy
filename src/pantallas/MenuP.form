@@ -184,7 +184,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="TablaDeDatosStaff">
+                <Component class="javax.swing.JTable" name="TablaDeDatosMenu">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ef" green="ef" red="ef" type="rgb"/>
@@ -205,7 +205,7 @@
                     <Property name="showGrid" type="boolean" value="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TablaDeDatosStaffMouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TablaDeDatosMenuMouseClicked"/>
                   </Events>
                 </Component>
               </SubComponents>
