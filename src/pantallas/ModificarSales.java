@@ -55,10 +55,9 @@ public class ModificarSales extends javax.swing.JDialog {
         txtAmount.setText(amount.toString());  // Establecer el valor del monto
         this.dateOfMeal.setText(dateOfMeal);
         // Rellenar el JComboBox para el nombre del personal (staffName)
-        comboStaff.setSelectedItem(staffName);  // Asumiendo que comboBoxStaffName es un JComboBox
+        comboStaff.setSelectedItem(staffName);  
         // Rellenar el JComboBox para el nombre del cliente (customerName)
-        comboCustomer.setSelectedItem(customerName);  // Asumiendo que comboBoxCustomerName es un JComboBox
-
+        comboCustomer.setSelectedItem(customerName);  
         // Si el campo `idMeals` se usa de alguna forma, puedes asignarlo también, por ejemplo:
         setComboBoxSelection(comboMeals, idMeals);
 

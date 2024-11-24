@@ -11,7 +11,6 @@ import config.Conexion;
 import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +54,7 @@ public class MealDishesP extends javax.swing.JPanel {
         panelPrincipal = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TablaDeDatosStaff = new javax.swing.JTable();
+        TablaDeDatosDishes = new javax.swing.JTable();
         btnModificar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -67,36 +66,38 @@ public class MealDishesP extends javax.swing.JPanel {
         btnNvoRegistro = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         cboxItemId = new javax.swing.JComboBox<>();
+        txtId = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         panelPrincipal.setBackground(new java.awt.Color(81, 81, 201));
 
         jPanel1.setBackground(new java.awt.Color(81, 81, 201));
 
-        TablaDeDatosStaff.setBackground(new java.awt.Color(239, 239, 239));
-        TablaDeDatosStaff.setModel(new javax.swing.table.DefaultTableModel(
+        TablaDeDatosDishes.setBackground(new java.awt.Color(239, 239, 239));
+        TablaDeDatosDishes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "meal_id", "item", "quantity"
+                "id", "meal_id", "item", "quantity"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                true, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        TablaDeDatosStaff.setGridColor(new java.awt.Color(153, 153, 153));
-        TablaDeDatosStaff.setShowGrid(true);
-        TablaDeDatosStaff.addMouseListener(new java.awt.event.MouseAdapter() {
+        TablaDeDatosDishes.setGridColor(new java.awt.Color(153, 153, 153));
+        TablaDeDatosDishes.setShowGrid(true);
+        TablaDeDatosDishes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TablaDeDatosStaffMouseClicked(evt);
+                TablaDeDatosDishesMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(TablaDeDatosStaff);
+        jScrollPane1.setViewportView(TablaDeDatosDishes);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -168,38 +169,52 @@ public class MealDishesP extends javax.swing.JPanel {
 
         cboxItemId.setEditable(true);
 
+        txtId.setEditable(false);
+        txtId.setFocusable(false);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("id");
+
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap(38, Short.MAX_VALUE)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(268, 268, 268)
-                        .addComponent(jLabel1))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(6, 6, 6)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnNvoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(txtMealId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(txtMealId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(27, 27, 27)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(cboxItemId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboxItemId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(34, 34, 34))
+                            .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(268, 268, 268)
+                                .addComponent(jLabel1))
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnNvoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(34, 34, 34))))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,16 +235,22 @@ public class MealDishesP extends javax.swing.JPanel {
                         .addGap(239, 239, 239)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel3))
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtQuantity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(cboxItemId, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtMealId, javax.swing.GroupLayout.Alignment.LEADING))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                            .addComponent(cboxItemId, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                            .addComponent(txtQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                            .addComponent(txtMealId))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtId)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -244,18 +265,20 @@ public class MealDishesP extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TablaDeDatosStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosStaffMouseClicked
+    private void TablaDeDatosDishesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosDishesMouseClicked
 
-         if (TablaDeDatosStaff.isFocusable()) {
-        int row = TablaDeDatosStaff.getSelectedRow();
+         if (TablaDeDatosDishes.isFocusable()) {
+        int row = TablaDeDatosDishes.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(null, "There is no row selected");
         } else {
             // Obtén los valores de las celdas, asegurando el tipo correcto
-            String mealId = TablaDeDatosStaff.getValueAt(row, 0).toString();  // ID de la comida
-            String itemName = TablaDeDatosStaff.getValueAt(row, 1).toString();  // Nombre del ítem
-            String quantity = TablaDeDatosStaff.getValueAt(row, 2).toString();  // Cantidad
+            String id = TablaDeDatosDishes.getValueAt(row, 0).toString();  // ID de la comida
+            String mealId = TablaDeDatosDishes.getValueAt(row, 1).toString();  // ID de la comida
+            String itemName = TablaDeDatosDishes.getValueAt(row, 2).toString();  // Nombre del ítem
+            String quantity = TablaDeDatosDishes.getValueAt(row, 3).toString();  // Cantidad
 
+            txtId.setText(id);
             // Asigna valores a los campos correspondientes
             txtMealId.setText(mealId);
 
@@ -271,11 +294,25 @@ public class MealDishesP extends javax.swing.JPanel {
             txtQuantity.setText(quantity);
         }
     }
-    }//GEN-LAST:event_TablaDeDatosStaffMouseClicked
+    }//GEN-LAST:event_TablaDeDatosDishesMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-        modificarRegistro();
+    int filaSeleccionada = TablaDeDatosDishes.getSelectedRow();
+
+        // Obtener los datos de la fila seleccionada
+        int id = (int) TablaDeDatosDishes.getValueAt(filaSeleccionada, 0); // ID en la primera columna
+        int idMeal = (int) TablaDeDatosDishes.getValueAt(filaSeleccionada, 1); // ID en la primera columna
+        String item = TablaDeDatosDishes.getValueAt(filaSeleccionada, 2).toString();
+        int quantity = (int) TablaDeDatosDishes.getValueAt(filaSeleccionada, 3); 
+
+
+// Crear el diálogo de modificación con los datos obtenidos
+        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
+        ModificarDishes dialog = new ModificarDishes(parentFrame, model, this, id, idMeal, item, quantity);
+        dialog.setVisible(true); // Muestra el diálogo
+
+                                                
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
@@ -295,33 +332,37 @@ public class MealDishesP extends javax.swing.JPanel {
         ventana.setPantalla(Pantalla.PrincipalP);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    void listar() {
-    String sql = "SELECT m.meal_id, t.name AS item_name, m.quantity " +
+  void listar() {
+    String sql = "SELECT m.id, m.meal_id, t.name AS item_name, m.quantity, t.id AS item_id " +
                  "FROM meal_dishes m " +
-                 "JOIN menu_items t ON m.item_id = t.id"; 
+                 "JOIN menu_items t ON m.item_id = t.id";
     try {
         con = cn.getConnection();
         st = con.createStatement();
         rs = st.executeQuery(sql);
         
         // Limpia el modelo antes de añadir nuevas filas
-        model = (DefaultTableModel) TablaDeDatosStaff.getModel();
+        model = (DefaultTableModel) TablaDeDatosDishes.getModel();
         model.setRowCount(0); // Limpia las filas existentes
         
-        Object[] meals = new Object[3];
+        Object[] meals = new Object[5]; // Ajusta el tamaño para incluir todos los datos (id, meal_id, item_name, quantity, item_id)
         
         while (rs.next()) {
-            meals[0] = rs.getInt("meal_id"); // ID de la comida
-            meals[1] = rs.getString("item_name"); // Nombre del ítem (debería ser "item_name")
-            meals[2] = rs.getInt("quantity"); // Cantidad
+            meals[0] = rs.getInt("id"); // ID del plato (meal_dishes.id)
+            meals[1] = rs.getInt("meal_id"); // ID de la comida (meal_id)
+            meals[2] = rs.getString("item_name"); // Nombre del ítem
+            meals[3] = rs.getInt("quantity"); // Cantidad
+            meals[4] = rs.getInt("item_id"); // ID del ítem (item_id de menu_items)
 
             model.addRow(meals);
         }
-        TablaDeDatosStaff.setModel(model);
+        TablaDeDatosDishes.setModel(model);
     } catch (Exception e) {
         e.printStackTrace(); // Imprimir la excepción para depuración
     }
 }
+
+
 
 
    
@@ -376,13 +417,16 @@ public class MealDishesP extends javax.swing.JPanel {
   
     
     void limpiarTexts() {
+        txtId.setText("");
         txtMealId.setText("");
         txtQuantity.setText("");
-        //txtItemID.setText("");
+        
+       cboxItemId.setSelectedIndex(-1); // Deseleccionar cualquier opción
+
     }
 
     void limpiarTabla(DefaultTableModel model) {
-        for (int i = 0; i < TablaDeDatosStaff.getRowCount(); i++) {
+        for (int i = 0; i < TablaDeDatosDishes.getRowCount(); i++) {
             model.removeRow(i);
             i = i - 1;
         }
@@ -396,7 +440,8 @@ public class MealDishesP extends javax.swing.JPanel {
 
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablaDeDatosStaff;
+    private javax.swing.JTable TablaDeDatosDishes;
+    private javax.swing.JTable TablaDeDatosDishes1;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNvoRegistro;
@@ -406,9 +451,14 @@ public class MealDishesP extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JPanel panelPrincipal1;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtMealId;
     private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables

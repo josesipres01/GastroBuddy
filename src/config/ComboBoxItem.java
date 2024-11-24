@@ -31,7 +31,7 @@ public class ComboBoxItem {
         return nombre; // Esto es lo que se mostrará en el JComboBox
     }
 
-   
+    
 }
 
 
