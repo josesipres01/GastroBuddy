@@ -17,6 +17,7 @@ public class ComboBoxItem {
         this.nombre = nombre;
     }
 
+ 
     public int getId() {
         return id;
     }

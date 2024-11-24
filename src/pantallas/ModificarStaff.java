@@ -12,6 +12,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author joses
  */
-public class AgregarStaff extends javax.swing.JDialog {
+public class ModificarStaff extends javax.swing.JDialog {
 
     Conexion cn = new Conexion();
     Connection con;
@@ -28,18 +33,36 @@ public class AgregarStaff extends javax.swing.JDialog {
     ResultSet rs;
    private DefaultTableModel tableModel; 
    private final StaffP staff;
+    private final int id;
+    private final String firstName;
+    private final String lastName;
+    private final int roleCode;
 
     /**
      * Creates new form AgregarStaff
      */
-    public AgregarStaff(Frame parent,DefaultTableModel tableModel, StaffP staff) {
-        super(parent, "New Registration", true); 
-        this.tableModel = model; 
-        this.staff = staff;
-        initComponents();
-        poblarComboBoxes(); // Llama al método para llenar los combos        
+   public ModificarStaff(Frame parent, DefaultTableModel tableModel, StaffP staff, int id, String firstName, String lastName, int roleCode) {
+    super(parent, "Modify Staff", true); // Título del diálogo
+    this.model = tableModel; // Modelo de la tabla (para actualizarla después)
+    this.staff = staff; // Objeto Staff para modificarlo
 
-    }
+    // Establecer los datos del personal seleccionado para mostrar en los campos de la interfaz
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.roleCode = roleCode;
+    initComponents(); // Inicializar los componentes gráficos (botones, campos de texto, etc.)
+    poblarComboBoxes();
+    seleccionarComboBoxRole(roleCode);
+
+    
+    // Establecer los valores iniciales en los campos de texto (asumiendo que tienes los JTextFields correspondientes)
+    txtFirstName.setText(firstName);
+    txtLastName.setText(lastName);
+   comboRole.setSelectedItem(roleCode);  // Asumiendo que comboBoxStaffName es un JComboBox
+
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -98,20 +121,22 @@ public class AgregarStaff extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4)
-                    .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
-                    .addComponent(comboRole, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(115, 115, 115)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(comboRole, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(jLabel3))
+                        .addGap(0, 153, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,8 +173,12 @@ public class AgregarStaff extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-        agregarRegistro();
+        try {
+            // TODO add your handling code here:
+            guardarCambios();
+        } catch (ParseException ex) {
+            Logger.getLogger(ModificarStaff.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
@@ -162,110 +191,98 @@ public class AgregarStaff extends javax.swing.JDialog {
             }
         });
     }
-   
- void agregarRegistro() {
-    // Verificar que el campo de nombre no esté vacío
-    if (txtFirstName.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "The 'First Name' field is empty. Please enter it.", 
-                                      "Add record", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Verificar que el campo de apellido no esté vacío
-    if (txtLastName.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "The 'Last Name' field is empty. Please enter it.", 
-                                      "Add record", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Validar que First Name solo contenga letras
-    if (!txtFirstName.getText().trim().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
-        JOptionPane.showMessageDialog(null, "The 'First Name' field should only contain text.", 
-                                      "Add record", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Validar que Last Name solo contenga letras
-    if (!txtLastName.getText().trim().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
-        JOptionPane.showMessageDialog(null, "The 'Last Name' field should only contain text.", 
-                                      "Add record", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Verificar que el campo de código no esté vacío
-    if (comboRole.getSelectedItem() == null || comboRole.getSelectedItem().toString().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "The 'Role Code' field is empty. Please select a role.",
-                                      "Add record", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Obtener el texto seleccionado en el JComboBox
-    String selectedRole = comboRole.getSelectedItem().toString().trim();
-    // Separar el 'roleCode' y 'roleName' usando el guion como delimitador
-    String[] parts = selectedRole.split(" - ");
+void guardarCambios() throws ParseException {
+    // Obtener los nuevos valores desde los campos de texto
+    String firstName = txtFirstName.getText().trim(); // Obtener el primer nombre
+    String lastName = txtLastName.getText().trim();   // Obtener el apellido
     
-    // Validar que la cadena contiene un código de rol válido
-    int roleCode = -1;
-    try {
-        roleCode = Integer.parseInt(parts[0]); // Obtener el 'roleCode'
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Invalid Role Code selected.", 
-                                      "Add record", JOptionPane.ERROR_MESSAGE);
+    // Obtener el objeto seleccionado de comboRole
+    ComboBoxItem selectedCode = (ComboBoxItem) comboRole.getSelectedItem();
+    
+    // Validar que se haya seleccionado algo en el JComboBox
+    if (selectedCode == null) {
+        JOptionPane.showMessageDialog(this, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // Conexión a la base de datos y ejecución del INSERT
+    // Obtener el código de rol desde el objeto ComboBoxItem
+    int roleCode = selectedCode.getId();  // Utiliza el método getId() de ComboBoxItem
+     String roleName = ""; // Variable para almacenar el nombre del rol
+    // Crear una conexión a la base de datos
     Connection con = null;
-    PreparedStatement pst = null;
-
     try {
-        // Obtener los valores de los campos
-        String first_name = txtFirstName.getText().trim();
-        String last_name = txtLastName.getText().trim();
+        con = cn.getConnection(); // Obtener la conexión
 
-        // Establecer conexión con la base de datos
-        con = cn.getConnection();
-
-        // Preparar consulta SQL
-        String sql = "INSERT INTO public.staff (first_name, last_name, role_code) VALUES (?, ?, ?)";
-        pst = con.prepareStatement(sql);
-
-        // Asignar valores a los parámetros de la consulta
-        pst.setString(1, first_name);
-        pst.setString(2, last_name);
-        pst.setInt(3, roleCode); // Usar roleCode extraído de la cadena
-
-        // Ejecutar la consulta
-        int rowsAffected = pst.executeUpdate();
-
-        // Verificar si el registro fue exitoso
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "¡Registration added successfully!", 
-                                          "Add record", JOptionPane.INFORMATION_MESSAGE);
-            staff.actualizar(); // Actualizar la tabla en la pantalla principal
-            this.dispose(); // Cerrar el diálogo
-        } else {
-            JOptionPane.showMessageDialog(null, "Registration could not be added.", 
-                                          "Add record", JOptionPane.ERROR_MESSAGE);
+        // Validar si la conexión es nula o está cerrada
+        if (con == null || con.isClosed()) {
+            JOptionPane.showMessageDialog(this, "Database connection is closed or not available.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
+        // Actualizar el registro en la base de datos
+        String sql = "UPDATE staff SET first_name=?, last_name=?, role_code=? WHERE id = ?;";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, firstName);  // Establecer el primer nombre
+        pst.setString(2, lastName);   // Establecer el apellido
+        pst.setInt(3, roleCode);      // Establecer el código de rol
+        pst.setInt(4, this.id);       // Establecer el ID del registro a actualizar
+
+        // Ejecutar la actualización en la base de datos
+        int filasAfectadas = pst.executeUpdate();
+
+        // Verificar si se actualizó correctamente
+        if (filasAfectadas > 0) {
+            JOptionPane.showMessageDialog(this, "Staff updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            String sqlRoleName = "SELECT role_name FROM reff_staff_roles WHERE code = ?";
+            PreparedStatement pstRoleName = con.prepareStatement(sqlRoleName);
+            pstRoleName.setInt(1, roleCode);
+            ResultSet rs = pstRoleName.executeQuery();
+
+            if (rs.next()) {
+                roleName = rs.getString("role_name"); // Obtener el nombre del rol
+            }
+
+            // Actualizar la tabla principal con los nuevos datos
+            actualizarTabla(this.id, firstName, lastName, roleCode, roleName);
+            // Cerrar la ventana de modificación
+            this.dispose(); // Cerrar el diálogo
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to update staff.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "A database error occurred: " + ex.getMessage(), 
-                                      "Add record", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     } finally {
-        // Cerrar el PreparedStatement y la conexión
-        try {
-            if (pst != null) pst.close();
-            if (con != null && !con.isClosed()) con.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Connection closing error: " + e.getMessage(), 
-                                          "Add record", JOptionPane.ERROR_MESSAGE);
+        // Asegurarse de cerrar la conexión
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+void actualizarTabla(int id, String firstName, String lastName, int roleCode, String roleName) {
+    // Formatear el texto como "code-role"
+    String codeRole = roleCode + " - " + roleName;
+
+    // Recorrer las filas de la tabla y actualizar la fila correspondiente
+    for (int i = 0; i < model.getRowCount(); i++) {
+        int tableId = (int) model.getValueAt(i, 0); // ID en la primera columna de la tabla
+        if (tableId == id) {
+            // Actualizar la fila con los nuevos datos
+            model.setValueAt(firstName, i, 1); // Nombre del staff en la segunda columna
+            model.setValueAt(lastName, i, 2);  // Apellido del staff en la tercera columna
+            model.setValueAt(codeRole, i, 3);  // Formato "code-role" en la cuarta columna
+            break; // Salir del loop una vez que se haya actualizado la fila correspondiente
         }
     }
 }
 
 
- private void poblarComboBoxes() {
+private void poblarComboBoxes() {
     Connection con = null;
     PreparedStatement pstRole = null;
     ResultSet rsRole = null;
@@ -286,8 +303,11 @@ public class AgregarStaff extends javax.swing.JDialog {
             int roleCode = rsRole.getInt("code"); // Obtener el 'roleCode'
             String roleName = rsRole.getString("role_name"); // Obtener el 'roleName'
             
-            // Agregar una cadena que contenga el 'roleCode' y 'roleName' al JComboBox
-            comboRole.addItem(roleCode + " - " + roleName);
+            // Crear un objeto ComboBoxItem con el código y el nombre del rol
+            ComboBoxItem comboItem = new ComboBoxItem(roleCode, roleName);
+            
+            // Agregar el objeto ComboBoxItem al JComboBox
+            comboRole.addItem(comboItem);
             System.out.println("Role agregado: " + roleCode + " - " + roleName);
         }
 
@@ -306,11 +326,24 @@ public class AgregarStaff extends javax.swing.JDialog {
     }
 }
 
+private void seleccionarComboBoxRole(int roleCode) {
+    for (int i = 0; i < comboRole.getItemCount(); i++) {
+        ComboBoxItem item = (ComboBoxItem) comboRole.getItemAt(i); // Obtén el elemento del JComboBox
+        if (item.getId() == roleCode) { // Compara el ID del rol
+            comboRole.setSelectedIndex(i); // Selecciona el elemento
+            break;
+        }
+    }
+}
+
+
+
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JComboBox<String> comboRole;
+    private javax.swing.JComboBox<ComboBoxItem> comboRole;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

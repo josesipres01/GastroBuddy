@@ -303,6 +303,29 @@ public class SalesP extends javax.swing.JPanel {
 
     private void TablaDeDatosSalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosSalesMouseClicked
 
+    if (TablaDeDatosSales.isFocusable()) {
+        int row = TablaDeDatosSales.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "No record selected.", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            // Obtener los valores seleccionados de la fila
+            String id = TablaDeDatosSales.getValueAt(row, 0).toString();
+            String amount = TablaDeDatosSales.getValueAt(row, 1).toString();
+            String idMeals = TablaDeDatosSales.getValueAt(row, 2).toString();
+            String staffName = TablaDeDatosSales.getValueAt(row, 3).toString();
+            String customerName = TablaDeDatosSales.getValueAt(row, 4).toString();
+            String date = TablaDeDatosSales.getValueAt(row, 5).toString();
+            // Asignar los valores a los campos correspondientes (para que se muestren en los JTextFields)
+            txtId.setText(id);
+            txtAmount.setText(amount);
+            txtMealsId.setText(idMeals);
+            txtStaffId.setText(staffName);
+            txtCustomer.setText(customerName);
+            dateOfMeal.setText(date);
+
+        }
+    }
+
     }//GEN-LAST:event_TablaDeDatosSalesMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed

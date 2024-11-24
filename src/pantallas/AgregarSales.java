@@ -126,6 +126,11 @@ public class AgregarSales extends javax.swing.JDialog {
         comboStaff.setModel(new javax.swing.DefaultComboBoxModel<>());
 
         comboMeals.setModel(new javax.swing.DefaultComboBoxModel<>());
+        comboMeals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboMealsActionPerformed(evt);
+            }
+        });
 
         comboCustomer.setModel(new javax.swing.DefaultComboBoxModel<>());
 
@@ -223,6 +228,10 @@ public class AgregarSales extends javax.swing.JDialog {
     private void txtAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAmountActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAmountActionPerformed
+
+    private void comboMealsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMealsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboMealsActionPerformed
 
     /**
      * @param args the command line arguments

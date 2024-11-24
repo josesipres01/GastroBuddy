@@ -276,31 +276,52 @@ public class StaffP extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TablaDeDatosStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosStaffMouseClicked
-
         if (TablaDeDatosStaff.isFocusable()) {
         int row = TablaDeDatosStaff.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "There is no row selected");
+            JOptionPane.showMessageDialog(null, "No record selected.", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            String id = (String) TablaDeDatosStaff.getValueAt(row, 0).toString();
-            String lastName = (String) TablaDeDatosStaff.getValueAt(row, 1);
-            String firstName = (String) TablaDeDatosStaff.getValueAt(row, 2);
-            
-            // Obtener el rol en el nuevo formato
-            String roleWithCode = (String) TablaDeDatosStaff.getValueAt(row, 3);
-            String roleCode = roleWithCode.split(" - ")[0]; // Extraer el código del rol
-            
+            // Obtener los valores seleccionados de la fila
+            String id = TablaDeDatosStaff.getValueAt(row, 0).toString();
+            String firstName = TablaDeDatosStaff.getValueAt(row, 1).toString();
+            String lastName = TablaDeDatosStaff.getValueAt(row, 2).toString();
+            String roleCode = TablaDeDatosStaff.getValueAt(row, 3).toString();
+
+            // Asignar los valores a los campos correspondientes
             txtId.setText(id);
-            txtFirstName.setText(lastName);
-            txtLastName.setText(firstName);
-            txtRoleName.setText(roleCode); // Guardar solo el código en el campo de texto
-            }
+            txtFirstName.setText(firstName);
+            txtLastName.setText(lastName);
+            txtRoleName.setText(roleCode); // Mostrar el código del rol en un campo de texto (si existe)
+
         }
+    }
+ 
     }//GEN-LAST:event_TablaDeDatosStaffMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+    int filaSeleccionada = TablaDeDatosStaff.getSelectedRow();
 
-        modificarRegistro();
+        // Obtener los datos de la fila seleccionada
+        int id = (int) TablaDeDatosStaff.getValueAt(filaSeleccionada, 0); // ID en la primera columna
+        String firstName = TablaDeDatosStaff.getValueAt(filaSeleccionada, 1).toString();
+        String lastName = TablaDeDatosStaff.getValueAt(filaSeleccionada, 2).toString();
+        String roleValue = TablaDeDatosStaff.getValueAt(filaSeleccionada, 3).toString(); // Obtener el valor de la columna de role
+
+// Verificar que roleValue tiene el formato esperado (por ejemplo "1 - Admin")
+        int roleCode = 0;
+        try {
+            String[] parts = roleValue.split(" - ");
+            roleCode = Integer.parseInt(parts[0].trim()); // Obtener solo el roleCode como número
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid role code format.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+// Crear el diálogo de modificación con los datos obtenidos
+        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
+        ModificarStaff dialog = new ModificarStaff(parentFrame, model, this, id, firstName, lastName, roleCode);
+        dialog.setVisible(true); // Muestra el diálogo
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
