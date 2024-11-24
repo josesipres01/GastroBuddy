@@ -29,6 +29,8 @@ public class ComboBoxItem {
     public String toString() {
         return nombre; // Esto es lo que se mostrará en el JComboBox
     }
+
+   
 }
 
 

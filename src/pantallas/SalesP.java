@@ -58,7 +58,7 @@ public class SalesP extends javax.swing.JPanel {
         panelPrincipal = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TablaDeDatosStaff = new javax.swing.JTable();
+        TablaDeDatosSales = new javax.swing.JTable();
         btnModificar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -81,8 +81,8 @@ public class SalesP extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(81, 81, 201));
 
-        TablaDeDatosStaff.setBackground(new java.awt.Color(239, 239, 239));
-        TablaDeDatosStaff.setModel(new javax.swing.table.DefaultTableModel(
+        TablaDeDatosSales.setBackground(new java.awt.Color(239, 239, 239));
+        TablaDeDatosSales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -98,14 +98,14 @@ public class SalesP extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        TablaDeDatosStaff.setGridColor(new java.awt.Color(153, 153, 153));
-        TablaDeDatosStaff.setShowGrid(true);
-        TablaDeDatosStaff.addMouseListener(new java.awt.event.MouseAdapter() {
+        TablaDeDatosSales.setGridColor(new java.awt.Color(153, 153, 153));
+        TablaDeDatosSales.setShowGrid(true);
+        TablaDeDatosSales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TablaDeDatosStaffMouseClicked(evt);
+                TablaDeDatosSalesMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(TablaDeDatosStaff);
+        jScrollPane1.setViewportView(TablaDeDatosSales);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -301,34 +301,40 @@ public class SalesP extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TablaDeDatosStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosStaffMouseClicked
+    private void TablaDeDatosSalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosSalesMouseClicked
 
-        if(TablaDeDatosStaff.isFocusable()){
-            int row = TablaDeDatosStaff.getSelectedRow();
-            if (row == -1) {
-                JOptionPane.showMessageDialog(null, "There is no row selected");
-            } else {
-                //id, amount, id_meals, id_staff, id_customer, date_of_meal
-                String id = (String) TablaDeDatosStaff.getValueAt(row, 0).toString();
-                String amount = (String) TablaDeDatosStaff.getValueAt(row, 1);
-                String id_meals = (String) TablaDeDatosStaff.getValueAt(row, 2);
-                String staff_namee = TablaDeDatosStaff.getValueAt(row, 3).toString();
-                String customer_name = TablaDeDatosStaff.getValueAt(row, 4).toString();
-                String date_of_meal = (String) TablaDeDatosStaff.getValueAt(row, 5);
-                
-                txtId.setText(id);
-                txtAmount.setText(amount);
-                txtCustomer.setText(staff_namee);
-                txtMealsId.setText(id_meals);
-                txtStaffId.setText(customer_name);
-                dateOfMeal.setText(date_of_meal);
-            }
-        }
-    }//GEN-LAST:event_TablaDeDatosStaffMouseClicked
+    }//GEN-LAST:event_TablaDeDatosSalesMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int filaSeleccionada = TablaDeDatosSales.getSelectedRow();
 
-        modificarRegistro();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Select a record to modify.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int id = (int) TablaDeDatosSales.getValueAt(filaSeleccionada, 0); // ID in the first column
+        Double amount = Double.parseDouble(TablaDeDatosSales.getValueAt(filaSeleccionada, 1).toString());
+
+// Obtener y convertir `idMeals`
+        String idMealsStr = TablaDeDatosSales.getValueAt(filaSeleccionada, 2).toString();
+        int idMeals = -1;
+        try {
+            idMeals = Integer.parseInt(idMealsStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid meal ID format. Please check the data.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String staffName = TablaDeDatosSales.getValueAt(filaSeleccionada, 3).toString();
+        String customerName = TablaDeDatosSales.getValueAt(filaSeleccionada, 4).toString();
+        String dateOfMeal = TablaDeDatosSales.getValueAt(filaSeleccionada, 5).toString();
+
+// Crear y mostrar el diálogo
+        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
+        ModificarSales dialog = new ModificarSales(parentFrame, model, this, id, amount, idMeals, staffName, customerName, dateOfMeal);
+        dialog.setVisible(true);
+      
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
@@ -366,7 +372,7 @@ public class SalesP extends javax.swing.JPanel {
             st = con.createStatement();
             rs = st.executeQuery(sql);
             Object[] meals = new Object[6];
-            model = (DefaultTableModel) TablaDeDatosStaff.getModel();
+            model = (DefaultTableModel) TablaDeDatosSales.getModel();
             while (rs.next()) {
                 meals[0] = rs.getInt("id");
                 meals[1] = rs.getString("amount");
@@ -376,7 +382,7 @@ public class SalesP extends javax.swing.JPanel {
                 meals[5] = rs.getString("date_of_meal");
                 model.addRow(meals);
             }
-            TablaDeDatosStaff.setModel(model);
+            TablaDeDatosSales.setModel(model);
         } catch (Exception e) {
             
         }
@@ -470,7 +476,7 @@ public class SalesP extends javax.swing.JPanel {
     }
     
     void limpiarTabla(DefaultTableModel model) {
-        for (int i = 0; i < TablaDeDatosStaff.getRowCount(); i++) {
+        for (int i = 0; i < TablaDeDatosSales.getRowCount(); i++) {
             model.removeRow(i);
             i = i - 1;
         }
@@ -486,7 +492,7 @@ public class SalesP extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablaDeDatosStaff;
+    private javax.swing.JTable TablaDeDatosSales;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNvoRegistro;

@@ -16,7 +16,7 @@ public class Conexion {
         String puerto = "5432";
         String bd = "GastroServer";
         con = DriverManager.getConnection("jdbc:postgresql://" + ip + ":" + puerto + "/" + bd, "developer", "sono1306");
-        
+
         if (con != null && !con.isClosed()) {
             System.out.println("Conexión establecida correctamente.");
         } else {
@@ -33,6 +33,16 @@ public class Conexion {
 
 
     public Connection getConnection() {
+        String ip = "localhost";
+        String puerto = "5432";
+        String bd = "GastroServer";
+        Connection con = null;
+        try {
+            // Configura tu URL, usuario y contraseña
+            con = DriverManager.getConnection("jdbc:postgresql://" + ip + ":" + puerto + "/" + bd, "developer", "sono1306");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return con;
     }
 
