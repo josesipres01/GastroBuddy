@@ -61,11 +61,11 @@ public class RVenEmp extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Calling Heart", 0, 52)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Reporte De Ventas");
+        jLabel1.setText("Sales Report");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Fecha:");
+        jLabel2.setText("Date");
 
         jForDateofReport.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM"))));
         jForDateofReport.setToolTipText("Año-Mes-Dia");
@@ -84,7 +84,7 @@ public class RVenEmp extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Generar Reporte");
+        jButton1.setText("Generate Report");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -93,9 +93,14 @@ public class RVenEmp extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Empleado:");
+        jLabel3.setText("Employee:");
 
-        cBoxStaff.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos_los_empleados" }));
+        cBoxStaff.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All_employees" }));
+        cBoxStaff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cBoxStaffActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -129,9 +134,9 @@ public class RVenEmp extends javax.swing.JDialog {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jForDateofReport, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cBoxStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cBoxStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(50, 50, 50))
@@ -169,6 +174,10 @@ public class RVenEmp extends javax.swing.JDialog {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jForDateofReportKeyReleased
+
+    private void cBoxStaffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBoxStaffActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cBoxStaffActionPerformed
 
     public void generarRVenEmp() {
     try {

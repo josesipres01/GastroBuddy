@@ -60,11 +60,11 @@ public class RCompCust extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Calling Heart", 0, 52)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Reporte Ventas-Cliente ");
+        jLabel1.setText("Sales-Customer Report");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Fecha:");
+        jLabel2.setText("Date:");
 
         jForDateofmeal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM"))));
         jForDateofmeal.setToolTipText("Año-Mes-Dia");
@@ -83,18 +83,18 @@ public class RCompCust extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Generar Reporte");
+        jButton1.setText("Generate Report");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        cBoxEmp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos_los_clientes" }));
+        cBoxEmp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All_customers" }));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Cliente:");
+        jLabel3.setText("Customer");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -104,7 +104,7 @@ public class RCompCust extends javax.swing.JDialog {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jButton1)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -113,7 +113,7 @@ public class RCompCust extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jForDateofmeal)
                             .addComponent(cBoxEmp, 0, 200, Short.MAX_VALUE))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
