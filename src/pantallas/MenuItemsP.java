@@ -147,11 +147,15 @@ public class MenuItemsP extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("menu_id");
+        jLabel3.setText("menu_name");
+
+        txtName.setEditable(false);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("name");
+
+        txtPrice.setEditable(false);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -177,7 +181,9 @@ public class MenuItemsP extends javax.swing.JPanel {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("description");
 
-        cBoxMenuId.setEditable(true);
+        txtDescription.setEditable(false);
+
+        cBoxMenuId.setEnabled(false);
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
@@ -204,8 +210,8 @@ public class MenuItemsP extends javax.swing.JPanel {
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(cBoxMenuId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cBoxMenuId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -308,21 +314,26 @@ public class MenuItemsP extends javax.swing.JPanel {
     }//GEN-LAST:event_TablaDeDatosItemsMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+int filaSeleccionada = TablaDeDatosItems.getSelectedRow();
 
-        int filaSeleccionada = TablaDeDatosItems.getSelectedRow();
+// Validar si no se ha seleccionado ninguna fila
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "You must select a record to modify.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return; // Salir del método si no se selecciona ninguna fila
+        }
 
-        // Obtener los datos de la fila seleccionada
+// Obtener los datos de la fila seleccionada
         int id = (int) TablaDeDatosItems.getValueAt(filaSeleccionada, 0); // ID en la primera columna
         String menu_name = TablaDeDatosItems.getValueAt(filaSeleccionada, 1).toString();
         String nameItem = TablaDeDatosItems.getValueAt(filaSeleccionada, 2).toString();
         String description = TablaDeDatosItems.getValueAt(filaSeleccionada, 4).toString();
-        double price = (Double) TablaDeDatosItems.getValueAt(filaSeleccionada, 3); // ID en la primera columna
-
+        double price = (Double) TablaDeDatosItems.getValueAt(filaSeleccionada, 3); // Precio del ítem
 
 // Crear el diálogo de modificación con los datos obtenidos
         Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
-        ModificarMenuItems dialog = new ModificarMenuItems(parentFrame, model, this, id, menu_name, nameItem, description,price);
+        ModificarMenuItems dialog = new ModificarMenuItems(parentFrame, model, this, id, menu_name, nameItem, description, price);
         dialog.setVisible(true); // Muestra el diálogo
+
 
     }//GEN-LAST:event_btnModificarActionPerformed
 

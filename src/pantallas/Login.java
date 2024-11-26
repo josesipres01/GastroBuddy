@@ -257,9 +257,9 @@ public class Login extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordTxfActionPerformed
 public void limpiarCampos() {
-        userTxf.setText(""); // Limpia el campo de usuario
-        passwordTxf.setText(""); // Limpia el campo de contraseña
-    }
+    userTxf.setText(""); // Limpia el campo de usuario
+    passwordTxf.setText(""); // Limpia el campo de contraseña
+}
 
     
 

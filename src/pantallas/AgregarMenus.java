@@ -224,7 +224,7 @@ public class AgregarMenus extends javax.swing.JDialog {
             }
         });
     }
-  void agregarRegistro() {
+void agregarRegistro() {
     boolean valid = true; // Control de validaciones
 
     // Validación del campo Nombre
@@ -242,9 +242,13 @@ public class AgregarMenus extends javax.swing.JDialog {
         txtType1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         JOptionPane.showMessageDialog(null, "The 'Type' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
+    } else if (type.length() > 50) {
+        txtType1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "The 'Type' field must be 50 characters or less.", "Validation", JOptionPane.ERROR_MESSAGE);
+        valid = false;
     } else if (!type.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) { // Solo letras
         txtType1.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        JOptionPane.showMessageDialog(null, "The 'Type' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Type' field should only contain text.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else {
         txtType1.setBorder(UIManager.getBorder("TextField.border")); // Restaurar borde original
@@ -255,6 +259,10 @@ public class AgregarMenus extends javax.swing.JDialog {
     if (season.isEmpty()) {
         txtSeason.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         JOptionPane.showMessageDialog(null, "The 'Season' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
+        valid = false;
+    } else if (season.length() > 20) {
+        txtSeason.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "The 'Season' field must be 20 characters or less.", "Validation", JOptionPane.ERROR_MESSAGE);
         valid = false;
     } else if (!season.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) { // Solo letras
         txtSeason.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
@@ -356,6 +364,7 @@ public class AgregarMenus extends javax.swing.JDialog {
         }
     }
 }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField jForDateFrom1;

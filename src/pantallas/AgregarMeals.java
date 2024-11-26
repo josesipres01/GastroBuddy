@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -336,18 +337,17 @@ void agregarRegistro() {
         int staffId = Integer.parseInt(idStaff[0]);
         double costOfMeal = Double.parseDouble(txtCostofmeal.getText().trim());
 
-        // Convertir la fecha de la comida a formato SQL
-        String sqlDatetime = jForDateofmeal.getText();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = dateFormat.parse(sqlDatetime);
-        java.sql.Date dateSql = new java.sql.Date(date.getTime());
+        // Obtener la fecha como una cadena (formato yyyy-MM-dd)
+        String sqlDatetime = jForDateofmeal.getText().trim();
 
         con = cn.getConnection();
 
         // Preparar la consulta SQL
         String sql = "INSERT INTO public.meals (date_of_meal, cost_of_meal, customers_id, staff_id) VALUES (?, ?, ?, ?)";
         pst = con.prepareStatement(sql);
-        pst.setDate(1, dateSql);
+        
+        // Insertar la fecha como una cadena
+        pst.setString(1, sqlDatetime);
         pst.setDouble(2, costOfMeal);
         pst.setInt(3, customersId);
         pst.setInt(4, staffId);
@@ -380,6 +380,8 @@ void agregarRegistro() {
         }
     }
 }
+
+
 
 
 

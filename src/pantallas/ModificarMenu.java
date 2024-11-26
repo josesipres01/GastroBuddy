@@ -247,20 +247,29 @@ void guardarCambios() throws ParseException {
     String season = txtSeason.getText().trim();
     String menuName = txtName.getText().trim();
     
-    
     // Parse dates
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    dateFormat.setLenient(false);  // Ensures strict parsing of the date format
     String dateDateFromS = jForDateFrom1.getText().trim();
     String dateDateToS = jForDateTo.getText().trim();
     
+    // Check if the date fields are empty
     if (dateDateFromS.isEmpty() || dateDateToS.isEmpty()) {
         JOptionPane.showMessageDialog(null, "Please fill in all date fields.", "Warning", JOptionPane.WARNING_MESSAGE);
         return;
     }
-    Date dateDateFrom = dateFormat.parse(dateDateFromS);
-    Date dateDateTo = dateFormat.parse(dateDateToS);
 
+    // Validate the date format
     try {
+        Date dateDateFrom = dateFormat.parse(dateDateFromS);
+        Date dateDateTo = dateFormat.parse(dateDateToS);
+        
+        // Validate if the parsed dates are valid
+        if (dateDateFrom.after(dateDateTo)) {
+            JOptionPane.showMessageDialog(null, "The 'From' date cannot be after the 'To' date.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         // Establish connection and prepare the query
         con = cn.getConnection(); // Assuming you have a configured `Conexion` class
         String sql = "UPDATE menu SET name = ?, available_date_from = ?, available_date_to = ?, type = ?, season = ? WHERE id = ?";
@@ -283,11 +292,14 @@ void guardarCambios() throws ParseException {
         } else {
             JOptionPane.showMessageDialog(null, "The record to update was not found.", "Warning", JOptionPane.WARNING_MESSAGE);
         }
+    } catch (ParseException e) {
+        // If date format is invalid, show the alert
+        JOptionPane.showMessageDialog(null, "Invalid date format. Please use 'yyyy-MM-dd'.", "Warning", JOptionPane.WARNING_MESSAGE);
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     } 
-    
 }
+
 
 
 

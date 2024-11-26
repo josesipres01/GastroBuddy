@@ -143,6 +143,7 @@ public class StaffP extends javax.swing.JPanel {
             }
         });
 
+        txtFirstName.setEditable(false);
         txtFirstName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFirstNameActionPerformed(evt);
@@ -153,6 +154,7 @@ public class StaffP extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("first_name");
 
+        txtLastName.setEditable(false);
         txtLastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLastNameActionPerformed(evt);
@@ -163,6 +165,7 @@ public class StaffP extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("last_name");
 
+        txtRoleName.setEditable(false);
         txtRoleName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtRoleNameActionPerformed(evt);
@@ -299,9 +302,15 @@ public class StaffP extends javax.swing.JPanel {
     }//GEN-LAST:event_TablaDeDatosStaffMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-    int filaSeleccionada = TablaDeDatosStaff.getSelectedRow();
+        int filaSeleccionada = TablaDeDatosStaff.getSelectedRow();
 
-        // Obtener los datos de la fila seleccionada
+// Validar si no se ha seleccionado ninguna fila
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "You must select a record to modify.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return; // Salir del método si no se selecciona ninguna fila
+        }
+
+// Obtener los datos de la fila seleccionada
         int id = (int) TablaDeDatosStaff.getValueAt(filaSeleccionada, 0); // ID en la primera columna
         String firstName = TablaDeDatosStaff.getValueAt(filaSeleccionada, 1).toString();
         String lastName = TablaDeDatosStaff.getValueAt(filaSeleccionada, 2).toString();
@@ -314,7 +323,7 @@ public class StaffP extends javax.swing.JPanel {
             roleCode = Integer.parseInt(parts[0].trim()); // Obtener solo el roleCode como número
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid role code format.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+            return; // Salir si el formato es inválido
         }
 
 // Crear el diálogo de modificación con los datos obtenidos

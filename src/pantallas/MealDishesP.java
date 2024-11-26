@@ -145,7 +145,9 @@ public class MealDishesP extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("item_id");
+        jLabel3.setText("item");
+
+        txtQuantity.setEditable(false);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -166,8 +168,6 @@ public class MealDishesP extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        cboxItemId.setEditable(true);
 
         txtId.setEditable(false);
         txtId.setFocusable(false);
@@ -242,9 +242,9 @@ public class MealDishesP extends javax.swing.JPanel {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                            .addComponent(cboxItemId, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                            .addComponent(txtQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                            .addComponent(txtMealId))
+                            .addComponent(cboxItemId)
+                            .addComponent(txtQuantity)
+                            .addComponent(txtMealId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -298,19 +298,25 @@ public class MealDishesP extends javax.swing.JPanel {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-    int filaSeleccionada = TablaDeDatosDishes.getSelectedRow();
+        int filaSeleccionada = TablaDeDatosDishes.getSelectedRow();
 
-        // Obtener los datos de la fila seleccionada
+// Validar si no se ha seleccionado ninguna fila
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "You must select a record to modify.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return; // Salir del método si no se selecciona ninguna fila
+        }
+
+// Obtener los datos de la fila seleccionada
         int id = (int) TablaDeDatosDishes.getValueAt(filaSeleccionada, 0); // ID en la primera columna
-        int idMeal = (int) TablaDeDatosDishes.getValueAt(filaSeleccionada, 1); // ID en la primera columna
+        int idMeal = (int) TablaDeDatosDishes.getValueAt(filaSeleccionada, 1); // ID del meal
         String item = TablaDeDatosDishes.getValueAt(filaSeleccionada, 2).toString();
-        int quantity = (int) TablaDeDatosDishes.getValueAt(filaSeleccionada, 3); 
-
+        int quantity = (int) TablaDeDatosDishes.getValueAt(filaSeleccionada, 3);
 
 // Crear el diálogo de modificación con los datos obtenidos
         Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
         ModificarDishes dialog = new ModificarDishes(parentFrame, model, this, id, idMeal, item, quantity);
         dialog.setVisible(true); // Muestra el diálogo
+
 
                                                 
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -441,7 +447,6 @@ public class MealDishesP extends javax.swing.JPanel {
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaDeDatosDishes;
-    private javax.swing.JTable TablaDeDatosDishes1;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNvoRegistro;
@@ -453,11 +458,8 @@ public class MealDishesP extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JPanel panelPrincipal1;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtMealId;
     private javax.swing.JTextField txtQuantity;

@@ -150,14 +150,19 @@ public class SalesP extends javax.swing.JPanel {
 
         txtId.setEditable(false);
 
+        txtAmount.setEditable(false);
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("amount");
+
+        txtCustomer.setEditable(false);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("id_meals");
 
+        txtMealsId.setEditable(false);
         txtMealsId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMealsIdActionPerformed(evt);
@@ -184,6 +189,7 @@ public class SalesP extends javax.swing.JPanel {
             }
         });
 
+        dateOfMeal.setEditable(false);
         dateOfMeal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
         dateOfMeal.setToolTipText("Año-Mes-Dia");
 
@@ -195,6 +201,7 @@ public class SalesP extends javax.swing.JPanel {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("customer_name");
 
+        txtStaffId.setEditable(false);
         txtStaffId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtStaffIdActionPerformed(evt);

@@ -189,7 +189,7 @@ void agregarRegistro() {
     // Validación del campo Nombre
     String name = txtName.getText().trim();
     if (name.isEmpty()) {
-        txtName.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
+        txtName.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         JOptionPane.showMessageDialog(null, "The 'Name' field is obligatory.", "Validation", JOptionPane.ERROR_MESSAGE);
         txtName.requestFocus();
         valid = false;

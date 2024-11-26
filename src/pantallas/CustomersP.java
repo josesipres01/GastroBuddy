@@ -139,9 +139,13 @@ public class CustomersP extends javax.swing.JPanel {
         txtId.setEditable(false);
         txtId.setFocusable(false);
 
+        txtName.setEditable(false);
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("name");
+
+        txtPhone.setEditable(false);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));

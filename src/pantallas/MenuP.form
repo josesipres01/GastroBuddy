@@ -133,7 +133,7 @@
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="txtName" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="jForDateFrom" alignment="3" max="32767" attributes="0"/>
+                              <Component id="jForDateFrom" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="txtType" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -262,6 +262,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtName">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -275,6 +278,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtType">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -288,6 +294,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtSeason">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSeasonActionPerformed"/>
           </Events>
@@ -327,6 +336,7 @@
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jForDateFrom">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
               <Format format="yyyy-MM-dd" subtype="-1" type="1"/>
             </Property>
@@ -335,6 +345,7 @@
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jForDateTo">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
               <Format format="yyyy-MM-dd" subtype="-1" type="1"/>
             </Property>

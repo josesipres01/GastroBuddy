@@ -16,8 +16,16 @@ public class ComboBoxItem {
         this.id = id;
         this.nombre = nombre;
     }
+     public ComboBoxItem(String nombre) {
+        
+        this.nombre = nombre;
+    }
 
- 
+     
+    public ComboBoxItem(int id) {
+        this.id = id;
+    
+    }
     public int getId() {
         return id;
     }

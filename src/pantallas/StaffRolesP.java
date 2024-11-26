@@ -136,9 +136,13 @@ public class StaffRolesP extends javax.swing.JPanel {
 
         txtCode.setEditable(false);
 
+        txtRoleName.setEditable(false);
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("role_name");
+
+        txtRoleDes.setEditable(false);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));

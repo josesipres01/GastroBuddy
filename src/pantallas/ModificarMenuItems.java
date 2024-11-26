@@ -210,7 +210,7 @@ public class ModificarMenuItems extends javax.swing.JDialog {
 void guardarCambios() {
     // Obtener el valor seleccionado del JComboBox
     String selectedMenu = (String) cBoxMenuId.getSelectedItem();
-    
+
     // Validar que el valor no sea nulo o vacío
     if (selectedMenu == null || selectedMenu.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Menu must be selected.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -223,7 +223,21 @@ void guardarCambios() {
     // Obtener los demás valores desde los campos del formulario
     String name = txtName.getText();
     String description = txtDescription.getText();
-    double price = Double.parseDouble(txtPrice.getText());
+    double price = 0;
+
+    // Validar el campo de precio
+    try {
+        price = Double.parseDouble(txtPrice.getText());
+
+        // Validar que el precio no sea negativo
+        if (price < 0) {
+            JOptionPane.showMessageDialog(this, "The price cannot be negative.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "The price must be a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
     // Validar que los campos obligatorios no estén vacíos
     if (name.isEmpty() || description.isEmpty()) {

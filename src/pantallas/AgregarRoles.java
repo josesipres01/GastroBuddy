@@ -5,12 +5,14 @@
 package pantallas;
 
 import config.Conexion;
+import java.awt.Color;
 import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -163,41 +165,38 @@ public class AgregarRoles extends javax.swing.JDialog {
     String name = txtName7.getText().trim(); // Elimina espacios en blanco
     String descrip = txtDescription.getText().trim(); // Elimina espacios en blanco
 
-    // Validar que los campos no estén vacíos
-    if (name.isEmpty() || descrip.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "All fields are required.", "Add record", JOptionPane.ERROR_MESSAGE);
-        return; // Salir del método si los campos están vacíos
+    // Validar que el campo 'name' no esté vacío
+    if (name.isEmpty()) {
+        txtName7.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        JOptionPane.showMessageDialog(null, "The 'Role name' field is required.", "Validation", JOptionPane.ERROR_MESSAGE);
+        return; // Salir del método si no se ingresó un nombre
     }
 
-    // Validar que solo contengan letras (incluye acentos y espacios para nombres)
+    // Validar que el nombre solo contenga letras (incluye acentos y espacios para nombres)
     if (!name.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
-        JOptionPane.showMessageDialog(null, "The 'Role name' field must only contain text.", "Add record", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "The 'Role name' field must only contain text.", "Validation", JOptionPane.ERROR_MESSAGE);
         return; // Salir del método si el nombre no es válido
     }
 
-    if (!descrip.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
-        JOptionPane.showMessageDialog(null, "The 'Description' field must only contain text.", "Add record", JOptionPane.ERROR_MESSAGE);
-        return; // Salir del método si la descripción no es válida
-    }
-
+    // Conexión a la base de datos
     Connection con = null;
     PreparedStatement pst = null;
 
     try {
         // Verifica la conexión a la base de datos
         con = cn.getConnection();
-        
+
         // Preparar la consulta SQL
         String sql = "INSERT INTO reff_staff_roles (role_name, role_description) VALUES (?, ?)";
         pst = con.prepareStatement(sql);
 
         // Asignar los valores a los parámetros de la consulta
         pst.setString(1, name);
-        pst.setString(2, descrip);
+        pst.setString(2, descrip.isEmpty() ? null : descrip); // Si la descripción está vacía, asignar null
         int rowsAffected = pst.executeUpdate();
 
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "¡Registration added successfully!", "Add record", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registration added successfully!", "Add record", JOptionPane.INFORMATION_MESSAGE);
             roles.actualizar();
             this.dispose();
         } else {
@@ -216,7 +215,8 @@ public class AgregarRoles extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Connection closing error: " + e.getMessage(), "Add record", JOptionPane.ERROR_MESSAGE);
         }
     }
-}   
+}
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar7;

@@ -195,10 +195,27 @@ void guardarCambios() throws ParseException {
     // Obtener los nuevos valores desde los campos de texto
     String firstName = txtFirstName.getText().trim(); // Obtener el primer nombre
     String lastName = txtLastName.getText().trim();   // Obtener el apellido
-    
+
+    // Validar que los campos obligatorios no estén vacíos
+    if (firstName.isEmpty() || lastName.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "First name and last name are required.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validar que firstName y lastName solo contengan letras (incluye acentos y espacios)
+    if (!firstName.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+        JOptionPane.showMessageDialog(this, "First name must only contain letters.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (!lastName.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+        JOptionPane.showMessageDialog(this, "Last name must only contain letters.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
     // Obtener el objeto seleccionado de comboRole
     ComboBoxItem selectedCode = (ComboBoxItem) comboRole.getSelectedItem();
-    
+
     // Validar que se haya seleccionado algo en el JComboBox
     if (selectedCode == null) {
         JOptionPane.showMessageDialog(this, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -206,8 +223,9 @@ void guardarCambios() throws ParseException {
     }
 
     // Obtener el código de rol desde el objeto ComboBoxItem
-    int roleCode = selectedCode.getId();  // Utiliza el método getId() de ComboBoxItem
-     String roleName = ""; // Variable para almacenar el nombre del rol
+    int roleCode = selectedCode.getId();
+    String roleName = ""; // Variable para almacenar el nombre del rol
+
     // Crear una conexión a la base de datos
     Connection con = null;
     try {
@@ -233,6 +251,8 @@ void guardarCambios() throws ParseException {
         // Verificar si se actualizó correctamente
         if (filasAfectadas > 0) {
             JOptionPane.showMessageDialog(this, "Staff updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            // Obtener el nombre del rol desde la base de datos
             String sqlRoleName = "SELECT role_name FROM reff_staff_roles WHERE code = ?";
             PreparedStatement pstRoleName = con.prepareStatement(sqlRoleName);
             pstRoleName.setInt(1, roleCode);
@@ -244,9 +264,9 @@ void guardarCambios() throws ParseException {
 
             // Actualizar la tabla principal con los nuevos datos
             actualizarTabla(this.id, firstName, lastName, roleCode, roleName);
+
             // Cerrar la ventana de modificación
             this.dispose(); // Cerrar el diálogo
-
         } else {
             JOptionPane.showMessageDialog(this, "Failed to update staff.", "Error", JOptionPane.ERROR_MESSAGE);
         }

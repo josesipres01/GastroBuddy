@@ -60,7 +60,7 @@ public class Conexion {
         System.out.println("La conexión ya estaba cerrada.");
     }
 }
-    
+
       // Cierra la conexión
     public void cerrarConexion() {
         if (connection != null) {
@@ -69,7 +69,7 @@ public class Conexion {
                 connection = null; // Evitar reutilizar la conexión cerrada
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
+}
         }
     }
 
