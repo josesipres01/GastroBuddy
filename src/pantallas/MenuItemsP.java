@@ -55,7 +55,7 @@ public class MenuItemsP extends javax.swing.JPanel {
         panelPrincipal = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TablaDeDatosStaff = new javax.swing.JTable();
+        TablaDeDatosItems = new javax.swing.JTable();
         btnModificar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -76,8 +76,8 @@ public class MenuItemsP extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(81, 81, 201));
 
-        TablaDeDatosStaff.setBackground(new java.awt.Color(239, 239, 239));
-        TablaDeDatosStaff.setModel(new javax.swing.table.DefaultTableModel(
+        TablaDeDatosItems.setBackground(new java.awt.Color(239, 239, 239));
+        TablaDeDatosItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -93,14 +93,14 @@ public class MenuItemsP extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        TablaDeDatosStaff.setGridColor(new java.awt.Color(153, 153, 153));
-        TablaDeDatosStaff.setShowGrid(true);
-        TablaDeDatosStaff.addMouseListener(new java.awt.event.MouseAdapter() {
+        TablaDeDatosItems.setGridColor(new java.awt.Color(153, 153, 153));
+        TablaDeDatosItems.setShowGrid(true);
+        TablaDeDatosItems.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TablaDeDatosStaffMouseClicked(evt);
+                TablaDeDatosItemsMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(TablaDeDatosStaff);
+        jScrollPane1.setViewportView(TablaDeDatosItems);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -273,19 +273,19 @@ public class MenuItemsP extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TablaDeDatosStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosStaffMouseClicked
+    private void TablaDeDatosItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosItemsMouseClicked
 
-         if (TablaDeDatosStaff.isFocusable()) {
-        int row = TablaDeDatosStaff.getSelectedRow();
+         if (TablaDeDatosItems.isFocusable()) {
+        int row = TablaDeDatosItems.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(null, "There is no row selected");
         } else {
             // Obtén los valores de las celdas de la fila seleccionada
-            String id = TablaDeDatosStaff.getValueAt(row, 0).toString();
-            String menu_name = TablaDeDatosStaff.getValueAt(row, 1).toString();
-            String price = TablaDeDatosStaff.getValueAt(row, 2).toString();
-            String name = TablaDeDatosStaff.getValueAt(row, 3).toString();
-            String description = TablaDeDatosStaff.getValueAt(row, 4).toString();
+            String id = TablaDeDatosItems.getValueAt(row, 0).toString();
+            String menu_name = TablaDeDatosItems.getValueAt(row, 1).toString();
+            String price = TablaDeDatosItems.getValueAt(row, 2).toString();
+            String name = TablaDeDatosItems.getValueAt(row, 3).toString();
+            String description = TablaDeDatosItems.getValueAt(row, 4).toString();
 
             // Asigna los valores obtenidos a los campos correspondientes
             txtId.setText(id);
@@ -305,11 +305,25 @@ public class MenuItemsP extends javax.swing.JPanel {
             }
         }
     }
-    }//GEN-LAST:event_TablaDeDatosStaffMouseClicked
+    }//GEN-LAST:event_TablaDeDatosItemsMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-        modificarRegistro();
+        int filaSeleccionada = TablaDeDatosItems.getSelectedRow();
+
+        // Obtener los datos de la fila seleccionada
+        int id = (int) TablaDeDatosItems.getValueAt(filaSeleccionada, 0); // ID en la primera columna
+        String menu_name = TablaDeDatosItems.getValueAt(filaSeleccionada, 1).toString();
+        String nameItem = TablaDeDatosItems.getValueAt(filaSeleccionada, 2).toString();
+        String description = TablaDeDatosItems.getValueAt(filaSeleccionada, 4).toString();
+        double price = (Double) TablaDeDatosItems.getValueAt(filaSeleccionada, 3); // ID en la primera columna
+
+
+// Crear el diálogo de modificación con los datos obtenidos
+        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
+        ModificarMenuItems dialog = new ModificarMenuItems(parentFrame, model, this, id, menu_name, nameItem, description,price);
+        dialog.setVisible(true); // Muestra el diálogo
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
@@ -339,7 +353,7 @@ public class MenuItemsP extends javax.swing.JPanel {
         rs = st.executeQuery(sql);
 
         // Limpiar la tabla antes de agregar nuevos datos
-        model = (DefaultTableModel) TablaDeDatosStaff.getModel();
+        model = (DefaultTableModel) TablaDeDatosItems.getModel();
         model.setRowCount(0); // Limpia las filas existentes
 
         Object[] menuItems = new Object[5]; // Para almacenar las 5 columnas que seleccionas
@@ -353,7 +367,7 @@ public class MenuItemsP extends javax.swing.JPanel {
 
             model.addRow(menuItems);
         }
-        TablaDeDatosStaff.setModel(model);
+        TablaDeDatosItems.setModel(model);
     } catch (Exception e) {
         e.printStackTrace(); // Para depurar cualquier excepción
     }
@@ -439,7 +453,7 @@ public class MenuItemsP extends javax.swing.JPanel {
     }
 
     void limpiarTabla(DefaultTableModel model) {
-        for (int i = 0; i < TablaDeDatosStaff.getRowCount(); i++) {
+        for (int i = 0; i < TablaDeDatosItems.getRowCount(); i++) {
             model.removeRow(i);
             i = i - 1;
         }
@@ -454,7 +468,7 @@ public class MenuItemsP extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablaDeDatosStaff;
+    private javax.swing.JTable TablaDeDatosItems;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNvoRegistro;

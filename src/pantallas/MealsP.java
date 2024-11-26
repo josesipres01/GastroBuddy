@@ -63,7 +63,7 @@ public class MealsP extends javax.swing.JPanel {
         panelPrincipal = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TablaDeDatosPrin = new javax.swing.JTable();
+        TablaDeDatosMeals = new javax.swing.JTable();
         btnModificar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -85,8 +85,8 @@ public class MealsP extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(81, 81, 201));
 
-        TablaDeDatosPrin.setBackground(new java.awt.Color(239, 239, 239));
-        TablaDeDatosPrin.setModel(new javax.swing.table.DefaultTableModel(
+        TablaDeDatosMeals.setBackground(new java.awt.Color(239, 239, 239));
+        TablaDeDatosMeals.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -102,16 +102,16 @@ public class MealsP extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        TablaDeDatosPrin.setGridColor(new java.awt.Color(153, 153, 153));
-        TablaDeDatosPrin.setShowGrid(true);
-        TablaDeDatosPrin.getTableHeader().setResizingAllowed(false);
-        TablaDeDatosPrin.getTableHeader().setReorderingAllowed(false);
-        TablaDeDatosPrin.addMouseListener(new java.awt.event.MouseAdapter() {
+        TablaDeDatosMeals.setGridColor(new java.awt.Color(153, 153, 153));
+        TablaDeDatosMeals.setShowGrid(true);
+        TablaDeDatosMeals.getTableHeader().setResizingAllowed(false);
+        TablaDeDatosMeals.getTableHeader().setReorderingAllowed(false);
+        TablaDeDatosMeals.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TablaDeDatosPrinMouseClicked(evt);
+                TablaDeDatosMealsMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(TablaDeDatosPrin);
+        jScrollPane1.setViewportView(TablaDeDatosMeals);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -299,19 +299,19 @@ public class MealsP extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TablaDeDatosPrinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosPrinMouseClicked
+    private void TablaDeDatosMealsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeDatosMealsMouseClicked
 
-         if (TablaDeDatosPrin.isFocusable()) {
-            int row = TablaDeDatosPrin.getSelectedRow();
+         if (TablaDeDatosMeals.isFocusable()) {
+            int row = TablaDeDatosMeals.getSelectedRow();
             if (row == -1) {
                 JOptionPane.showMessageDialog(null, "There is no row selected");
             } else {
             // Obtén los valores de las celdas, asegurando el tipo correcto
-                String id = TablaDeDatosPrin.getValueAt(row, 0).toString();
-                String staffName = TablaDeDatosPrin.getValueAt(row, 1).toString();// Nombre del staff
-                String customerName = TablaDeDatosPrin.getValueAt(row, 2).toString();// Nombre del cliente
-                String dateString = TablaDeDatosPrin.getValueAt(row, 3).toString();// Fecha de la comida
-                String costOfMeal = TablaDeDatosPrin.getValueAt(row, 4).toString();// Costo de la comida
+                String id = TablaDeDatosMeals.getValueAt(row, 0).toString();
+                String staffName = TablaDeDatosMeals.getValueAt(row, 1).toString();// Nombre del staff
+                String customerName = TablaDeDatosMeals.getValueAt(row, 2).toString();// Nombre del cliente
+                String dateString = TablaDeDatosMeals.getValueAt(row, 3).toString();// Fecha de la comida
+                String costOfMeal = TablaDeDatosMeals.getValueAt(row, 4).toString();// Costo de la comida
 
                 // Asigna valores a los campos correspondientes
                 txtId.setText(id);
@@ -322,11 +322,26 @@ public class MealsP extends javax.swing.JPanel {
         
         }
     }
-    }//GEN-LAST:event_TablaDeDatosPrinMouseClicked
+    }//GEN-LAST:event_TablaDeDatosMealsMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-        modificarRegistro();
+        int filaSeleccionada = TablaDeDatosMeals.getSelectedRow();
+
+        // Obtener los datos de la fila seleccionada
+        int id = (int) TablaDeDatosMeals.getValueAt(filaSeleccionada, 0); // ID en la primera columna
+        String staffName = TablaDeDatosMeals.getValueAt(filaSeleccionada, 1).toString();
+        String customerName = TablaDeDatosMeals.getValueAt(filaSeleccionada, 2).toString();
+        String dateOfMeal = TablaDeDatosMeals.getValueAt(filaSeleccionada, 3).toString();
+        double costOfMeal = (Double) TablaDeDatosMeals.getValueAt(filaSeleccionada, 4); // ID en la primera columna
+
+
+// Crear el diálogo de modificación con los datos obtenidos
+        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
+        ModificarMeals dialog = new ModificarMeals(parentFrame, model, this, id, staffName, customerName, dateOfMeal,costOfMeal);
+        dialog.setVisible(true); // Muestra el diálogo
+
+                                                
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
@@ -358,7 +373,7 @@ void listar() {
             st = con.createStatement();
             rs = st.executeQuery(sql);
             Object[] meals = new Object[5];
-            model = (DefaultTableModel) TablaDeDatosPrin.getModel();
+            model = (DefaultTableModel) TablaDeDatosMeals.getModel();
 
             model.setRowCount(0);  // Limpiar tabla
 
@@ -370,7 +385,7 @@ void listar() {
                 meals[4] = rs.getDouble("cost_of_meal");
                 model.addRow(meals);
             }
-            TablaDeDatosPrin.setModel(model);
+            TablaDeDatosMeals.setModel(model);
         } catch (Exception e) {
             e.printStackTrace();
     }
@@ -548,7 +563,7 @@ void listar() {
     }
     
     void limpiarTabla(DefaultTableModel model) {
-        for (int i = 0; i < TablaDeDatosPrin.getRowCount(); i++) {
+        for (int i = 0; i < TablaDeDatosMeals.getRowCount(); i++) {
             model.removeRow(i);
             i = i - 1;
         }
@@ -562,7 +577,7 @@ void listar() {
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablaDeDatosPrin;
+    private javax.swing.JTable TablaDeDatosMeals;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNvoRegistro;
