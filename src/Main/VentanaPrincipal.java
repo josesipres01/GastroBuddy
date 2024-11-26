@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import pantallas.CustomersP;
 import pantallas.Login;
@@ -186,29 +188,42 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-       // Cerrar conexiones activas
-    try {
-        // Usar clase Conexion
-        Conexion conexion = new Conexion(); // Si tienes una instancia global, úsala
-        if (conexion.getEstado()) {
-            conexion.closeConnection();
+         // Confirmar cierre de sesión
+    int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to log out?", "Log out", JOptionPane.YES_NO_OPTION);
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Cerrar conexiones activas
+        try {
+            // Usar clase Conexion
+            Conexion conexion = new Conexion(); // Instancia global si la tienes
+            if (conexion.getEstado()) {
+                conexion.cerrarConexion(); // Cerrar conexión
+                System.out.println("Conexión cerrada correctamente.");
+            }
+
+            // Usar clase Connect
+            if (Connect.connection != null && !Connect.connection.isClosed()) {
+                Connect.connection.close(); // Cerrar conexión
+                System.out.println("Conexión de Connect cerrada correctamente.");
+            }
+        } catch (SQLException ex) {
+            System.err.println("[ERROR]: No fue posible cerrar la conexión.");
+            ex.printStackTrace();
         }
 
-        // Usar clase Connect
-        if (Connect.connection != null && !Connect.connection.isClosed()) {
-            Connect.connection.close();
-            System.out.println("Conexión de Connect cerrada correctamente.");
-        }
-    } catch (SQLException ex) {
-        System.err.println("[ERROR]: No fue posible cerrar la conexión.");
-        ex.printStackTrace();
+        // Cerrar la ventana actual y redirigir al Login
+        this.dispose(); // Cerrar la ventana actual
+
+        // Crear una nueva instancia del Login
+        JFrame loginFrame = new JFrame("Login Screen");
+        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar aplicación al cerrar ventana
+        loginFrame.setSize(1100, 750); // Dimensiones del login
+        loginFrame.setLocationRelativeTo(null); // Centrar en pantalla
+        loginFrame.setResizable(false); // No permitir redimensionar
+
+        Login loginPanel = new Login(); // Instancia del Login existente
+        loginFrame.setContentPane(loginPanel); // Establecer el panel del Login
+        loginFrame.setVisible(true); // Mostrar el login
     }
-
-    // Reemplazar el contenido actual con el Login
-    Login loginPanel = new Login();
-    this.setContentPane(loginPanel);
-    this.revalidate(); // Forzar la actualización del contenido
-    this.repaint(); // Redibujar la ventana
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     public void actualizarContenido(JPanel panel){

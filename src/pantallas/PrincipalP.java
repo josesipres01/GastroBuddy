@@ -346,37 +346,46 @@ public class PrincipalP extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCustomersActionPerformed
 
     private void btncerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncerrarActionPerformed
-        // TODO add your handling code here:
-           int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Log out", JOptionPane.YES_NO_OPTION);
-                if (confirm == JOptionPane.YES_OPTION) {
-                    ventana.dispose(); // Cierra la ventana actual
-                    abrirLogin(); // Redirige al login
-                }
-        
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Log out", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            // Cierra la conexión a la base de datos
+            Conexion conexion = new Conexion();
+            conexion.cerrarConexion();
+
+            // Cierra la ventana actual
+            ventana.dispose();
+
+            // Redirige al login
+            abrirLogin();
+        }
+
+
+
     }//GEN-LAST:event_btncerrarActionPerformed
 
-     private void abrirLogin() {
-   // Crear un JFrame
-        JFrame frame = new JFrame("Login Screen");
-        
-        // Crear una instancia del panel Login
-        Login loginPanel = new Login();
-        
-        // Configurar el JFrame
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar aplicación al cerrar ventana
-        frame.setSize(1100, 750); // Tamaño del JFrame
-        frame.setLocationRelativeTo(null); // Centrar la ventana en la pantalla
-        frame.setResizable(false); // Desactiva el redimensionamiento (y elimina el botón de maximizar)
+    private void abrirLogin() {
+    // Crear un nuevo JFrame para evitar referencias anteriores
+    JFrame frame = new JFrame("Login Screen");
 
+    // Crear una nueva instancia del panel Login
+    Login loginPanel = new Login();
 
+    // Limpiar campos y estado del login (si no lo haces en el constructor)
+    loginPanel.limpiarCampos();// Método para reiniciar el estado del login
 
-        
-        // Agregar el panel Login al JFrame
-        frame.setContentPane(loginPanel);
-        
-        // Hacer visible el JFrame
-        frame.setVisible(true);
-    }
+    // Configurar el JFrame
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setSize(1100, 750);
+    frame.setLocationRelativeTo(null);
+    frame.setResizable(false);
+
+    // Agregar el panel Login al JFrame
+    frame.setContentPane(loginPanel);
+
+    // Hacer visible el JFrame
+    frame.setVisible(true);
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCustomers;

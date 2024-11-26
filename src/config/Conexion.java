@@ -1,5 +1,6 @@
 package config;
 
+import static Adds.Connect.connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -59,5 +60,17 @@ public class Conexion {
         System.out.println("La conexión ya estaba cerrada.");
     }
 }
+    
+      // Cierra la conexión
+    public void cerrarConexion() {
+        if (connection != null) {
+            try {
+                connection.close();
+                connection = null; // Evitar reutilizar la conexión cerrada
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

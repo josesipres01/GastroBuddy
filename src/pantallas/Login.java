@@ -20,7 +20,9 @@ public class Login extends javax.swing.JPanel {
      */
     public Login() {
         initComponents();
-        
+        userTxf.setText(""); // Limpia el campo de usuario
+        passwordTxf.setText(""); // Limpia el campo de contraseña
+
     }
 
     /**
@@ -219,27 +221,32 @@ public class Login extends javax.swing.JPanel {
     
     
     private void boton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton1ActionPerformed
-          // Obtener el usuario y contraseña ingresados
-    String username = userTxf.getText().trim();
-    String password = new String(passwordTxf.getPassword()).trim();
+// Obtener el usuario y contraseña ingresados
+        String username = userTxf.getText().trim();
+        String password = new String(passwordTxf.getPassword()).trim();
 
-    // Validar si los campos están vacíos
-    if (username.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please complete both fields.", "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Detener el flujo si hay campos vacíos
-    }
+// Validar si los campos están vacíos
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please complete both fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Detener el flujo si hay campos vacíos
+        }
 
-    // Llamar al método de autenticación
-    if (Authentication.authUser(username, password)) {
-        // Crear una instancia de la ventana "VentanaPrincipal"            
-        new VentanaPrincipal().setVisible(true);
+// Llamar al método de autenticación
+        if (Authentication.authUser(username, password)) {
+            // Crear una instancia de la ventana "VentanaPrincipal"            
+            new VentanaPrincipal().setVisible(true);
 
-        // Cerrar el JFrame actual
-        javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
-    } else {
-        // Si la autenticación falla, mostrar un mensaje de error
-        JOptionPane.showMessageDialog(this, "Incorrect username or password.\nPlease try again.", "Error", JOptionPane.ERROR_MESSAGE);
-    }    
+            // Cerrar el JFrame actual
+            javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
+        } else {
+            // Si la autenticación falla, mostrar un mensaje de error
+            JOptionPane.showMessageDialog(this, "Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
+
+            // Limpiar los campos de usuario y contraseña
+            userTxf.setText("");
+            passwordTxf.setText("");
+        }
+   
     }//GEN-LAST:event_boton1ActionPerformed
 
     private void userTxfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTxfActionPerformed
@@ -249,6 +256,10 @@ public class Login extends javax.swing.JPanel {
     private void passwordTxfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTxfActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordTxfActionPerformed
+public void limpiarCampos() {
+        userTxf.setText(""); // Limpia el campo de usuario
+        passwordTxf.setText(""); // Limpia el campo de contraseña
+    }
 
     
 
